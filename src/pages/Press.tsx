@@ -208,15 +208,14 @@ export default function Press() {
                 <span className="text-[9px] uppercase tracking-[0.6em] text-mauve/80 font-semibold">Speaking</span>
                 <div className="flex-1 h-[1px] bg-white/5" />
               </div>
-              <div className="flex gap-7 md:gap-9 items-start">
+              <div className="flex flex-col sm:flex-row gap-7 md:gap-9 items-start">
                 {/* Image */}
                 <motion.div
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1] }}
-                  className="relative overflow-hidden shrink-0 w-[240px] h-[240px] md:w-[300px] md:h-[300px] rounded-full border-2 border-mauve/40 shadow-[0_0_0_8px_rgba(191,168,187,0.08),0_30px_70px_rgba(0,0,0,0.6)]"
-                  style={{}}
+                  className="relative overflow-hidden shrink-0 w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] rounded-full border-2 border-mauve/40 shadow-[0_0_0_8px_rgba(191,168,187,0.08),0_30px_70px_rgba(0,0,0,0.6)]"
                 >
                   <img
                     src="/assests/GSON3031.jpg"
@@ -254,7 +253,7 @@ export default function Press() {
                 <span className="text-[9px] uppercase tracking-[0.6em] text-mauve/80 font-semibold">Recognition</span>
                 <div className="flex-1 h-[1px] bg-white/5" />
               </div>
-              <div className="flex gap-7 md:gap-9 items-start">
+              <div className="flex flex-col-reverse sm:flex-row gap-7 md:gap-9 items-start">
                 {/* Text */}
                 <div className="divide-y divide-white/5 flex-1 min-w-0">
                   {AWARDS.map((item, i) => (
@@ -284,8 +283,7 @@ export default function Press() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
                   transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.15 }}
-                  className="relative overflow-hidden shrink-0 w-[240px] h-[240px] md:w-[300px] md:h-[300px] rounded-full border-2 border-mauve/40 shadow-[0_0_0_8px_rgba(191,168,187,0.08),0_30px_70px_rgba(0,0,0,0.6)]"
-                  style={{}}
+                  className="relative overflow-hidden shrink-0 w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] rounded-full border-2 border-mauve/40 shadow-[0_0_0_8px_rgba(191,168,187,0.08),0_30px_70px_rgba(0,0,0,0.6)]"
                 >
                   <img
                     src="/assests/7b.jpg"

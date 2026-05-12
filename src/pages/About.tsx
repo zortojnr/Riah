@@ -224,7 +224,7 @@ export default function About() {
                 whileInView={{ y: 0, opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 2.5, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute -top-10 -right-4 md:-top-20 md:-right-8 lg:-right-16 w-[45%] aspect-[3/4] z-20 shadow-[-20px_40px_80px_rgba(0,0,0,0.2)] ring-1 ring-white/20 p-2 bg-white"
+                className="absolute -top-6 -right-2 sm:-top-10 sm:-right-4 md:-top-20 md:-right-8 lg:-right-16 w-[38%] sm:w-[45%] aspect-[3/4] z-20 shadow-[-20px_40px_80px_rgba(0,0,0,0.2)] ring-1 ring-white/20 p-1 sm:p-2 bg-white"
               >
                 <div className="w-full h-full overflow-hidden relative">
                   <img

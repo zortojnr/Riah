@@ -83,15 +83,15 @@ export default function DestinationsSection() {
               whileInView={{ opacity: 1, y: 40 }}
               viewport={{ once: true }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="text-[clamp(48px,10vw,160px)] font-serif text-teal italic leading-none tracking-tighter absolute -top-16 md:-top-24 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none"
+              className="text-[clamp(36px,8vw,160px)] font-serif text-teal italic leading-none tracking-tighter absolute -top-12 md:-top-24 left-1/2 -translate-x-1/2 whitespace-nowrap pointer-events-none"
             >
               Destinations
             </motion.h2>
 
-            {/* Pillar Cards */}
-            <div className="flex gap-3 md:gap-5 items-end mt-24 pt-4">
+            {/* Pillar Cards — horizontal scroll on mobile, flex row on md+ */}
+            <div className="flex gap-3 md:gap-5 items-end mt-20 md:mt-24 pt-4 overflow-x-auto pb-2 md:overflow-visible md:pb-0 snap-x snap-mandatory md:snap-none no-scrollbar">
               {DESTINATIONS.map((dest) => (
-                <div key={dest.country} className="flex-1 min-w-0 flex flex-col items-center">
+                <div key={dest.country} className="flex-none w-[52vw] sm:w-[38vw] md:flex-1 md:min-w-0 md:w-auto flex flex-col items-center snap-start">
 
                   {/* Clip wrapper — hides the card while it's below its resting position */}
                   <div className="w-full overflow-hidden">

@@ -95,13 +95,13 @@ export default function ImpactSection() {
             {/* 42+ card — image overlaps number from left */}
             <div className="relative flex items-end">
               {/* Image — sits behind the number, overlapping */}
-              <div className="w-40 sm:w-52 md:w-60 h-52 sm:h-64 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
+              <div className="w-32 sm:w-44 md:w-60 h-44 sm:h-56 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
                 <StatSlideshow images={STAT_IMAGES_1} />
               </div>
               {/* Number + label — pulled left so image touches it */}
-              <div className="flex flex-col -ml-6 z-20">
+              <div className="flex flex-col -ml-4 sm:-ml-6 z-20 min-w-0">
                 <Counter value={42} suffix="+" />
-                <span className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
+                <span className="text-[9px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
                   Global commissions<br />uniquely executed
                 </span>
               </div>
@@ -110,14 +110,14 @@ export default function ImpactSection() {
             {/* 5 card — image overlaps number from right */}
             <div className="relative flex items-end justify-end">
               {/* Number + label */}
-              <div className="flex flex-col text-right -mr-6 z-20">
+              <div className="flex flex-col text-right -mr-4 sm:-mr-6 z-20 min-w-0">
                 <Counter value={5} />
-                <span className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
+                <span className="text-[9px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
                   Destinations<br />currently managed
                 </span>
               </div>
               {/* Image — overlaps from the right */}
-              <div className="w-40 sm:w-52 md:w-60 h-52 sm:h-64 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
+              <div className="w-32 sm:w-44 md:w-60 h-44 sm:h-56 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
                 <StatSlideshow images={STAT_IMAGES_2} />
               </div>
             </div>
