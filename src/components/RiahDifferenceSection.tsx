@@ -48,7 +48,7 @@ function PortraitCard({ number, word, description, image, delay = 0 }: {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay }}
-      className="relative overflow-hidden aspect-[3/4] border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] group w-full"
+      className="relative overflow-hidden aspect-[3/4] border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.4)] group w-full"
     >
       <img
         src={image}
@@ -140,7 +140,7 @@ export default function RiahDifferenceSection() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.15 }}
               transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-              className="relative overflow-hidden w-full border border-white/10 shadow-[0_40px_120px_rgba(0,0,0,0.7)] group"
+              className="relative overflow-hidden w-full border border-white/10 shadow-[0_15px_40px_rgba(0,0,0,0.4)] group"
               style={{ aspectRatio: '16/9' }}
             >
               <img
@@ -207,7 +207,7 @@ export default function RiahDifferenceSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.1 }}
             transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-            className="relative overflow-hidden border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)] group"
+            className="relative overflow-hidden border border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.35)] group"
             style={{ aspectRatio: '16/9' }}
           >
             <img

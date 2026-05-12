@@ -67,14 +67,13 @@
 
 /* Image zoom on group hover — used across editorial sections */
 .image-zoom-slow {
-  transition: transform 8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .group:hover .image-zoom-slow {
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .perspective-container {
-  perspective: 2500px;
   width: 100%;
   overflow-x: hidden;
 }

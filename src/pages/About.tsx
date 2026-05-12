@@ -161,7 +161,7 @@ export default function About() {
                   <img
                     src={value.image}
                     alt={value.title}
-                    className="w-full h-full object-cover grayscale transition-transform duration-[3000ms] ease-out group-hover:scale-110 group-hover:grayscale-0"
+                    className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                     referrerPolicy="no-referrer"
                     loading="lazy"
                   />

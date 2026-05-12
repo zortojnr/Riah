@@ -26,28 +26,15 @@ const principles = [
 
 const AnimatedText = ({ text, className, delay = 0 }: { text: string, className?: string, delay?: number }) => {
   const words = text.split(" ");
-  
+
   const container = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.03, delayChildren: delay },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: delay } },
   };
 
   const child = {
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: [0.16, 1, 0.3, 1],
-      },
-    },
-    hidden: {
-      opacity: 0,
-      y: 10,
-    },
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
   };
 
   return (
@@ -59,15 +46,8 @@ const AnimatedText = ({ text, className, delay = 0 }: { text: string, className?
       className={`flex flex-wrap justify-center ${className}`}
     >
       {words.map((word, index) => (
-        <motion.span
-          key={index}
-          className="mr-[0.3em] flex"
-        >
-          {word.split("").map((char, charIdx) => (
-            <motion.span key={charIdx} variants={child}>
-              {char}
-            </motion.span>
-          ))}
+        <motion.span key={index} variants={child} className="mr-[0.3em]">
+          {word}
         </motion.span>
       ))}
     </motion.div>
@@ -89,12 +69,14 @@ export default function PhilosophySection() {
   const nextSlide = () => paginate(1);
   const prevSlide = () => paginate(-1);
 
-  // Autoplay
   useEffect(() => {
-    const timer = setInterval(() => {
-      paginate(1);
-    }, 6000);
-    return () => clearInterval(timer);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const start = () => { timer = setInterval(() => paginate(1), 6000); };
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const onVisibility = () => document.hidden ? stop() : start();
+    start();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => { stop(); document.removeEventListener('visibilitychange', onVisibility); };
   }, [paginate]);
 
   const variants = {

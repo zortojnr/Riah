@@ -47,7 +47,7 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
       });
       imgCursor++;
       slotCursor++;
-    }, 1800);
+    }, 4000);
     return () => clearInterval(t);
   }, []);
 

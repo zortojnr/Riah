@@ -21,8 +21,13 @@ function VideoInterlude() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIndex(i => (i + 1) % MOTTOS.length), 3500);
-    return () => clearInterval(t);
+    let t: ReturnType<typeof setInterval> | null = null;
+    const start = () => { t = setInterval(() => setIndex(i => (i + 1) % MOTTOS.length), 3500); };
+    const stop = () => { if (t) { clearInterval(t); t = null; } };
+    const onVisibility = () => document.hidden ? stop() : start();
+    start();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => { stop(); document.removeEventListener('visibilitychange', onVisibility); };
   }, []);
 
   return (
@@ -119,8 +124,13 @@ function PressCarousel() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const t = setInterval(() => setIndex(i => (i + 1) % PRESS_QUOTES.length), 4000);
-    return () => clearInterval(t);
+    let t: ReturnType<typeof setInterval> | null = null;
+    const start = () => { t = setInterval(() => setIndex(i => (i + 1) % PRESS_QUOTES.length), 4000); };
+    const stop = () => { if (t) { clearInterval(t); t = null; } };
+    const onVisibility = () => document.hidden ? stop() : start();
+    start();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => { stop(); document.removeEventListener('visibilitychange', onVisibility); };
   }, []);
 
   return (

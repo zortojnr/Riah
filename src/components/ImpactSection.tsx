@@ -5,32 +5,18 @@ import { Link } from 'react-router-dom';
 function Counter({ value, suffix = "" }: { value: number, suffix?: string }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  
-  const spring = useSpring(0, {
-    stiffness: 40,
-    damping: 20,
-    restDelta: 0.001
-  });
+
+  const spring = useSpring(0, { stiffness: 40, damping: 20, restDelta: 0.5 });
 
   useEffect(() => {
-    if (isInView) {
-      spring.set(value);
-    }
+    if (isInView) spring.set(value);
   }, [isInView, spring, value]);
 
-  const displayValue = useTransform(spring, (latest) => Math.floor(latest));
-  const [current, setCurrent] = useState(0);
-
-  useEffect(() => {
-    const unsubscribe = displayValue.on("change", (latest) => {
-      setCurrent(latest);
-    });
-    return () => unsubscribe();
-  }, [displayValue]);
+  const rounded = useTransform(spring, (latest) => Math.floor(latest));
 
   return (
     <span ref={ref} className="text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] font-serif leading-none tracking-tighter">
-      {current}{suffix}
+      <motion.span>{rounded}</motion.span>{suffix}
     </span>
   );
 }
@@ -56,10 +42,13 @@ function StatSlideshow({ images }: { images: string[] }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % images.length);
-    }, 4000);
-    return () => clearInterval(timer);
+    let timer: ReturnType<typeof setInterval> | null = null;
+    const start = () => { timer = setInterval(() => setIndex(prev => (prev + 1) % images.length), 4000); };
+    const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+    const onVisibility = () => document.hidden ? stop() : start();
+    start();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => { stop(); document.removeEventListener('visibilitychange', onVisibility); };
   }, [images.length]);
 
   return (

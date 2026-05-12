@@ -28,7 +28,7 @@ export default function Footer() {
           whileInView={{ opacity: 0.06, scale: 1, y: 0 }}
           viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[35vw] font-serif tracking-[0.2em] uppercase text-off-white leading-none blur-[1px]"
+          className="text-[35vw] font-serif tracking-[0.2em] uppercase text-off-white leading-none"
         >
           RIAH
         </motion.span>
