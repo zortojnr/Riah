@@ -166,7 +166,7 @@ export default function PhilosophySection() {
           transition={{ duration: 1.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full max-w-5xl mx-auto px-4 md:px-0"
         >
-          <div className="relative h-[500px] md:h-[650px]">
+          <div className="relative h-[320px] sm:h-[440px] md:h-[580px] lg:h-[650px]">
             {/* Side Previews (Neighbors) - Blurred and Behind */}
             <div className="absolute inset-y-0 -left-[15%] w-full opacity-30 transform scale-[0.85] pointer-events-none z-0 hidden md:block">
                <img 
@@ -212,11 +212,11 @@ export default function PhilosophySection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
                   
                   {/* Content Overlay */}
-                  <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-20 text-off-white">
+                  <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-8 md:p-14 lg:p-20 text-off-white">
                     <span className="text-[10px] md:text-xs tracking-[0.6em] uppercase mb-4 opacity-70 font-medium">
                       {principles[activeIndex].id}
                     </span>
-                    <h3 className="text-3xl md:text-5xl lg:text-6xl font-serif mb-6 max-w-xl leading-[1.1]">
+                    <h3 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-serif mb-4 md:mb-6 max-w-xl leading-[1.1]">
                       {principles[activeIndex].title}
                     </h3>
                     <p className="text-sm md:text-base lg:text-lg font-light max-w-md opacity-80 leading-relaxed tracking-wide italic mb-10">
@@ -238,17 +238,17 @@ export default function PhilosophySection() {
             </AnimatePresence>
 
             {/* Navigation Arrows (Far Sides) */}
-            <button 
+            <button
               onClick={prevSlide}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-full md:-translate-x-[150%] z-30 group p-3 md:p-5 bg-off-white/90 backdrop-blur-sm border border-teal/5 rounded-full transition-all duration-500 hover:bg-teal hover:border-teal shadow-lg"
+              className="absolute left-2 sm:left-0 top-1/2 -translate-y-1/2 sm:-translate-x-full md:-translate-x-[150%] z-30 group p-2.5 md:p-5 bg-off-white/90 backdrop-blur-sm border border-teal/5 rounded-full transition-all duration-500 hover:bg-teal hover:border-teal shadow-lg"
               aria-label="Previous principle"
             >
-              <ChevronLeft className="w-5 h-5 text-teal group-hover:text-off-white transition-colors" />
+              <ChevronLeft className="w-4 h-4 md:w-5 md:h-5 text-teal group-hover:text-off-white transition-colors" />
             </button>
-            
-            <button 
+
+            <button
               onClick={nextSlide}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full md:translate-x-[150%] z-30 group p-3 md:p-5 bg-off-white/90 backdrop-blur-sm border border-teal/5 rounded-full transition-all duration-500 hover:bg-teal hover:border-teal shadow-lg"
+              className="absolute right-2 sm:right-0 top-1/2 -translate-y-1/2 sm:translate-x-full md:translate-x-[150%] z-30 group p-2.5 md:p-5 bg-off-white/90 backdrop-blur-sm border border-teal/5 rounded-full transition-all duration-500 hover:bg-teal hover:border-teal shadow-lg"
               aria-label="Next principle"
             >
               <ChevronRight className="w-5 h-5 text-teal group-hover:text-off-white transition-colors" />

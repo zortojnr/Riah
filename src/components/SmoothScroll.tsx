@@ -14,12 +14,12 @@ export default function SmoothScroll() {
       touchMultiplier: 2,
     });
 
+    let rafId: number;
     const raf = (time: number) => {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     };
-
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     // Watch for destination open class to stop/start Lenis
     const observer = new MutationObserver(() => {
@@ -40,6 +40,7 @@ export default function SmoothScroll() {
     window.addEventListener('popstate', handleScrollToTop);
 
     return () => {
+      cancelAnimationFrame(rafId);
       lenis.destroy();
       observer.disconnect();
       window.removeEventListener('popstate', handleScrollToTop);

@@ -71,17 +71,15 @@ export default function ExperienceSection() {
                 <AnimatePresence initial={false}>
                   {openIndex === index && (
                     <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
-                      className="overflow-hidden"
+                      initial={{ opacity: 0, y: -8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.35, ease: "easeOut" }}
+                      className="pb-10 md:pb-12 max-w-2xl"
                     >
-                      <div className="pb-10 md:pb-12 max-w-2xl">
-                        <p className="text-sm md:text-base text-teal/65 font-light leading-relaxed tracking-wide">
-                          {item.description}
-                        </p>
-                      </div>
+                      <p className="text-sm md:text-base text-teal/65 font-light leading-relaxed tracking-wide">
+                        {item.description}
+                      </p>
                     </motion.div>
                   )}
                 </AnimatePresence>

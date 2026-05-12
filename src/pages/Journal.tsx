@@ -1,79 +1,223 @@
+import { useState, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import FadeIn from '../components/FadeIn';
 
-const articles = [
-  {
-    title: 'The Art of the Intentional Celebration',
-    category: 'Philosophy',
-    image: 'https://images.unsplash.com/photo-1510076857177-7470076d4098?q=80&w=2072&auto=format&fit=crop',
-    featured: true
-  },
-  {
-    title: 'Minimalism in Lake Como',
-    category: 'Destinations',
-    image: 'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1974&auto=format&fit=crop'
-  },
-  {
-    title: 'Cultural Nuance in High-End Design',
-    category: 'Design',
-    image: 'https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=1974&auto=format&fit=crop'
-  },
-  {
-    title: 'A Sunset Seiree in the Cotswolds',
-    category: 'Real Weddings',
-    image: 'https://images.unsplash.com/photo-1541250848049-b4f7141dca3f?q=80&w=1974&auto=format&fit=crop'
-  }
-];
+const CATEGORIES = ['All', 'Cultural Insight', 'Planning Philosophy', 'Destination Guides', 'Real Celebrations', 'The Conversation'];
+
+const articles: {
+  slug: string;
+  title: string;
+  category: string;
+  excerpt: string;
+  image: string;
+  featured?: boolean;
+  readTime: string;
+}[] = [];
 
 export default function Journal() {
-  return (
-    <div className="pt-40 pb-40">
-      <div className="luxury-container">
-        <FadeIn className="mb-24">
-          <span className="text-[10px] uppercase tracking-[0.6em] text-mauve font-semibold mb-8 block">The Curator</span>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl text-teal mb-10 leading-[0.9]">Journal</h1>
-          <p className="text-base md:text-lg text-teal/60 max-w-2xl font-light leading-relaxed tracking-wide italic">
-            Insights on design, destination intelligence, and the poetry of celebration.
-          </p>
-        </FadeIn>
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
 
-        {/* Featured Article */}
-        <FadeIn className="mb-24">
-          <div className="group cursor-pointer relative overflow-hidden aspect-[16/7] bg-slate/10 shadow-2xl">
-            <img 
-              src={articles[0].image} 
-              alt={articles[0].title} 
-              className="absolute inset-0 w-full h-full object-cover grayscale-[20%] image-zoom-slow brightness-75 group-hover:brightness-100"
-              referrerPolicy="no-referrer"
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] });
+  const heroY = useTransform(scrollYProgress, [0, 1], ['0%', '25%']);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) setSubscribed(true);
+  };
+
+  return (
+    <div className="bg-off-white overflow-hidden">
+
+      {/* ── HERO ── */}
+      <section ref={heroRef} className="relative h-[65vh] md:h-[80vh] flex items-end overflow-hidden">
+        <motion.div style={{ y: heroY }} className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-[#0e1b1b]" />
+          {/* Ambient diagonal light */}
+          <div className="absolute inset-0 bg-gradient-to-br from-mauve/10 via-transparent to-transparent" />
+        </motion.div>
+
+        {/* RIAH watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-hidden">
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 3, ease: 'easeOut' }}
+            className="text-[28vw] font-serif font-bold text-white/[0.025] tracking-[0.35em] uppercase leading-none"
+          >
+            RIAH
+          </motion.span>
+        </div>
+
+        {/* Corner brackets */}
+        <div className="absolute top-8 left-8 md:top-12 md:left-14 w-10 h-10 border-l border-t border-mauve/25 z-10" />
+        <div className="absolute top-8 right-8 md:top-12 md:right-14 w-10 h-10 border-r border-t border-mauve/25 z-10" />
+
+        <motion.div style={{ opacity: heroOpacity }} className="relative z-10 w-full px-5 sm:px-8 md:px-14 lg:px-20 pb-14 md:pb-24">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
+          >
+            <span className="text-[9px] uppercase tracking-[0.7em] text-mauve/80 mb-8 block font-sans">
+              The Curator
+            </span>
+            <h1 className="font-serif text-[clamp(48px,8vw,110px)] text-off-white leading-[0.92] tracking-[-0.01em] mb-8">
+              The RIAH<br />Journal
+            </h1>
+            <div className="w-14 h-[1px] bg-mauve/50 mb-8" />
+            <p className="text-sm text-off-white/45 font-light leading-relaxed tracking-wide italic max-w-md">
+              Insight, inspiration, and intimate reflections on the art of crafting culturally rich celebrations.
+            </p>
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* ── CATEGORY FILTER ── */}
+      <section className="bg-off-white border-b border-teal/5 sticky top-[72px] z-40">
+        <div className="luxury-container">
+          <div className="flex gap-x-6 md:gap-x-10 gap-y-0 overflow-x-auto scrollbar-hide py-0">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`text-[9px] uppercase tracking-[0.4em] font-medium transition-all duration-500 py-5 whitespace-nowrap border-b-[1.5px] min-h-[44px] flex items-center ${
+                  activeCategory === cat
+                    ? 'text-teal border-mauve'
+                    : 'text-teal/35 border-transparent hover:text-teal/70'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── EMPTY STATE ── */}
+      <section className="py-40 md:py-56 relative overflow-hidden">
+        {/* Background watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 2.5, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[22vw] font-serif text-teal/[0.03] leading-none tracking-[0.3em] uppercase"
+          >
+            SOON
+          </motion.span>
+        </div>
+
+        <FadeIn className="luxury-container relative z-10">
+          <div className="max-w-2xl mx-auto text-center">
+
+            {/* Decorative line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+              className="w-[1px] h-20 bg-gradient-to-b from-transparent via-mauve/40 to-transparent mx-auto mb-14"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-teal/90 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-[2000ms]" />
-            <div className="absolute bottom-0 left-0 p-12 md:p-24">
-              <span className="text-[10px] uppercase tracking-[0.4em] font-medium text-mauve mb-6 block">{articles[0].category}</span>
-              <h2 className="text-2xl sm:text-3xl md:text-5xl text-off-white max-w-3xl leading-[1.1] font-serif group-hover:tracking-tight transition-all duration-1000">{articles[0].title}</h2>
-              <div className="mt-12 h-[1px] w-12 bg-mauve group-hover:w-full transition-all duration-1000" />
+
+            <span className="text-[9px] uppercase tracking-[0.7em] text-mauve font-semibold mb-10 block">
+              Coming Soon
+            </span>
+
+            <h2 className="font-serif text-4xl md:text-6xl text-teal italic leading-[1.05] tracking-tight mb-10">
+              The journal is<br />being curated.
+            </h2>
+
+            <div className="w-10 h-[1px] bg-mauve/40 mx-auto mb-10" />
+
+            <p className="text-sm text-teal/50 font-light leading-relaxed tracking-wide italic max-w-sm mx-auto mb-16">
+              We are preparing a space for considered reflections on culture, celebration, and the art of intentional planning.
+            </p>
+
+            {/* Category pills */}
+            <div className="flex flex-wrap justify-center gap-3 mb-20">
+              {CATEGORIES.slice(1).map((cat, i) => (
+                <motion.span
+                  key={cat}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.4 + i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-[8px] uppercase tracking-[0.4em] text-teal/30 border border-teal/10 px-5 py-2.5"
+                >
+                  {cat}
+                </motion.span>
+              ))}
             </div>
+
+            {/* Decorative bottom line */}
+            <motion.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 1.4, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+              className="w-[1px] h-20 bg-gradient-to-b from-transparent via-mauve/40 to-transparent mx-auto"
+            />
           </div>
         </FadeIn>
+      </section>
 
-        {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 md:gap-12">
-          {articles.slice(1).map((article, i) => (
-            <FadeIn key={article.title} delay={0.1 * i} className="group cursor-pointer">
-              <div className="aspect-[4/5] overflow-hidden mb-10 bg-slate/5 relative">
-                <img 
-                  src={article.image} 
-                  alt={article.title} 
-                  className="w-full h-full object-cover grayscale-[40%] image-zoom-slow"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-teal/5 group-hover:bg-transparent transition-colors duration-1000" />
-              </div>
-              <span className="text-[10px] uppercase tracking-[0.4em] font-semibold text-mauve mb-6 block border-l border-mauve/30 pl-4">{article.category}</span>
-              <h3 className="text-2xl text-teal group-hover:text-mauve transition-colors duration-500 font-serif leading-[1.3]">{article.title}</h3>
-              <p className="mt-6 text-[10px] uppercase tracking-[0.3em] text-teal/40 group-hover:pl-4 transition-all duration-500">Read Narrative →</p>
-            </FadeIn>
-          ))}
+      {/* ── EMAIL CAPTURE ── */}
+      <section className="border-t border-teal/5 bg-teal relative overflow-hidden">
+        {/* Watermark */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
+          <motion.span
+            initial={{ opacity: 0, scale: 0.3, y: 100 }}
+            whileInView={{ opacity: 0.04, scale: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.1 }}
+            transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
+            className="text-[30vw] font-serif tracking-[0.2em] uppercase text-off-white leading-none"
+          >
+            RIAH
+          </motion.span>
         </div>
-      </div>
+
+        <div className="luxury-container py-32 md:py-44 relative z-10">
+          <FadeIn className="max-w-xl mx-auto text-center">
+            <span className="text-[9px] uppercase tracking-[0.6em] text-mauve/80 font-semibold mb-10 block">Stay Close</span>
+            <h2 className="font-serif text-3xl md:text-5xl text-off-white italic leading-[1.1] tracking-tight mb-8">
+              Stay close to<br />the conversation
+            </h2>
+            <div className="w-10 h-[1px] bg-mauve/50 mx-auto mb-10" />
+            <p className="text-sm text-off-white/45 font-light leading-relaxed tracking-wide italic mb-14 max-w-sm mx-auto">
+              Receive considered reflections on culture, celebration, and the art of intentional planning. Occasionally.
+            </p>
+
+            {subscribed ? (
+              <motion.p
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-[11px] uppercase tracking-[0.4em] text-mauve/80"
+              >
+                Thank you. You'll hear from us soon.
+              </motion.p>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex w-full max-w-sm mx-auto">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Your email address"
+                  required
+                  className="flex-1 bg-transparent border border-off-white/15 px-6 py-4 text-[11px] text-off-white placeholder:text-off-white/25 tracking-[0.15em] outline-none focus:border-mauve/50 transition-colors duration-300"
+                />
+                <button
+                  type="submit"
+                  className="px-7 py-4 bg-off-white/10 text-off-white text-[9px] uppercase tracking-[0.4em] hover:bg-mauve hover:text-off-white transition-all duration-500 whitespace-nowrap border border-off-white/15 border-l-0"
+                >
+                  Subscribe
+                </button>
+              </form>
+            )}
+          </FadeIn>
+        </div>
+      </section>
+
     </div>
   );
 }

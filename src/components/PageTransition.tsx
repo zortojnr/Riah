@@ -4,56 +4,48 @@ import { ReactNode } from 'react';
 const variants = {
   initial: {
     opacity: 0,
-    rotateY: 20,
-    rotateX: 5,
-    x: 100,
-    scale: 0.9,
-    filter: 'blur(10px)',
   },
   enter: {
     opacity: 1,
-    rotateY: 0,
-    rotateX: 0,
-    x: 0,
-    scale: 1,
-    filter: 'blur(0px)',
     transition: {
-      duration: 1.8,
+      duration: 0.4,
       ease: [0.16, 1, 0.3, 1],
-      staggerChildren: 0.1,
     },
   },
   exit: {
     opacity: 0,
-    rotateY: -20,
-    rotateX: -5,
-    x: -100,
-    scale: 0.9,
-    filter: 'blur(10px)',
     transition: {
-      duration: 1.2,
+      duration: 0.3,
       ease: [0.16, 1, 0.3, 1],
     },
   },
+  none: {
+    opacity: 1,
+  },
 };
+
+// True on a hard reload (performance.navigation is legacy but widely supported)
+function isHardReload() {
+  return (
+    (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming)?.type === 'reload' ||
+    performance.navigation?.type === 1
+  );
+}
 
 interface PageTransitionProps {
   children: ReactNode;
 }
 
 export default function PageTransition({ children }: PageTransitionProps) {
+  const skipAnimation = isHardReload();
+
   return (
     <motion.div
-      initial="initial"
+      initial={skipAnimation ? 'none' : 'initial'}
       animate="enter"
       exit="exit"
       variants={variants}
       className="w-full"
-      style={{ 
-        transformOrigin: 'center center', 
-        perspective: '2500px',
-        backfaceVisibility: 'hidden'
-      }}
     >
       {children}
     </motion.div>

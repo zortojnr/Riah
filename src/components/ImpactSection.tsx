@@ -29,22 +29,27 @@ function Counter({ value, suffix = "" }: { value: number, suffix?: string }) {
   }, [displayValue]);
 
   return (
-    <span ref={ref} className="text-6xl md:text-8xl lg:text-[10rem] font-serif leading-none tracking-tighter">
+    <span ref={ref} className="text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] font-serif leading-none tracking-tighter">
       {current}{suffix}
     </span>
   );
 }
 
+// 42+ card — local wedding/event images
 const STAT_IMAGES_1 = [
-  "https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1532712938310-34cb3982ef74?q=80&w=1200&auto=format&fit=crop"
+  '/assests/1a.jpg',
+  '/assests/3a.jpg',
+  '/assests/8a.jpg',
+  '/assests/12a.jpg',
 ];
 
+// 5 card — destinations images
 const STAT_IMAGES_2 = [
-  "https://images.unsplash.com/photo-1523438885200-e635ba2c371e?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1200&auto=format&fit=crop",
-  "https://images.unsplash.com/photo-1510076857177-7443610d4138?q=80&w=1200&auto=format&fit=crop"
+  'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1200',
+  '/assests/france.jpg',
+  '/assests/2a.jpg',
+  'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1200',
+  'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?q=80&w=1200',
 ];
 
 function StatSlideshow({ images }: { images: string[] }) {
@@ -80,35 +85,43 @@ export default function ImpactSection() {
   const [isFlipped, setIsFlipped] = useState(false);
 
   return (
-    <section className="bg-[#0E1B1B] text-off-white py-48 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+    <section className="bg-[#0E1B1B] text-off-white py-16 sm:py-24 md:py-32 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
           
           {/* STATS COLUMN */}
-          <div className="space-y-32">
-             <div className="flex flex-col md:flex-row items-center md:items-end gap-12 group">
-                <div className="w-full md:w-64 h-80 overflow-hidden shadow-2xl transition-transform duration-1000 bg-teal/10">
-                  <StatSlideshow images={STAT_IMAGES_1} />
-                </div>
-                <div className="flex flex-col">
-                  <Counter value={42} suffix="+" />
-                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] opacity-40 mt-4">
-                    Global commissions <br className="hidden md:block"/> uniquely executed
-                  </span>
-                </div>
-             </div>
+          <div className="space-y-16 md:space-y-20">
 
-             <div className="flex flex-col md:flex-row-reverse items-center md:items-end gap-12 group">
-                <div className="w-full md:w-64 h-80 overflow-hidden shadow-2xl transition-transform duration-1000 bg-teal/10">
-                  <StatSlideshow images={STAT_IMAGES_2} />
-                </div>
-                <div className="flex flex-col text-center md:text-right">
-                  <Counter value={9} />
-                  <span className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] opacity-40 mt-4">
-                    Destinations <br className="hidden md:block"/> currently managed
-                  </span>
-                </div>
-             </div>
+            {/* 42+ card — image overlaps number from left */}
+            <div className="relative flex items-end">
+              {/* Image — sits behind the number, overlapping */}
+              <div className="w-40 sm:w-52 md:w-60 h-52 sm:h-64 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
+                <StatSlideshow images={STAT_IMAGES_1} />
+              </div>
+              {/* Number + label — pulled left so image touches it */}
+              <div className="flex flex-col -ml-6 z-20">
+                <Counter value={42} suffix="+" />
+                <span className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
+                  Global commissions<br />uniquely executed
+                </span>
+              </div>
+            </div>
+
+            {/* 5 card — image overlaps number from right */}
+            <div className="relative flex items-end justify-end">
+              {/* Number + label */}
+              <div className="flex flex-col text-right -mr-6 z-20">
+                <Counter value={5} />
+                <span className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
+                  Destinations<br />currently managed
+                </span>
+              </div>
+              {/* Image — overlaps from the right */}
+              <div className="w-40 sm:w-52 md:w-60 h-52 sm:h-64 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
+                <StatSlideshow images={STAT_IMAGES_2} />
+              </div>
+            </div>
+
           </div>
 
           {/* FLIP CARD COLUMN */}
@@ -122,7 +135,7 @@ export default function ImpactSection() {
               >
                 {/* FRONT SIDE */}
                 <div 
-                  className={`absolute inset-0 backface-hidden bg-[#1e3331] p-16 flex flex-col items-center justify-center border border-white/5 shadow-2xl transition-opacity duration-300 ${isFlipped ? 'opacity-0' : 'opacity-100'}`}
+                  className={`absolute inset-0 backface-hidden bg-[#1e3331] p-8 md:p-16 flex flex-col items-center justify-center border border-white/5 shadow-2xl transition-opacity duration-300 ${isFlipped ? 'opacity-0' : 'opacity-100'}`}
                 >
                   <div className="mb-12">
                     <h2 className="text-5xl md:text-6xl font-serif tracking-[0.3em] text-white/20 select-none">RIAH</h2>
@@ -150,26 +163,26 @@ export default function ImpactSection() {
                   <div>
                     <span className="text-[4rem] font-serif leading-none italic opacity-20">“</span>
                     <p className="text-xl md:text-2xl font-serif italic leading-relaxed">
-                      RIAH redefined what we thought was possible. They didn&apos;t just plan a wedding; they created an atmosphere that felt like a living memory.
+                      RIAH redefined what we thought was possible. They created an atmosphere that felt like a living memory.
                     </p>
                   </div>
                   
                   <div className="border-t border-teal/10 pt-8 flex justify-between items-end">
                     <div className="flex flex-col gap-4">
                       <div>
-                        <p className="text-[10px] uppercase tracking-[0.4em] font-semibold text-mauve">— Private Client</p>
+                        <p className="text-[10px] uppercase tracking-[0.4em] font-semibold text-mauve">Private Client</p>
                         <p className="text-[12px] font-serif italic mt-1 opacity-60 text-teal">Lake Como</p>
                       </div>
-                      <Link 
+                      <Link
                         to="/about"
-                        className="text-[10px] uppercase tracking-[0.3em] font-bold text-mauve hover:text-teal transition-colors flex items-center gap-2"
+                        className="text-[10px] uppercase tracking-[0.3em] font-bold text-mauve hover:text-teal transition-colors flex items-center gap-2 py-3 min-h-[44px]"
                       >
                         See More <span>→</span>
                       </Link>
                     </div>
-                    <button 
+                    <button
                       onClick={() => setIsFlipped(false)}
-                      className="text-[10px] uppercase tracking-[0.3em] font-black text-teal/40 hover:text-teal transition-colors"
+                      className="text-[10px] uppercase tracking-[0.3em] font-black text-teal/40 hover:text-teal transition-colors py-3 min-h-[44px]"
                     >
                       Back
                     </button>
@@ -177,17 +190,9 @@ export default function ImpactSection() {
                 </div>
               </motion.div>
               
-              {/* Floating Decorative Elements */}
-              <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -top-12 -right-12 w-24 h-24 bg-mauve/10 blur-3xl rounded-full"
-              />
-              <motion.div 
-                animate={{ y: [0, 15, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -bottom-12 -left-12 w-32 h-32 bg-white/5 blur-3xl rounded-full"
-              />
+              {/* Static decorative elements — no animation/blur (perf) */}
+              <div className="absolute -top-12 -right-12 w-24 h-24 bg-mauve/8 rounded-full" />
+              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-white/4 rounded-full" />
             </div>
           </div>
 

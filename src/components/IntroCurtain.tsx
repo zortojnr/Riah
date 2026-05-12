@@ -1,87 +1,98 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
+
+const RIAH_LETTERS = ['R', 'I', 'A', 'H'];
 
 export default function IntroCurtain() {
-  const [isVisible, setIsVisible] = useState(true);
-  const [step, setStep] = useState<'logo' | 'tagline' | 'reveal' | 'none'>('logo');
+  const alreadyDone = typeof sessionStorage !== 'undefined' && sessionStorage.getItem('curtainDone') === 'true';
+  const [isVisible, setIsVisible] = useState(!alreadyDone);
+  const [revealing, setRevealing] = useState(false);
+  const hasRevealed = useRef(false);
 
   useEffect(() => {
-    // Sequence timing for a luxurious, but faster reveal (all within 6s)
-    const timerTagline = setTimeout(() => {
-      setStep('tagline');
-    }, 1200); 
+    if (!isVisible) return;
 
-    const timerReveal = setTimeout(() => {
-      setStep('reveal');
-    }, 4200); // Start moving up at 4.2s
-
-    const timerDone = setTimeout(() => {
-      setIsVisible(false);
-    }, 6000); // Fully done by 6s
-
-    return () => {
-      clearTimeout(timerTagline);
-      clearTimeout(timerReveal);
-      clearTimeout(timerDone);
+    const reveal = () => {
+      if (hasRevealed.current) return;
+      hasRevealed.current = true;
+      setRevealing(true);
+      setTimeout(() => {
+        setIsVisible(false);
+        sessionStorage.setItem('curtainDone', 'true');
+      }, 1200);
     };
-  }, []);
+
+    // Auto-lift after 2.5s — logo is visible immediately, RIAH writes in by ~0.8s
+    const autoReveal = setTimeout(reveal, 2500);
+    window.addEventListener('scroll', reveal, { once: true, passive: true });
+    return () => {
+      window.removeEventListener('scroll', reveal);
+      clearTimeout(autoReveal);
+    };
+  }, [isVisible]);
 
   if (!isVisible) return null;
 
   return (
-    <motion.div
-      initial={{ y: 0 }}
-      animate={{ y: step === 'reveal' ? '-100%' : 0 }}
-      transition={{ duration: 1.5, ease: [0.77, 0, 0.175, 1] }}
-      className="fixed inset-0 z-[200] bg-[#1a2b29] flex flex-col items-center justify-center pointer-events-auto overflow-hidden"
-    >
-      {/* Background Texture - kept very subtle */}
-      <div className="absolute inset-0 opacity-5 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_80%)]" />
-      </div>
+    <>
+      {/* Curtain panel */}
+      <motion.div
+        initial={{ y: 0 }}
+        animate={{ y: revealing ? '-100%' : 0 }}
+        transition={{ duration: 1.1, ease: [0.76, 0, 0.24, 1] }}
+        className="fixed inset-0 z-[200] bg-[#0e1c1b] pointer-events-auto"
+      />
 
-      <div className="relative flex flex-col items-center z-20">
-        {/* Animated RIAH Logo */}
-        <motion.div 
+      {/* Content layer */}
+      <motion.div
+        animate={{ opacity: revealing ? 0 : 1 }}
+        transition={{ duration: 0.3 }}
+        className="fixed inset-0 z-[201] flex flex-col items-center justify-center pointer-events-none select-none"
+      >
+        {/* Logo — visible immediately */}
+        <motion.img
+          src="/assests/logo.png"
+          alt="RIAH"
           initial={{ opacity: 0, y: 10 }}
-          animate={{ 
-            opacity: 1, 
-            y: 0,
-            transition: { duration: 2.5, ease: [0.16, 1, 0.3, 1] }
-          }}
-          className="flex items-center mb-12"
-        >
-          <span className="text-white/30 text-4xl md:text-5xl font-light tracking-tighter mr-8">@</span>
-          <h1 className="text-white font-serif text-7xl md:text-9xl font-light tracking-[0.25em]">
-            RIAH
-          </h1>
-          <span className="text-white/30 text-4xl md:text-5xl font-light tracking-tighter ml-8">@</span>
-        </motion.div>
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0, ease: [0.16, 1, 0.3, 1] }}
+          className="h-16 md:h-24 w-auto brightness-0 invert mb-6"
+        />
 
-        {/* Tagline Animation */}
-        <div className="h-16 flex items-center justify-center translate-y-2">
-          <AnimatePresence mode="wait">
-            {(step === 'tagline' || step === 'reveal') && (
-              <motion.p
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 2, ease: "easeOut" }}
-                className="text-white/95 font-serif italic text-xl md:text-3xl tracking-[0.1em] text-center"
-              >
-                Where Culture Meets Celebration
-              </motion.p>
-            )}
-          </AnimatePresence>
+        {/* RIAH letter-by-letter write-on */}
+        <div className="flex gap-[0.12em] mb-6">
+          {RIAH_LETTERS.map((letter, i) => (
+            <motion.span
+              key={letter}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: 0.3 + i * 0.1, ease: 'easeOut' }}
+              className="font-serif text-white text-2xl md:text-3xl tracking-[0.3em]"
+            >
+              {letter}
+            </motion.span>
+          ))}
         </div>
 
-        {/* Decorative Line */}
-        <motion.div 
-          initial={{ width: 0, opacity: 0 }}
-          animate={{ width: '200px', opacity: 1 }}
-          transition={{ delay: 1.5, duration: 2 }}
-          className="h-[1px] bg-white/25 mt-20"
+        {/* Thin rule */}
+        <motion.div
+          initial={{ scaleX: 0, opacity: 0 }}
+          animate={{ scaleX: 1, opacity: 0.25 }}
+          transition={{ duration: 0.7, delay: 0.8, ease: 'easeOut' }}
+          style={{ originX: 0.5 }}
+          className="w-20 h-[1px] bg-white mb-6"
         />
-      </div>
-    </motion.div>
+
+        {/* Tagline */}
+        <motion.p
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 0.7, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.1, ease: 'easeOut' }}
+          className="font-serif italic text-white text-sm md:text-lg tracking-[0.15em] text-center px-6"
+        >
+          Where Culture Meets Celebration
+        </motion.p>
+      </motion.div>
+    </>
   );
 }

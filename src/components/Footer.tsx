@@ -1,73 +1,153 @@
-import { Instagram, Linkedin, Mail } from 'lucide-react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 
+const NAV_LINKS = [
+  { name: 'About', path: '/about' },
+  { name: 'Planning Experiences', path: '/planning' },
+  { name: 'The Journal', path: '/journal' },
+  { name: 'Press', path: '/press' },
+  { name: 'Enquire', path: '/enquire' },
+];
+
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) setSubscribed(true);
+  };
+
   return (
-    <footer className="sticky bottom-0 z-10 min-h-[600px] flex items-end bg-teal text-off-white overflow-hidden">
-      {/* Background Glowing Text */}
+    <footer className="sticky bottom-0 z-10 bg-teal text-off-white overflow-hidden">
+      {/* Background watermark */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
-        <motion.span 
+        <motion.span
           initial={{ opacity: 0, scale: 0.3, y: 100 }}
-          whileInView={{ opacity: 0.1, scale: 1, y: 0 }}
+          whileInView={{ opacity: 0.06, scale: 1, y: 0 }}
           viewport={{ once: false, amount: 0.1 }}
           transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-[35vw] font-serif tracking-[0.2em] uppercase text-off-white blur-[2px] leading-none"
-          style={{ 
-            textShadow: '0 0 120px rgba(229, 222, 212, 0.4)',
-            WebkitTextStroke: '1px rgba(229, 222, 212, 0.1)'
-          }}
+          className="text-[35vw] font-serif tracking-[0.2em] uppercase text-off-white leading-none blur-[1px]"
         >
           RIAH
         </motion.span>
       </div>
 
-      <motion.div 
-        className="luxury-container py-24 md:py-32 lg:py-40 relative z-20 w-full"
+      <motion.div
+        className="luxury-container py-16 md:py-24 lg:py-32 relative z-20 w-full"
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: false, amount: 0.2 }}
+        viewport={{ once: false, amount: 0.15 }}
         transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="flex flex-col md:flex-row justify-between items-start gap-16 md:gap-24 mb-20 md:mb-32">
-          <div className="max-w-sm">
-            <h2 className="text-3xl md:text-4xl font-serif tracking-[0.2em] uppercase mb-10">RIAH</h2>
-            <p className="font-light text-xs md:text-sm lg:text-base opacity-40 leading-relaxed tracking-wide italic max-w-xs">
-              Where culture meets celebration, and every moment becomes timeless. Curating deeply intentional weddings worldwide.
+        {/* 3-Column Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-12 lg:gap-16 mb-12 md:mb-20">
+
+          {/* Column 1, Brand */}
+          <div>
+            <img src="/assests/logo.png" alt="RIAH" className="h-10 w-auto mb-6 brightness-0 invert" />
+            <p className="text-[11px] uppercase tracking-[0.25em] text-mauve/70 mb-8 font-light">
+              Where Culture Meets Celebration
+            </p>
+            <p className="text-xs text-off-white/40 font-light leading-relaxed tracking-wide italic max-w-xs">
+              A globally mobile luxury wedding planning house for discerning couples across the UK, Europe, and beyond.
             </p>
           </div>
 
-          <div className="grid grid-cols-2 gap-12 md:flex md:gap-20">
-            <div>
-              <h4 className="text-[9px] uppercase tracking-[0.3em] font-semibold mb-6 opacity-30">Client Gateways</h4>
-              <ul className="flex flex-col gap-3">
-                <li><Link to="/planning" className="text-[10px] uppercase tracking-widest transition-colors hover:text-mauve opacity-70 hover:opacity-100">Planning</Link></li>
-                <li><Link to="/about" className="text-[10px] uppercase tracking-widest transition-colors hover:text-mauve opacity-70 hover:opacity-100">Our Story</Link></li>
-                <li><Link to="/enquire" className="text-[10px] uppercase tracking-widest transition-colors hover:text-mauve opacity-70 hover:opacity-100">Enquire</Link></li>
-              </ul>
+          {/* Column 2, Navigation */}
+          <div>
+            <h4 className="text-[9px] uppercase tracking-[0.4em] font-semibold mb-8 text-off-white/30">Navigation</h4>
+            <ul className="flex flex-col gap-1">
+              {NAV_LINKS.map((link) => (
+                <li key={link.path}>
+                  <Link
+                    to={link.path}
+                    className="text-[10px] uppercase tracking-[0.3em] text-off-white/60 hover:text-mauve transition-colors duration-400 py-3 min-h-[44px] flex items-center"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Link
+                  to="/portal"
+                  className="text-[10px] uppercase tracking-[0.3em] text-off-white/25 hover:text-off-white/50 transition-colors duration-400 py-3 min-h-[44px] flex items-center"
+                >
+                  Client Portal
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3, Connect */}
+          <div>
+            <h4 className="text-[9px] uppercase tracking-[0.4em] font-semibold mb-8 text-off-white/30">Connect</h4>
+            <div className="flex flex-col gap-1 mb-12">
+              <a
+                href="https://instagram.com/riahweddings"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] uppercase tracking-[0.3em] text-off-white/60 hover:text-mauve transition-colors duration-400 py-3 min-h-[44px] flex items-center"
+              >
+                Instagram
+              </a>
+              <a
+                href="mailto:press@riah.co.uk"
+                className="text-[10px] uppercase tracking-[0.3em] text-off-white/60 hover:text-mauve transition-colors duration-400 py-3 min-h-[44px] flex items-center"
+              >
+                press@riah.co.uk
+              </a>
+              <Link
+                to="/enquire"
+                className="text-[10px] uppercase tracking-[0.3em] text-mauve/80 hover:text-mauve transition-colors duration-400 py-3 min-h-[44px] flex items-center"
+              >
+                Begin Your Journey →
+              </Link>
             </div>
-            <div>
-              <h4 className="text-[9px] uppercase tracking-[0.3em] font-semibold mb-6 opacity-30">The Curator</h4>
-              <ul className="flex flex-col gap-3">
-                <li><Link to="/journal" className="text-[10px] uppercase tracking-widest transition-colors hover:text-mauve opacity-70 hover:opacity-100">Journal</Link></li>
-                <li><Link to="/press" className="text-[10px] uppercase tracking-widest transition-colors hover:text-mauve opacity-70 hover:opacity-100">Press</Link></li>
-              </ul>
-            </div>
+
+            {/* Email Subscribe */}
+            {subscribed ? (
+              <p className="text-[10px] uppercase tracking-[0.3em] text-mauve/70">Thank you, we'll be in touch.</p>
+            ) : (
+              <form onSubmit={handleSubscribe} className="flex">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder="Email address"
+                  required
+                  className="flex-1 min-w-0 bg-transparent border border-off-white/10 px-4 py-3 text-[10px] text-off-white placeholder:text-off-white/25 tracking-[0.1em] outline-none focus:border-mauve/40 transition-colors"
+                />
+                <button
+                  type="submit"
+                  className="px-6 py-3 min-h-[44px] bg-off-white/10 text-[9px] uppercase tracking-[0.3em] text-off-white/70 hover:bg-mauve hover:text-off-white transition-all duration-500 whitespace-nowrap"
+                >
+                  Join
+                </button>
+              </form>
+            )}
           </div>
         </div>
 
-        <div className="pt-8 border-t border-off-white/5 flex flex-col md:flex-row justify-between gap-8 items-center">
-          <p className="text-[9px] uppercase tracking-[0.3em] opacity-30">© {new Date().getFullYear()} RIAH Weddings. All rights reserved.</p>
-          <div className="flex gap-6 items-center">
-            <a href="#" className="p-2 -m-2 opacity-40 hover:opacity-100 transition-opacity" aria-label="Instagram">
-              <Instagram size={18} strokeWidth={1.5} />
-            </a>
-            <a href="#" className="p-2 -m-2 opacity-40 hover:opacity-100 transition-opacity" aria-label="LinkedIn">
-              <Linkedin size={18} strokeWidth={1.5} />
-            </a>
-            <a href="#" className="p-2 -m-2 opacity-40 hover:opacity-100 transition-opacity" aria-label="Email">
-              <Mail size={18} strokeWidth={1.5} />
-            </a>
+        {/* Bottom Bar */}
+        <div className="pt-8 border-t border-off-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+          <p className="text-[9px] uppercase tracking-[0.25em] text-off-white/25">
+            © {new Date().getFullYear()} RIAH. All rights reserved.
+          </p>
+          <div className="flex gap-4">
+            <Link
+              to="/privacy"
+              className="text-[9px] uppercase tracking-[0.25em] text-off-white/25 hover:text-off-white/50 transition-colors py-3 min-h-[44px] flex items-center"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              to="/terms"
+              className="text-[9px] uppercase tracking-[0.25em] text-off-white/25 hover:text-off-white/50 transition-colors py-3 min-h-[44px] flex items-center"
+            >
+              Terms &amp; Conditions
+            </Link>
           </div>
         </div>
       </motion.div>

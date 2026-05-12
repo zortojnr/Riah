@@ -1,122 +1,301 @@
+import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect } from 'react';
 import FadeIn from '../components/FadeIn';
 
-const tiers = [
+const TIERS = [
   {
     id: 'essential',
-    title: 'Essential',
-    description: 'For couples who have their vision and venue secured but require a master curator to refine the details and manage the orchestration of the day.',
-    bullets: [
-      'Comprehensive Wedding Curation & Coordination',
-      'Vendor Liaison & Professional Management',
-      'Detailed Timeline Development',
-      'On-site Execution & Directorship',
-      'Cultural Integration Consultancy'
+    number: '01',
+    title: 'Essential Full-Service Planning',
+    tagline: 'Elegant. Refined. Perfectly Supported.',
+    intro: 'For couples who want full wedding planning with all the fundamental elements in place, beautifully organised, thoughtfully handled, and guided by a luxury professional from start to finish.',
+    idealFor: [
+      'A streamlined, guided planning experience',
+      'Professional oversight of suppliers, timelines, and logistics',
+      'Expert support without the additional concierge layer',
     ],
-    image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop'
+    inclusions: [
+      'Full wedding planning and design direction',
+      'Supplier sourcing, negotiation, and management',
+      'Budget creation, planning tools, and timeline curation',
+      'Regular planning meetings',
+      'One venue walkthrough',
+      'Essential guest guidance (accommodation suggestions, transport notes)',
+      'Coordination and management on the wedding day',
+    ],
+    perfectFor: 'UK weddings or intimate destination celebrations that require full planning but minimal guest travel management.',
+    images: [
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop',
+      '/assests/5a.jpg',
+      '/assests/14a.jpg',
+    ],
   },
   {
     id: 'signature',
-    title: 'Signature',
-    description: 'Our hallmark service. A full-service planning experience where we design, create, and produce every element of your celebration from inception.',
-    bullets: [
-      'Full-Scale Planning & Creative Direction',
-      'International Venue Sourcing',
-      'Bespoke Design & Aesthetic Concepting',
-      'Contract Negotiation & Management',
-      'Multi-Day Event Coordination'
+    number: '02',
+    title: 'Signature Full-Service Planning',
+    tagline: 'A holistic, elevated planning journey with luxury concierge care.',
+    intro: 'Our most sought-after service, created for couples who desire a seamless, stress-free, fully curated wedding experience, especially for destination weddings or events with guests travelling from multiple locations.',
+    highlight: 'This is where our Signature Guest Experience Concierge™ comes to life.',
+    idealFor: [
+      'Guests to feel fully supported from the moment they receive the invitation',
+      'Visa, travel, accommodation, or transport guidance for guests',
+      'Cultural integration, family support, and impeccable communication',
+      'A refined, high-touch planning experience',
     ],
-    image: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?q=80&w=2069&auto=format&fit=crop'
+    inclusions: [
+      'Signature Guest Experience Concierge™ (visa guidance, hotel coordination, guest movement management, itinerary support)',
+      'Planning for welcome dinners or rehearsal celebrations',
+      'Family liaison support (parents, elders, VIP guests)',
+      'Cultural advisory and integration',
+      'Priority response times',
+      'Multiple venue walkthroughs',
+      'Extended planning meetings',
+      'Everything included in Essential',
+    ],
+    perfectFor: 'US couples marrying in the UK or Europe. UK couples with destination weddings. Large, multicultural events with significant guest travel.',
+    images: [
+      '/assests/8b.jpg',
+      '/assests/11b.jpg',
+      '/assests/12b.jpg',
+    ],
   },
   {
     id: 'luxury-elite',
-    title: 'Luxury Elite',
-    description: 'The pinnacle of RIAH. An ultra-bespoke service for massive-scale celebrations and multi-destination wedding weekends across the globe.',
-    bullets: [
-      'Concierge-Level Private Management',
-      'Global Destination Logistics & Guest Services',
-      'Custom Infrastructure & Build Production',
-      'High-Security & Privacy Management',
-      'Infinite Personal Revisions'
+    number: '03',
+    title: 'Luxury Elite Experience',
+    tagline: 'Our most immersive, white-glove planning service, curated for world-class celebrations.',
+    intro: 'Reserved for couples hosting multi-day weddings, high-profile events, or destination celebrations requiring a full luxury team and complete weekend management.',
+    highlight: 'This is the pinnacle of RIAH\'s planning excellence.',
+    idealFor: [
+      'A fully tailor-made, concierge-level planning experience',
+      'Multi-day events (welcome dinner, ceremony, reception, brunch, excursions)',
+      'Dedicated planners, assistants, and guest management',
+      'On-the-ground planning days for venue scouting and supplier immersion',
+      'Cultural depth, luxury precision, and flawless execution',
     ],
-    image: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?q=80&w=2070&auto=format&fit=crop'
-  }
+    inclusions: [
+      'Unlimited concierge access for couple and VIP guests',
+      'Full weekend planning (Friday–Sunday)',
+      'Two to three planners on-site',
+      'Pre-wedding destination planning days',
+      'Full guest itinerary creation (restaurants, activities, transport)',
+      'Chauffeur and transport coordination',
+      'Bridal styling logistics and fitting support',
+      'VIP family assistant',
+      'Pre-wedding shoot coordination',
+      'Everything included in Signature',
+    ],
+    perfectFor: 'Large-scale, luxury, or cultural weddings in Italy, France, Greece, the UK, or across Europe.',
+    images: [
+      '/assests/6a.jpg',
+      '/assests/11a.jpg',
+      '/assests/18a.jpg',
+    ],
+  },
+];
+
+function TierImage({ images, tierNumber }: { images: string[]; tierNumber: string }) {
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setIndex(i => (i + 1) % images.length), 3500);
+    return () => clearInterval(t);
+  }, [images.length]);
+
+  return (
+    <div className="relative w-full h-full">
+      <AnimatePresence mode="wait">
+        <motion.img
+          key={index}
+          src={images[index]}
+          alt=""
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
+          className="absolute inset-0 w-full h-full object-cover grayscale-[15%]"
+        />
+      </AnimatePresence>
+      <div className="absolute inset-0 bg-teal/5 pointer-events-none" />
+      {/* Tier badge */}
+      <div className="absolute top-6 left-6 z-10">
+        <span className="text-[9px] uppercase tracking-[0.5em] text-off-white backdrop-blur-md px-5 py-2 border border-off-white/20 font-mono">
+          Tier {tierNumber}
+        </span>
+      </div>
+      {/* Dot indicators */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+        {images.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setIndex(i)}
+            className={`rounded-full transition-all duration-500 ${i === index ? 'w-5 h-[2px] bg-white/80' : 'w-[5px] h-[5px] bg-white/30 hover:bg-white/60'}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const ENHANCEMENTS = [
+  'Signature Guest Experience Concierge™',
+  'Multi-day celebration planning',
+  'Cultural and family liaison support',
+  'Destination venue scouting',
+  'Pre-wedding events and experiences',
 ];
 
 export default function Planning() {
   return (
-    <div className="pt-40">
+    <div className="pt-24 md:pt-36">
+      {/* Page Intro */}
       <div className="luxury-container mb-20">
-        <FadeIn className="text-center">
+        <FadeIn className="text-center max-w-3xl mx-auto">
           <span className="text-[10px] uppercase tracking-[0.6em] text-mauve font-semibold mb-6 block">The Offerings</span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl text-teal mb-8 leading-[0.9] tracking-tight">Planning <br/> Experiences</h1>
-          <p className="text-sm md:text-base text-teal/60 max-w-xl mx-auto font-light leading-relaxed tracking-wide italic">
-            We provide tiered levels of engagement, each designed to meet the technical and aesthetic requirements of our discerning clientele.
-          </p>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl text-teal mb-10 leading-[0.9] tracking-tight">
+            Our Signature<br />Planning Experiences
+          </h1>
+          <div className="space-y-5 text-sm md:text-base text-teal/60 font-light leading-relaxed tracking-wide italic max-w-2xl mx-auto">
+            <p>
+              Where luxury, culture, and intentional storytelling meet. Every celebration we curate is approached with depth, artistry, and emotional intelligence, honouring your story, your culture, and your vision.
+            </p>
+            <p>
+              Our service structure is designed to give you the flexibility to choose the level of support and experience that feels right, while ensuring exceptional care at every stage.
+            </p>
+          </div>
         </FadeIn>
       </div>
 
+      {/* Service Tiers */}
       <div className="flex flex-col">
-        {tiers.map((tier, i) => (
+        {TIERS.map((tier, i) => (
           <section key={tier.id} className="relative w-full border-t border-teal/5">
-            <div className={`grid grid-cols-1 lg:grid-cols-2 ${i % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}>
-              {/* Image side */}
-              <div className={`relative h-[50vh] lg:h-[80vh] overflow-hidden ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
-                <img 
-                  src={tier.image} 
-                  alt={tier.title} 
-                  className="w-full h-full object-cover grayscale-[20%] image-zoom-slow"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-teal/5" />
-                <div className="absolute top-8 left-8 md:top-16 md:left-16">
-                  <span className="text-[9px] uppercase tracking-[0.5em] text-off-white backdrop-blur-md px-5 py-2 border border-off-white/20">
-                    Tier 0{i + 1}
-                  </span>
+            <div className={`grid grid-cols-1 lg:grid-cols-2 lg:items-stretch`}>
+              {/* Image side — padded so it doesn't touch the edges */}
+              <div className={`relative p-4 md:p-8 lg:p-10 bg-off-white ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
+                <div className="relative h-[40vh] sm:h-[55vh] md:h-[65vh] lg:h-full min-h-[500px] overflow-hidden">
+                  <TierImage images={tier.images} tierNumber={tier.number} />
                 </div>
               </div>
-              
-              {/* Content side */}
-              <div className="flex items-center justify-center p-10 md:p-16 lg:p-24 bg-off-white">
-                <FadeIn className="max-w-lg">
-                  <h3 className="text-3xl sm:text-4xl md:text-5xl text-teal mb-10 leading-tight tracking-tight">{tier.title}</h3>
-                  <p className="text-base md:text-lg text-teal/70 mb-12 font-light leading-relaxed tracking-wide italic border-l border-mauve/30 pl-6">
-                    {tier.description}
+
+              {/* Content side — stretches to match image height */}
+              <div className={`flex items-start justify-center p-6 sm:p-10 md:p-12 lg:p-16 bg-off-white self-stretch ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
+                <FadeIn className="w-full">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-teal mb-4 leading-tight tracking-tight">
+                    {tier.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-teal/80 italic mb-10 font-light leading-relaxed tracking-wide border-l border-mauve/50 pl-5">
+                    {tier.tagline}
                   </p>
-                  
-                  <div className="space-y-10">
-                    <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold">Inclusions</h4>
-                    <ul className="space-y-6">
-                      {tier.bullets.map((bullet) => (
-                        <li key={bullet} className="flex items-start gap-4 text-[10px] md:text-[11px] text-teal group">
-                          <span className="w-1 h-3 bg-mauve/20 mt-0.5 shrink-0 transition-all group-hover:bg-mauve group-hover:h-4" />
-                          <span className="uppercase tracking-[0.15em] font-light leading-snug">{bullet}</span>
+                  <p className="text-sm md:text-base text-teal/85 mb-8 font-light leading-relaxed tracking-wide">
+                    {tier.intro}
+                  </p>
+
+                  {tier.highlight && (
+                    <p className="text-sm md:text-base text-teal font-semibold mb-10 leading-relaxed">
+                      {tier.highlight}
+                    </p>
+                  )}
+
+                  {/* Ideal For */}
+                  <div className="mb-10">
+                    <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">Ideal for couples who want</h4>
+                    <ul className="space-y-3">
+                      {tier.idealFor.map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-[11px] text-teal/85">
+                          <span className="w-1 h-3 bg-mauve/50 mt-0.5 shrink-0" />
+                          <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
                         </li>
                       ))}
                     </ul>
+                  </div>
+
+                  {/* Inclusions */}
+                  <div className="mb-10">
+                    <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">What's Included</h4>
+                    <ul className="space-y-3">
+                      {tier.inclusions.map((item) => (
+                        <li key={item} className="flex items-start gap-3 text-[11px] text-teal group">
+                          <span className="w-1 h-3 bg-mauve/40 mt-0.5 shrink-0 transition-all group-hover:bg-mauve group-hover:h-4" />
+                          <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Perfect For */}
+                  <div className="pt-8 border-t border-teal/10">
+                    <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-3">Perfect For</h4>
+                    <p className="text-[11px] text-teal/80 font-light leading-relaxed tracking-wide">
+                      {tier.perfectFor}
+                    </p>
+                    <p className="text-[10px] text-teal/50 italic mt-4 font-light">
+                      Minimum fee applies. Percentage of total wedding investment also applies.
+                    </p>
                   </div>
                 </FadeIn>
               </div>
             </div>
 
-            {/* Spacer imagery or lines */}
-            {i < tiers.length - 1 && (
-              <div className="h-24 md:h-40 w-full bg-off-white flex items-center justify-center">
-                 <div className="w-[1px] h-full bg-teal/5" />
+            {i < TIERS.length - 1 && (
+              <div className="h-16 md:h-24 w-full bg-off-white flex items-center justify-center">
+                <div className="w-[1px] h-full bg-teal/5" />
               </div>
             )}
           </section>
         ))}
       </div>
 
+      {/* Optional Enhancements */}
+      <section className="section-padding bg-teal/[0.03] border-y border-teal/5">
+        <div className="luxury-container">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
+            <FadeIn>
+              <span className="text-[10px] uppercase tracking-[0.6em] text-mauve font-semibold mb-6 block">Optional Enhancements</span>
+              <h2 className="text-3xl md:text-4xl text-teal mb-8 leading-tight tracking-tight">
+                Beyond the Experience
+              </h2>
+              <p className="text-sm md:text-base text-teal/60 font-light leading-relaxed tracking-wide mb-8">
+                For couples desiring an even more immersive celebration, a selection of bespoke concierge and guest-experience services is available upon request.
+              </p>
+              <p className="text-sm text-teal/40 font-light italic leading-relaxed tracking-wide">
+                A full enhancement menu is shared privately during your consultation.
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <ul className="space-y-6">
+                {ENHANCEMENTS.map((item, i) => (
+                  <motion.li
+                    key={item}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                    className="flex items-start gap-4 text-sm text-teal/70 font-light leading-relaxed"
+                  >
+                    <span className="w-1 h-3 bg-mauve/40 mt-1.5 shrink-0" />
+                    {item}
+                  </motion.li>
+                ))}
+              </ul>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
       <section className="section-padding bg-teal text-off-white text-center">
         <FadeIn className="luxury-container">
-          <p className="text-[10px] uppercase tracking-[0.6em] mb-12 opacity-60">Engagement</p>
-          <a 
-            href="/enquire" 
-            className="text-2xl sm:text-3xl md:text-5xl font-serif italic border-b border-mauve inline-block pb-4 hover:text-mauve transition-all duration-700 hover:tracking-widest"
+          <p className="text-[10px] uppercase tracking-[0.6em] mb-10 opacity-50">Begin Your Journey</p>
+          <Link
+            to="/enquire"
+            className="group text-2xl sm:text-3xl md:text-5xl font-serif italic border-b border-mauve inline-block pb-4 hover:text-mauve transition-all duration-700 hover:tracking-widest"
           >
             Request Private Consultation →
-          </a>
+          </Link>
         </FadeIn>
       </section>
     </div>

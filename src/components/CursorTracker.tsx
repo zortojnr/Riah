@@ -16,6 +16,9 @@ export default function CursorTracker() {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [isPointer, setIsPointer] = useState(false);
   const [particles, setParticles] = useState<Particle[]>([]);
+  const [isTouchDevice] = useState(() => window.matchMedia('(pointer: coarse)').matches);
+
+  if (isTouchDevice) return null;
 
   useEffect(() => {
     const moveMouse = (e: MouseEvent) => {

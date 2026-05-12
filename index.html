@@ -3,11 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>My Google AI Studio App</title>
+
+    <!-- Primary Meta -->
+    <title>RIAH | Luxury Weddings &amp; Celebrations Worldwide</title>
+    <meta name="description" content="RIAH is a globally mobile luxury wedding planning house for culturally rich couples across the UK, Europe, and beyond. Founded by Tobi Yusuf. Full-service planning with depth, discretion, and world-class execution." />
+    <meta name="theme-color" content="#334748" />
+    <link rel="canonical" href="https://riahevents.com" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://riahevents.com" />
+    <meta property="og:title" content="RIAH | Luxury Weddings &amp; Celebrations Worldwide" />
+    <meta property="og:description" content="Where culture meets celebration, and every moment becomes timeless. Luxury wedding planning across the UK, Europe, and global destinations." />
+    <meta property="og:image" content="https://riahevents.com/og-image.jpg" />
+    <meta property="og:site_name" content="RIAH Weddings &amp; Events" />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="RIAH | Luxury Weddings &amp; Celebrations Worldwide" />
+    <meta name="twitter:description" content="Where culture meets celebration, and every moment becomes timeless." />
+    <meta name="twitter:image" content="https://riahevents.com/og-image.jpg" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "RIAH Weddings & Events",
+      "url": "https://riahevents.com",
+      "logo": "https://riahevents.com/favicon.svg",
+      "founder": { "@type": "Person", "name": "Tobi Yusuf" },
+      "description": "Globally mobile luxury wedding planning house for culturally rich couples across the UK, Europe, and beyond.",
+      "contactPoint": { "@type": "ContactPoint", "email": "tobi@riahevents.com", "contactType": "customer service" },
+      "sameAs": [
+        "https://instagram.com/riahweddings",
+        "https://pinterest.com/riahweddings"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "RIAH Weddings & Events",
+      "url": "https://riahevents.com",
+      "telephone": "+447534193866",
+      "email": "tobi@riahevents.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "London",
+        "addressCountry": "GB"
+      },
+      "areaServed": ["London", "United Kingdom", "Italy", "France", "Greece", "Portugal", "Europe"],
+      "priceRange": "£££££",
+      "openingHours": "Mo-Fr 09:00-18:00",
+      "description": "Luxury wedding planning for culturally rich couples. Full-service, destination and multicultural wedding planning across the UK and Europe."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": "RIAH Planning Services",
+      "itemListElement": [
+        {
+          "@type": "Service",
+          "position": 1,
+          "name": "Essential Full-Service Wedding Planning",
+          "provider": { "@type": "Organization", "name": "RIAH Weddings & Events" },
+          "areaServed": "United Kingdom",
+          "serviceType": "Wedding Planning"
+        },
+        {
+          "@type": "Service",
+          "position": 2,
+          "name": "Signature Full-Service Wedding Planning",
+          "provider": { "@type": "Organization", "name": "RIAH Weddings & Events" },
+          "areaServed": ["United Kingdom", "Europe"],
+          "serviceType": "Luxury Wedding Planning"
+        },
+        {
+          "@type": "Service",
+          "position": 3,
+          "name": "Luxury Elite Wedding Experience",
+          "provider": { "@type": "Organization", "name": "RIAH Weddings & Events" },
+          "areaServed": ["United Kingdom", "Italy", "France", "Greece", "Portugal", "Europe"],
+          "serviceType": "Destination Wedding Planning"
+        }
+      ]
+    }
+    </script>
+
+    <!-- Google Fonts — preconnect first for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
