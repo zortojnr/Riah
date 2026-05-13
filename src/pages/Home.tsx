@@ -186,9 +186,9 @@ export default function Home() {
             muted
             loop
             playsInline
-            className="w-full h-full object-cover brightness-[0.65]"
+            className="w-full h-full object-cover object-top brightness-[0.65]"
           >
-            <source src="https://res.cloudinary.com/dzr18sd58/video/upload/v1778538684/RIAHS_WEDDING_jgl3j4.mp4" type="video/mp4" />
+            <source src="https://res.cloudinary.com/dzr18sd58/video/upload/q_auto:best,vc_auto/v1778538684/RIAHS_WEDDING_jgl3j4.mp4" type="video/mp4" />
           </video>
         </div>
 
