@@ -102,7 +102,7 @@ export default function Navbar() {
   useEffect(() => {
     if (!curtainActive) return;
     const onScroll = () => setCurtainActive(false);
-    const autoReveal = setTimeout(() => setCurtainActive(false), 9500);
+    const autoReveal = setTimeout(() => setCurtainActive(false), 2500);
     window.addEventListener('scroll', onScroll, { once: true, passive: true });
     return () => {
       window.removeEventListener('scroll', onScroll);

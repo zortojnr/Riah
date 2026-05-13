@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import FadeIn from '../components/FadeIn';
 import IntroCurtain from '../components/IntroCurtain';
 import RiahDifferenceSection from '../components/RiahDifferenceSection';
@@ -19,6 +19,8 @@ const MOTTOS = [
 
 function VideoInterlude() {
   const [index, setIndex] = useState(0);
+  const [videoReady, setVideoReady] = useState(false);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let t: ReturnType<typeof setInterval> | null = null;
@@ -30,8 +32,24 @@ function VideoInterlude() {
     return () => { stop(); document.removeEventListener('visibilitychange', onVisibility); };
   }, []);
 
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVideoReady(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '400px' }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="bg-[#0e1c1b] py-16 sm:py-20 md:py-28 relative overflow-hidden">
+    <section ref={sectionRef} className="bg-[#0e1c1b] py-16 sm:py-20 md:py-28 relative overflow-hidden">
       {/* Background RIAH text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
         <span className="font-serif font-bold text-white opacity-[0.04] leading-none tracking-widest"
@@ -95,15 +113,13 @@ function VideoInterlude() {
             className="relative overflow-hidden rounded-2xl shadow-[0_60px_100px_-20px_rgba(0,0,0,0.8)]"
             style={{ width: 'min(340px, 80vw)', aspectRatio: '9/16' }}
           >
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src="https://res.cloudinary.com/dzr18sd58/video/upload/v1778538684/RIAH_kikenb.mp4" type="video/mp4" />
-            </video>
+            {videoReady ? (
+              <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                <source src="https://res.cloudinary.com/dzr18sd58/video/upload/v1778538684/RIAH_kikenb.mp4" type="video/mp4" />
+              </video>
+            ) : (
+              <div className="w-full h-full bg-[#0e1c1b]" />
+            )}
             <div className="absolute inset-0 bg-black/10" />
           </div>
         </div>

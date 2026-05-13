@@ -7,19 +7,19 @@ const VALUES = [
   {
     title: 'Intentionality',
     desc: 'Every decision is purposeful. Nothing is filler.',
-    image: '/assests/7a.jpg',
+    image: '/assests/7a.webp',
     yPos: 'md:-mt-12',
   },
   {
     title: 'Discretion',
     desc: "Luxury is private. We protect our couples' experience with care.",
-    image: '/assests/15a.jpg',
+    image: '/assests/15a.webp',
     yPos: 'md:mt-12',
   },
   {
     title: 'Excellence',
     desc: 'We hold ourselves to a standard that leaves no room for compromise.',
-    image: '/assests/13a.jpg',
+    image: '/assests/13a.webp',
     yPos: 'md:-mt-24',
   },
 ];
@@ -63,7 +63,7 @@ export default function About() {
               className="absolute left-0 top-0 w-[85%] h-[90%] overflow-hidden grayscale-[15%]"
             >
               <img
-                src="/assests/2b.jpg"
+                src="/assests/2b.webp"
                 alt="Tobi Yusuf, Founder of RIAH"
                 className="w-full h-full object-cover object-top transition-transform duration-[4000ms] ease-out hover:scale-105"
               />
@@ -79,7 +79,7 @@ export default function About() {
             >
               <div className="w-full h-full overflow-hidden relative">
                 <img
-                  src="/assests/4b.jpg"
+                  src="/assests/4b.webp"
                   alt="Tobi Yusuf, Founder of RIAH"
                   className="w-full h-full object-cover object-top grayscale-[10%] transition-transform duration-[3000ms] hover:scale-110"
                 />
@@ -210,7 +210,7 @@ export default function About() {
                 className="relative z-0 w-full aspect-[16/10] overflow-hidden shadow-2xl"
               >
                 <img
-                  src="/assests/15b.jpg"
+                  src="/assests/15b.webp"
                   alt="Destination luxury wedding"
                   className="w-full h-full object-cover transition-transform duration-[4000ms] hover:scale-105"
                   referrerPolicy="no-referrer"
@@ -228,7 +228,7 @@ export default function About() {
               >
                 <div className="w-full h-full overflow-hidden relative">
                   <img
-                    src="/assests/18a.jpg"
+                    src="/assests/18a.webp"
                     alt="Refined detail"
                     className="w-full h-full object-cover transition-transform duration-[3000ms] hover:scale-110"
                     referrerPolicy="no-referrer"

@@ -10,13 +10,13 @@ const DESTINATIONS = [
   },
   {
     country: 'FRANCE',
-    image: '/assests/france.jpg',
+    image: '/assests/france.webp',
     blurb: 'From Provençal châteaux to Parisian salons, we bring an intimate understanding of French elegance to every celebration.',
     delay: 0.1,
   },
   {
     country: 'UNITED KINGDOM',
-    image: '/assests/2a.jpg',
+    image: '/assests/2a.webp',
     blurb: 'Stately homes, manicured gardens, and private members clubs. Our home ground, curated with unmatched local access.',
     delay: 0.2,
   },
@@ -46,11 +46,6 @@ export default function DestinationsSection() {
 
   return (
     <section ref={containerRef} id="destinations" className="bg-[#FAF9F6] py-16 sm:py-24 md:py-40 relative overflow-hidden">
-      {/* Background texture */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply">
-        <img src="https://www.transparenttextures.com/patterns/natural-paper.png" alt="" className="w-full h-full object-repeat" />
-      </div>
-
       {/* Background GLOBAL text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
         <motion.span

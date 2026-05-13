@@ -27,8 +27,8 @@ const TIERS = [
     perfectFor: 'UK weddings or intimate destination celebrations that require full planning but minimal guest travel management.',
     images: [
       'https://images.unsplash.com/photo-1519225421980-715cb0215aed?q=80&w=2070&auto=format&fit=crop',
-      '/assests/5a.jpg',
-      '/assests/14a.jpg',
+      '/assests/5a.webp',
+      '/assests/14a.webp',
     ],
   },
   {
@@ -56,9 +56,9 @@ const TIERS = [
     ],
     perfectFor: 'US couples marrying in the UK or Europe. UK couples with destination weddings. Large, multicultural events with significant guest travel.',
     images: [
-      '/assests/8b.jpg',
-      '/assests/11b.jpg',
-      '/assests/12b.jpg',
+      '/assests/8b.webp',
+      '/assests/11b.webp',
+      '/assests/12b.webp',
     ],
   },
   {
@@ -89,9 +89,9 @@ const TIERS = [
     ],
     perfectFor: 'Large-scale, luxury, or cultural weddings in Italy, France, Greece, the UK, or across Europe.',
     images: [
-      '/assests/6a.jpg',
-      '/assests/11a.jpg',
-      '/assests/18a.jpg',
+      '/assests/6a.webp',
+      '/assests/11a.webp',
+      '/assests/18a.webp',
     ],
   },
 ];

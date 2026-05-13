@@ -1,25 +1,15 @@
 import { useEffect, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  color: string;
-  size: number;
-  rotation: number;
-  targetX: number;
-  targetY: number;
-}
+import { motion } from 'motion/react';
 
 export default function CursorTracker() {
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [isPointer, setIsPointer] = useState(false);
-  const [particles, setParticles] = useState<Particle[]>([]);
   const [isTouchDevice] = useState(() => window.matchMedia('(pointer: coarse)').matches);
   const rafRef = useRef<number | null>(null);
   const pendingPos = useRef({ x: -100, y: -100 });
   const pendingPointer = useRef(false);
+  const particleContainerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useRef(window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
   if (isTouchDevice) return null;
 
@@ -42,18 +32,27 @@ export default function CursorTracker() {
     };
 
     const handleClick = (e: MouseEvent) => {
-      const newParticles = Array.from({ length: 12 }).map((_, i) => ({
-        id: Date.now() + i,
-        x: e.clientX,
-        y: e.clientY,
-        color: i % 3 === 0 ? '#BF9F6B' : i % 3 === 1 ? '#E5DED4' : '#2B403E',
-        size: Math.random() * 8 + 4,
-        rotation: Math.random() * 360,
-        targetX: (Math.random() - 0.5) * 300,
-        targetY: (Math.random() - 0.5) * 300,
-      }));
-
-      setParticles(prev => [...prev.slice(-24), ...newParticles]);
+      if (reducedMotion.current || !particleContainerRef.current) return;
+      const container = particleContainerRef.current;
+      const COLORS = ['#BF9F6B', '#E5DED4', '#2B403E'];
+      for (let i = 0; i < 12; i++) {
+        const size = (Math.random() * 8 + 4) * 1.5;
+        const color = COLORS[i % 3];
+        const targetX = (Math.random() - 0.5) * 300;
+        const targetY = (Math.random() - 0.5) * 300;
+        const rotation = Math.random() * 360;
+        const el = document.createElement('div');
+        el.style.cssText = `position:fixed;top:0;left:0;width:${size}px;height:${size}px;background:${color};border-radius:${i % 4 === 0 ? '50%' : '1px'};z-index:10000;pointer-events:none`;
+        container.appendChild(el);
+        const anim = el.animate(
+          [
+            { transform: `translate(${e.clientX}px,${e.clientY}px) scale(0.2) rotate(0deg)`, opacity: '1' },
+            { transform: `translate(${e.clientX + targetX}px,${e.clientY + targetY}px) scale(1.5) rotate(${rotation}deg)`, opacity: '0' },
+          ],
+          { duration: 1000, easing: 'cubic-bezier(0.19,1,0.22,1)', fill: 'forwards' }
+        );
+        anim.onfinish = () => { if (el.isConnected) el.remove(); };
+      }
     };
 
     window.addEventListener('mousemove', moveMouse);
@@ -66,17 +65,8 @@ export default function CursorTracker() {
     };
   }, []);
 
-  useEffect(() => {
-    if (particles.length > 0) {
-      const timer = setTimeout(() => {
-        setParticles(prev => prev.slice(12));
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [particles]);
-
   return (
-    <div className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
+    <div ref={particleContainerRef} className="fixed inset-0 pointer-events-none z-[9999] overflow-hidden">
       <motion.div
         className="fixed top-0 left-0 w-10 h-10 rounded-full border-[2px] border-teal/40"
         animate={{
@@ -99,27 +89,6 @@ export default function CursorTracker() {
         }}
         transition={{ type: "spring", damping: 20, stiffness: 400, mass: 0.2 }}
       />
-
-      <AnimatePresence>
-        {particles.map((p) => (
-          <motion.div
-            key={p.id}
-            initial={{ x: p.x, y: p.y, opacity: 1, scale: 0.2, rotate: 0 }}
-            animate={{ x: p.x + p.targetX, y: p.y + p.targetY, opacity: 0, scale: 1.5, rotate: p.rotation }}
-            transition={{ duration: 1.0, ease: [0.19, 1, 0.22, 1] }}
-            style={{
-              position: 'fixed',
-              top: 0,
-              left: 0,
-              width: p.size * 1.5,
-              height: p.size * 1.5,
-              backgroundColor: p.color,
-              borderRadius: p.id % 4 === 0 ? '50%' : '1px',
-              zIndex: 10000
-            }}
-          />
-        ))}
-      </AnimatePresence>
     </div>
   );
 }

@@ -7,10 +7,20 @@ export default function MobileCtaBar() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 200);
+    let rafId: number | null = null;
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setVisible(window.scrollY > 200);
+        rafId = null;
+      });
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   if (pathname === '/enquire') return null;

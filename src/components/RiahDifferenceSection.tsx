@@ -6,25 +6,25 @@ const PORTRAITS = [
     number: '01',
     word: 'Luxury',
     description: 'Uncompromising attention to detail, refined aesthetics, and world-class execution.',
-    image: '/assests/3a.jpg',
+    image: '/assests/3a.webp',
   },
   {
     number: '02',
     word: 'Culture',
     description: 'Deep understanding of heritage, tradition, and the rituals that make a celebration yours.',
-    image: '/assests/8a.jpg',
+    image: '/assests/8a.webp',
   },
   {
     number: '04',
     word: 'Storytelling',
     description: 'Every wedding tells a story. We design yours so it unfolds with intention and beauty.',
-    image: '/assests/4a.jpg',
+    image: '/assests/4a.webp',
   },
   {
     number: '05',
     word: 'Intentionality',
     description: 'Nothing is accidental. Every element is chosen with purpose and meaning.',
-    image: '/assests/12a.jpg',
+    image: '/assests/12a.webp',
   },
 ];
 
@@ -32,7 +32,7 @@ const LANDSCAPE = {
   number: '03',
   word: 'Experience',
   description: 'From the first enquiry to the final dance, we create an experience that transcends the ordinary.',
-  image: '/assests/14a.jpg',
+  image: '/assests/14a.webp',
 };
 
 function PortraitCard({ number, word, description, image, delay = 0 }: {
@@ -91,7 +91,7 @@ export default function RiahDifferenceSection() {
 
       {/* Section background */}
       <div className="absolute inset-0 z-0">
-        <img src="/assests/11a.jpg" alt="" className="w-full h-full object-cover" />
+        <img src="/assests/11a.webp" alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-[#0E1B1B]/80" />
         <div className="absolute inset-0 bg-gradient-to-b from-[#0E1B1B]/60 via-transparent to-[#0E1B1B]/70" />
       </div>

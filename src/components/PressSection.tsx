@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 
 const BRANDS = [
@@ -14,6 +14,13 @@ export default function PressSection() {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { margin: '200px' });
   const duplicatedBrands = [...BRANDS, ...BRANDS];
+  const [tabVisible, setTabVisible] = useState(true);
+
+  useEffect(() => {
+    const onVisibility = () => setTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
 
   return (
     <section className="bg-off-white pt-10 pb-16 md:pb-24 border-y border-teal/5 overflow-hidden">
@@ -30,7 +37,7 @@ export default function PressSection() {
 
       <div ref={ref} className="relative overflow-hidden">
         <motion.div
-          animate={isInView ? { x: [0, '-50%'] } : false}
+          animate={isInView && tabVisible ? { x: [0, '-50%'] } : false}
           transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
           style={{ willChange: 'transform', display: 'flex', whiteSpace: 'nowrap' }}
           className="gap-12 sm:gap-20 md:gap-32 items-center pr-12 sm:pr-20 md:pr-32 flex"

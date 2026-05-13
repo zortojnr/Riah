@@ -101,15 +101,6 @@ export default function PhilosophySection() {
 
   return (
     <section className="relative pt-24 md:pt-32 pb-16 bg-off-white overflow-hidden" id="philosophy">
-      {/* Premium Dimmed Background Texture */}
-      <div className="absolute inset-0 opacity-[0.06] pointer-events-none mix-blend-multiply">
-        <img 
-          src="https://images.unsplash.com/photo-1531685250059-7bb7988f6f5a?q=80&w=3000&auto=format&fit=crop" 
-          alt="Luxury silk texture" 
-          className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-        />
-      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-teal/[0.02] pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(43,64,62,0.03)_100%)] pointer-events-none" />
 

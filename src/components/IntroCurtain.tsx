@@ -22,8 +22,8 @@ export default function IntroCurtain() {
       }, 1200);
     };
 
-    // Auto-lift after 2.5s — logo is visible immediately, RIAH writes in by ~0.8s
-    const autoReveal = setTimeout(reveal, 2500);
+    // Auto-lift after 1.8s — tagline completes at ~1.8s, curtain rises immediately after
+    const autoReveal = setTimeout(reveal, 1800);
     window.addEventListener('scroll', reveal, { once: true, passive: true });
     return () => {
       window.removeEventListener('scroll', reveal);

@@ -5,14 +5,14 @@ import FadeIn from '../components/FadeIn';
 type CelebrationType = 'wedding' | 'private' | null;
 
 const GALLERY_IMAGES = [
-  '/assests/Stefflon(1).jpg',
-  '/assests/Stefflon(2).jpg',
-  '/assests/Stefflon(19).jpg',
-  '/assests/Stefflon(21).jpg',
+  '/assests/Stefflon(1).webp',
+  '/assests/Stefflon(2).webp',
+  '/assests/Stefflon(19).webp',
+  '/assests/Stefflon(21).webp',
   '/assests/Stefflon2 (1).jpg',
-  '/assests/Steff3.JPG',
-  '/assests/Stefflon(4).jpg',
-  '/assests/StefflonDon.JPG',
+  '/assests/Steff3.webp',
+  '/assests/Stefflon(4).webp',
+  '/assests/StefflonDon.webp',
 ];
 
 // Each slot has a fixed size — images crossfade inside without any layout shift
@@ -233,7 +233,7 @@ export default function Enquire() {
                     label: 'Private Celebration',
                     badge: 'Bespoke',
                     desc: 'Milestone gatherings, anniversaries, proposals, and intimate cultural celebrations curated with the same depth and discretion as our weddings.',
-                    image: '/assests/SteffWireless(271).jpg',
+                    image: '/assests/SteffWireless(271).webp',
                   },
                 ].map(card => (
                   <div

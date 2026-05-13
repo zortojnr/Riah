@@ -1,30 +1,32 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'motion/react';
-import { useEffect } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import MobileCtaBar from './components/MobileCtaBar';
-import Home from './pages/Home';
-import About from './pages/About';
-import Planning from './pages/Planning';
-import Journal from './pages/Journal';
-import Press from './pages/Press';
-import Enquire from './pages/Enquire';
-import NotFound from './pages/NotFound';
-import Privacy from './pages/Privacy';
-import Terms from './pages/Terms';
-import JournalArticle from './pages/JournalArticle';
-import ClientPortal from './pages/ClientPortal';
-import FAQ from './pages/FAQ';
-import WeddingPlannerLondon from './pages/seo/WeddingPlannerLondon';
-import WeddingPlannerUK from './pages/seo/WeddingPlannerUK';
-import DestinationWeddingPlanner from './pages/seo/DestinationWeddingPlanner';
-import LuxuryWeddingPlanner from './pages/seo/LuxuryWeddingPlanner';
-import MulticulturalWeddingPlanner from './pages/seo/MulticulturalWeddingPlanner';
-import NigerianWeddingPlanner from './pages/seo/NigerianWeddingPlanner';
 import PageTransition from './components/PageTransition';
 import CursorTracker from './components/CursorTracker';
 import SmoothScroll from './components/SmoothScroll';
+import RouteFallback from './components/RouteFallback';
+
+const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
+const Planning = lazy(() => import('./pages/Planning'));
+const Journal = lazy(() => import('./pages/Journal'));
+const Press = lazy(() => import('./pages/Press'));
+const Enquire = lazy(() => import('./pages/Enquire'));
+const NotFound = lazy(() => import('./pages/NotFound'));
+const Privacy = lazy(() => import('./pages/Privacy'));
+const Terms = lazy(() => import('./pages/Terms'));
+const JournalArticle = lazy(() => import('./pages/JournalArticle'));
+const ClientPortal = lazy(() => import('./pages/ClientPortal'));
+const FAQ = lazy(() => import('./pages/FAQ'));
+const WeddingPlannerLondon = lazy(() => import('./pages/seo/WeddingPlannerLondon'));
+const WeddingPlannerUK = lazy(() => import('./pages/seo/WeddingPlannerUK'));
+const DestinationWeddingPlanner = lazy(() => import('./pages/seo/DestinationWeddingPlanner'));
+const LuxuryWeddingPlanner = lazy(() => import('./pages/seo/LuxuryWeddingPlanner'));
+const MulticulturalWeddingPlanner = lazy(() => import('./pages/seo/MulticulturalWeddingPlanner'));
+const NigerianWeddingPlanner = lazy(() => import('./pages/seo/NigerianWeddingPlanner'));
 
 const PAGE_TITLES: Record<string, string> = {
   '/': 'RIAH | Luxury Weddings & Celebrations Worldwide',
@@ -58,8 +60,11 @@ function ScrollToTop() {
 function AnimatedRoutes() {
   const location = useLocation();
 
+  // Suspense must wrap AnimatePresence — if reversed, lazy routes that suspend cause
+  // AnimatePresence to see exit of route A but never enter of route B, breaking mode="wait".
   return (
-    <AnimatePresence mode="wait">
+    <Suspense fallback={<RouteFallback />}>
+      <AnimatePresence mode="wait">
       <div key={location.pathname} className="perspective-container">
         <Routes location={location}>
           <Route path="/" element={<PageTransition><Home /></PageTransition>} />
@@ -82,7 +87,8 @@ function AnimatedRoutes() {
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </div>
-    </AnimatePresence>
+      </AnimatePresence>
+    </Suspense>
   );
 }
 

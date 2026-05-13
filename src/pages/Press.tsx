@@ -39,7 +39,7 @@ export default function Press() {
       <section ref={heroRef} className="relative h-[70vh] md:h-[85vh] flex items-end overflow-hidden">
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0">
           <img
-            src="/assests/11a.jpg"
+            src="/assests/11a.webp"
             alt=""
             className="w-full h-full object-cover brightness-[0.45]"
             loading="eager"
@@ -218,7 +218,7 @@ export default function Press() {
                   className="relative overflow-hidden shrink-0 w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] rounded-full border-2 border-mauve/40 shadow-[0_0_0_8px_rgba(191,168,187,0.08),0_30px_70px_rgba(0,0,0,0.6)]"
                 >
                   <img
-                    src="/assests/GSON3031.jpg"
+                    src="/assests/GSON3031.webp"
                     alt=""
                     className="w-full h-full object-cover transition-transform duration-[2s] ease-out hover:scale-110"
                     loading="lazy"
@@ -286,7 +286,7 @@ export default function Press() {
                   className="relative overflow-hidden shrink-0 w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[260px] md:h-[260px] rounded-full border-2 border-mauve/40 shadow-[0_0_0_8px_rgba(191,168,187,0.08),0_30px_70px_rgba(0,0,0,0.6)]"
                 >
                   <img
-                    src="/assests/7b.jpg"
+                    src="/assests/7b.webp"
                     alt=""
                     className="w-full h-full object-cover transition-transform duration-[2s] ease-out hover:scale-110"
                     loading="lazy"

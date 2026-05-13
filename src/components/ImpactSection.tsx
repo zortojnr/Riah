@@ -23,17 +23,17 @@ function Counter({ value, suffix = "" }: { value: number, suffix?: string }) {
 
 // 42+ card — local wedding/event images
 const STAT_IMAGES_1 = [
-  '/assests/1a.jpg',
-  '/assests/3a.jpg',
-  '/assests/8a.jpg',
-  '/assests/12a.jpg',
+  '/assests/1a.webp',
+  '/assests/3a.webp',
+  '/assests/8a.webp',
+  '/assests/12a.webp',
 ];
 
 // 5 card — destinations images
 const STAT_IMAGES_2 = [
   'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1200',
-  '/assests/france.jpg',
-  '/assests/2a.jpg',
+  '/assests/france.webp',
+  '/assests/2a.webp',
   'https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=1200',
   'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?q=80&w=1200',
 ];
