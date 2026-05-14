@@ -94,6 +94,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const [atTop, setAtTop] = useState(true);
 
   const [curtainActive, setCurtainActive] = useState(() => {
     return isHome && sessionStorage.getItem('curtainDone') !== 'true';
@@ -110,6 +111,22 @@ export default function Navbar() {
     };
   }, [curtainActive]);
 
+  useEffect(() => {
+    let rafId: number | null = null;
+    const onScroll = () => {
+      if (rafId !== null) return;
+      rafId = requestAnimationFrame(() => {
+        setAtTop(window.scrollY <= 80);
+        rafId = null;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+    };
+  }, []);
+
   if (curtainActive) return null;
 
   // On home: white logo + light hamburger (over dark hero video)
@@ -122,7 +139,7 @@ export default function Navbar() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.2 }}
-        className="fixed top-0 left-0 w-full z-[110] px-5 md:px-12 py-6 md:py-10 bg-transparent"
+        className={`fixed top-0 left-0 w-full z-[110] px-5 md:px-12 py-6 md:py-10 bg-transparent transition-all duration-500 ${atTop || open ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full pointer-events-none'}`}
       >
         <div className="max-w-[1800px] mx-auto flex justify-between items-center">
           <Link

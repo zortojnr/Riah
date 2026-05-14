@@ -145,6 +145,18 @@ export default function DestinationsSection() {
               ))}
             </div>
 
+            {/* Mobile swipe hint — hidden on md+ */}
+            <div className="flex md:hidden items-center justify-center gap-2 mt-5 text-teal/40">
+              <span className="text-[9px] uppercase tracking-[0.4em]">Swipe</span>
+              <motion.span
+                animate={{ x: [0, 6, 0] }}
+                transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+                className="text-base leading-none"
+              >
+                →
+              </motion.span>
+            </div>
+
           </div>
         </div>
       </div>

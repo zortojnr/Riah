@@ -49,11 +49,11 @@ export default function TrustSignals() {
           <FadeIn className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-10">
             <span className="text-[11px] uppercase tracking-[0.5em] text-teal/40 font-bold w-full text-center mb-4">As Seen On</span>
             {PLATFORMS.map((p, i) => (
-              <div key={i} className="w-20 h-20 rounded-full overflow-hidden border border-teal/10 bg-white flex items-center justify-center shadow-sm p-2 shrink-0">
+              <div key={i} className="w-28 h-16 rounded-xl overflow-hidden border border-teal/10 bg-white flex items-center justify-center shadow-sm px-3 py-2 shrink-0">
                 <img
                   src={p.logo}
                   alt={p.alt}
-                  className="w-full h-full object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-contain hover:brightness-110 transition-all duration-500"
                 />
               </div>
             ))}

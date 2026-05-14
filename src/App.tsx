@@ -60,35 +60,35 @@ function ScrollToTop() {
 function AnimatedRoutes() {
   const location = useLocation();
 
-  // Suspense must wrap AnimatePresence — if reversed, lazy routes that suspend cause
-  // AnimatePresence to see exit of route A but never enter of route B, breaking mode="wait".
+  // Suspense is inside AnimatePresence so AnimatePresence sees the key change immediately
+  // and can start the exit animation while the new chunk loads in the background.
   return (
-    <Suspense fallback={<RouteFallback />}>
-      <AnimatePresence mode="wait">
+    <AnimatePresence mode="wait">
       <div key={location.pathname} className="perspective-container">
-        <Routes location={location}>
-          <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-          <Route path="/about" element={<PageTransition><About /></PageTransition>} />
-          <Route path="/planning" element={<PageTransition><Planning /></PageTransition>} />
-          <Route path="/journal" element={<PageTransition><Journal /></PageTransition>} />
-          <Route path="/journal/:slug" element={<PageTransition><JournalArticle /></PageTransition>} />
-          <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
-          <Route path="/enquire" element={<PageTransition><Enquire /></PageTransition>} />
-          <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
-          <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
-          <Route path="/portal" element={<PageTransition><ClientPortal /></PageTransition>} />
-          <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
-          <Route path="/wedding-planner-london" element={<PageTransition><WeddingPlannerLondon /></PageTransition>} />
-          <Route path="/wedding-planner-uk" element={<PageTransition><WeddingPlannerUK /></PageTransition>} />
-          <Route path="/destination-wedding-planner-uk" element={<PageTransition><DestinationWeddingPlanner /></PageTransition>} />
-          <Route path="/luxury-wedding-planner-uk" element={<PageTransition><LuxuryWeddingPlanner /></PageTransition>} />
-          <Route path="/multicultural-wedding-planner-uk" element={<PageTransition><MulticulturalWeddingPlanner /></PageTransition>} />
-          <Route path="/nigerian-wedding-planner-uk" element={<PageTransition><NigerianWeddingPlanner /></PageTransition>} />
-          <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
-        </Routes>
+        <Suspense fallback={<RouteFallback />}>
+          <Routes location={location}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/about" element={<PageTransition><About /></PageTransition>} />
+            <Route path="/planning" element={<PageTransition><Planning /></PageTransition>} />
+            <Route path="/journal" element={<PageTransition><Journal /></PageTransition>} />
+            <Route path="/journal/:slug" element={<PageTransition><JournalArticle /></PageTransition>} />
+            <Route path="/press" element={<PageTransition><Press /></PageTransition>} />
+            <Route path="/enquire" element={<PageTransition><Enquire /></PageTransition>} />
+            <Route path="/privacy" element={<PageTransition><Privacy /></PageTransition>} />
+            <Route path="/terms" element={<PageTransition><Terms /></PageTransition>} />
+            <Route path="/portal" element={<PageTransition><ClientPortal /></PageTransition>} />
+            <Route path="/faq" element={<PageTransition><FAQ /></PageTransition>} />
+            <Route path="/wedding-planner-london" element={<PageTransition><WeddingPlannerLondon /></PageTransition>} />
+            <Route path="/wedding-planner-uk" element={<PageTransition><WeddingPlannerUK /></PageTransition>} />
+            <Route path="/destination-wedding-planner-uk" element={<PageTransition><DestinationWeddingPlanner /></PageTransition>} />
+            <Route path="/luxury-wedding-planner-uk" element={<PageTransition><LuxuryWeddingPlanner /></PageTransition>} />
+            <Route path="/multicultural-wedding-planner-uk" element={<PageTransition><MulticulturalWeddingPlanner /></PageTransition>} />
+            <Route path="/nigerian-wedding-planner-uk" element={<PageTransition><NigerianWeddingPlanner /></PageTransition>} />
+            <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
+          </Routes>
+        </Suspense>
       </div>
-      </AnimatePresence>
-    </Suspense>
+    </AnimatePresence>
   );
 }
 
