@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import FadeIn from './FadeIn';
 
@@ -40,24 +40,43 @@ const TESTIMONIALS = [
 export default function TrustSignals() {
   const statsRef = useRef<HTMLDivElement>(null);
   const statsInView = useInView(statsRef, { once: true, margin: '-80px' });
+  const marqueeRef = useRef<HTMLDivElement>(null);
+  const marqueeInView = useInView(marqueeRef, { once: false, margin: '-80px' });
+  const [tabVisible, setTabVisible] = useState(true);
+
+  useEffect(() => {
+    const onVisibility = () => setTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
+
+  // Duplicate for seamless loop
+  const DOUBLED = [...PLATFORMS, ...PLATFORMS];
 
   return (
     <div>
-      {/* Platform Badge Bar */}
-      <section className="py-16 border-y border-teal/5 bg-off-white">
-        <div className="luxury-container">
-          <FadeIn className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-10">
-            <span className="text-[11px] uppercase tracking-[0.5em] text-teal/40 font-bold w-full text-center mb-4">As Seen On</span>
-            {PLATFORMS.map((p, i) => (
+      {/* Platform Badge Bar — marquee */}
+      <section className="py-12 border-y border-teal/5 bg-off-white overflow-hidden">
+        <FadeIn className="text-center mb-8">
+          <span className="text-[11px] uppercase tracking-[0.5em] text-teal/40 font-bold">As Seen On</span>
+        </FadeIn>
+        <div ref={marqueeRef} className="relative overflow-hidden">
+          <motion.div
+            animate={marqueeInView && tabVisible ? { x: [0, '-50%'] } : false}
+            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+            style={{ willChange: 'transform', display: 'flex', whiteSpace: 'nowrap' }}
+            className="flex items-center gap-8 pr-8"
+          >
+            {DOUBLED.map((p, i) => (
               <div key={i} className="w-44 h-24 rounded-xl border border-teal/10 flex items-center justify-center shadow-sm shrink-0">
                 <img
                   src={p.logo}
                   alt={p.alt}
-                  className="w-full h-full object-contain hover:brightness-110 transition-all duration-500"
+                  className="w-full h-full object-contain"
                 />
               </div>
             ))}
-          </FadeIn>
+          </motion.div>
         </div>
       </section>
 
