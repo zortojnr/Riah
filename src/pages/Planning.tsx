@@ -157,10 +157,10 @@ function TierContent({ tier }: { tier: typeof TIERS[0] }) {
       )}
 
       <div className="mb-8">
-        <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">Ideal for couples who want</h4>
+        <h4 className="text-[10px] uppercase tracking-[0.35em] text-mauve font-bold mb-5">Ideal for couples who want</h4>
         <ul className="space-y-3">
           {tier.idealFor.map((item) => (
-            <li key={item} className="flex items-start gap-3 text-[11px] text-teal">
+            <li key={item} className="flex items-start gap-3 text-sm text-teal">
               <span className="w-1 h-3 bg-mauve/50 mt-0.5 shrink-0" />
               <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
             </li>
@@ -169,10 +169,10 @@ function TierContent({ tier }: { tier: typeof TIERS[0] }) {
       </div>
 
       <div className="mb-8">
-        <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">What's Included</h4>
+        <h4 className="text-[10px] uppercase tracking-[0.35em] text-mauve font-bold mb-5">What's Included</h4>
         <ul className="space-y-3">
           {tier.inclusions.map((item) => (
-            <li key={item} className="flex items-start gap-3 text-[11px] text-teal group">
+            <li key={item} className="flex items-start gap-3 text-sm text-teal group">
               <span className="w-1 h-3 bg-mauve/40 mt-0.5 shrink-0 transition-all group-hover:bg-mauve group-hover:h-4" />
               <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
             </li>
@@ -181,11 +181,11 @@ function TierContent({ tier }: { tier: typeof TIERS[0] }) {
       </div>
 
       <div className="pt-8 border-t border-teal/10">
-        <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-3">Perfect For</h4>
-        <p className="text-[11px] text-teal font-light leading-relaxed tracking-wide">
+        <h4 className="text-[10px] uppercase tracking-[0.35em] text-mauve font-bold mb-3">Perfect For</h4>
+        <p className="text-sm text-teal font-light leading-relaxed tracking-wide">
           {tier.perfectFor}
         </p>
-        <p className="text-[10px] text-teal/70 italic mt-4 font-light">
+        <p className="text-xs text-teal/70 italic mt-4 font-light">
           Minimum fee applies. Percentage of total wedding investment also applies.
         </p>
       </div>
