@@ -80,7 +80,7 @@ You didn't just plan a celebration, you created an experience that felt deeply i
 Thank you for being such an important part of one of the most meaningful moments of our lives. Your excellence, warmth, and dedication did not go unnoticed.
 
 You are truly a star.`,
-    client: 'T & T',
+    client: 'Tosan & Tayo',
     location: '',
     image: '/assests/testimonial1.webp',
   },
