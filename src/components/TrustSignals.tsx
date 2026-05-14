@@ -3,9 +3,9 @@ import { motion, useInView } from 'motion/react';
 import FadeIn from './FadeIn';
 
 const PLATFORMS = [
-  { logo: '/assests/HITCHED.jpg',                   alt: 'Hitched' },
-  { logo: '/assests/partyslate-social-preview.png', alt: 'PartySlate' },
-  { logo: '/assests/R.png',                         alt: 'BrideStory' },
+  { logo: '/assests/HITCHED.jpg',                   alt: '' },
+  { logo: '/assests/partyslate-social-preview.png', alt: '' },
+  { logo: '/assests/R.png',                         alt: '' },
   { logo: '/assests/logo1.jpg',                     alt: '' },
   { logo: '/assests/logo2.jpg',                     alt: '' },
   { logo: '/assests/logo3.png',                     alt: '' },

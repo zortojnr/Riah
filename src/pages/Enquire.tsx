@@ -30,11 +30,6 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
   const [slotImages, setSlotImages] = useState([0, 1, 2, 3, 4]);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
-  }, []);
-
-  useEffect(() => {
     let imgCursor = 5; // next image index to bring in (wraps around GALLERY_IMAGES)
     let slotCursor = 0; // which slot to update next
 
@@ -72,11 +67,18 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
       <div className="max-w-[1400px] mx-auto px-5 md:px-12 py-16 md:py-20">
 
         {/* Header */}
-        <div className="mb-10 md:mb-14">
+        <div className="mb-10 md:mb-14 flex flex-col items-center text-center">
           <p className="text-[9px] uppercase tracking-[0.6em] text-mauve/80 mb-3">Private Celebrations</p>
-          <h2 className="font-serif italic text-off-white/90 text-3xl md:text-5xl leading-tight">
+          <h2 className="font-serif italic text-off-white/90 text-3xl md:text-5xl leading-tight mb-8">
             Intimate. Cultural. Utterly bespoke.
           </h2>
+          <span className="text-[9px] uppercase tracking-[0.6em] text-off-white/50 block mb-5">Private Celebration</span>
+          <button
+            onClick={onEnquire}
+            className="bg-mauve text-off-white text-[9px] uppercase tracking-[0.5em] px-10 py-4 hover:bg-mauve/80 transition-all duration-500 shadow-lg"
+          >
+            Begin Your Enquiry →
+          </button>
         </div>
 
         {/* Fixed grid — slot sizes never change, only the image inside crossfades */}
@@ -219,17 +221,6 @@ export default function Enquire() {
                   <span className="text-[9px] uppercase tracking-[0.5em] text-off-white/20">Video coming soon</span>
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center z-10">
-                  <FadeIn>
-                    <span className="text-[9px] uppercase tracking-[0.6em] text-off-white/50 block text-center mb-4">Private Celebration</span>
-                    <button
-                      onClick={() => setShowPrivateGallery(true)}
-                      className="bg-mauve text-off-white text-[9px] uppercase tracking-[0.5em] px-10 py-4 hover:bg-mauve/80 transition-all duration-500 shadow-lg"
-                    >
-                      Begin Your Enquiry →
-                    </button>
-                  </FadeIn>
-                </div>
               </div>
 
               {/* Cards */}
