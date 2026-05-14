@@ -69,11 +69,21 @@ function StatSlideshow({ images }: { images: string[] }) {
   );
 }
 
-// Add your testimonials here when ready.
-// Each entry needs: quote, client, location, image (webp in /public/assests/)
 const TESTIMONIALS: { quote: string; client: string; location: string; image: string }[] = [
-  // Example format — replace with real content:
-  // { quote: "...", client: "Private Client", location: "Lake Como", image: "/assests/testimonial-1.webp" },
+  {
+    quote: `Tobi… thank you truly for everything.
+
+From the very beginning, your calmness, professionalism, and reassuring presence made the entire experience feel effortless. Every detail was handled with such care, urgency, and precision, and throughout it all, you remained composed, attentive, and incredibly efficient.
+
+You didn't just plan a celebration, you created an experience that felt deeply intentional, beautiful, and completely seamless for us and our families.
+
+Thank you for being such an important part of one of the most meaningful moments of our lives. Your excellence, warmth, and dedication did not go unnoticed.
+
+You are truly a star.`,
+    client: 'T & T',
+    location: '',
+    image: '/assests/testimonial1.webp',
+  },
 ];
 
 function TestimonialCard() {
@@ -88,56 +98,52 @@ function TestimonialCard() {
 
   useEffect(() => {
     if (TESTIMONIALS.length < 2 || !tabVisible) return;
-    const t = setInterval(() => setIndex(i => (i + 1) % TESTIMONIALS.length), 6000);
+    const t = setInterval(() => setIndex(i => (i + 1) % TESTIMONIALS.length), 8000);
     return () => clearInterval(t);
   }, [tabVisible]);
 
-  // Nothing to show until testimonials are added
   if (TESTIMONIALS.length === 0) return null;
 
   const t = TESTIMONIALS[index];
 
   return (
-    <div className="relative w-full max-w-[450px] aspect-[4/5] bg-off-white border border-teal/10 shadow-2xl overflow-hidden">
-      {/* Image half */}
+    <div className="relative w-full max-w-[450px] aspect-[4/5] overflow-hidden shadow-2xl">
+      {/* Full-bleed image */}
       <AnimatePresence mode="wait">
-        <motion.div
+        <motion.img
           key={index + '-img'}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: 'easeInOut' }}
-          className="absolute inset-0 w-full h-[55%]"
-        >
-          <img src={t.image} alt="" className="w-full h-full object-cover grayscale-[15%]" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent to-off-white" />
-        </motion.div>
+          src={t.image}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
       </AnimatePresence>
 
-      {/* Text half */}
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/10 pointer-events-none" />
+
+      {/* Text */}
       <AnimatePresence mode="wait">
         <motion.div
           key={index + '-text'}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
-          className="absolute bottom-0 left-0 right-0 p-10 md:p-12 flex flex-col justify-end"
+          transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.15 }}
+          className="absolute bottom-0 left-0 right-0 p-7 md:p-9 overflow-y-auto max-h-[85%]"
         >
-          <span className="text-[3rem] font-serif leading-none italic text-teal/15 mb-1">"</span>
-          <p className="text-base md:text-lg font-serif italic leading-relaxed text-teal mb-8">
+          <p className="text-[13px] md:text-sm font-serif italic leading-relaxed text-off-white mb-5 whitespace-pre-line">
             {t.quote}
           </p>
-          <div className="border-t border-teal/10 pt-6">
-            <p className="text-[10px] uppercase tracking-[0.4em] font-semibold text-mauve">{t.client}</p>
-            <p className="text-[11px] font-serif italic mt-1 opacity-50 text-teal">{t.location}</p>
+          <div className="border-t border-white/20 pt-4">
+            <p className="text-[10px] uppercase tracking-[0.4em] font-semibold text-mauve">— {t.client}</p>
+            {t.location && <p className="text-[11px] font-serif italic mt-1 text-off-white/50">{t.location}</p>}
           </div>
         </motion.div>
       </AnimatePresence>
-
-      {/* Decorative elements */}
-      <div className="absolute -top-12 -right-12 w-24 h-24 bg-mauve/8 rounded-full pointer-events-none" />
-      <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-teal/4 rounded-full pointer-events-none" />
     </div>
   );
 }
