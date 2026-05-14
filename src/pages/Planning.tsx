@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
-import { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import { useState, useEffect, useRef } from 'react';
 import FadeIn from '../components/FadeIn';
 
 const TIERS = [
@@ -37,7 +37,7 @@ const TIERS = [
     title: 'Signature Full-Service Planning',
     tagline: 'A holistic, elevated planning journey with luxury concierge care.',
     intro: 'Our most sought-after service, created for couples who desire a seamless, stress-free, fully curated wedding experience, especially for destination weddings or events with guests travelling from multiple locations.',
-    highlight: 'This is where our Signature Guest Experience Concierge™ comes to life.',
+    highlight: 'This is where our Signature Guest Experience Concierge comes to life.',
     idealFor: [
       'Guests to feel fully supported from the moment they receive the invitation',
       'Visa, travel, accommodation, or transport guidance for guests',
@@ -45,7 +45,7 @@ const TIERS = [
       'A refined, high-touch planning experience',
     ],
     inclusions: [
-      'Signature Guest Experience Concierge™ (visa guidance, hotel coordination, guest movement management, itinerary support)',
+      'Signature Guest Experience Concierge (visa guidance, hotel coordination, guest movement management, itinerary support)',
       'Planning for welcome dinners or rehearsal celebrations',
       'Family liaison support (parents, elders, VIP guests)',
       'Cultural advisory and integration',
@@ -67,7 +67,7 @@ const TIERS = [
     title: 'Luxury Elite Experience',
     tagline: 'Our most immersive, white-glove planning service, curated for world-class celebrations.',
     intro: 'Reserved for couples hosting multi-day weddings, high-profile events, or destination celebrations requiring a full luxury team and complete weekend management.',
-    highlight: 'This is the pinnacle of RIAH\'s planning excellence.',
+    highlight: 'This is the pinnacle of RIAH planning excellence.',
     idealFor: [
       'A fully tailor-made, concierge-level planning experience',
       'Multi-day events (welcome dinner, ceremony, reception, brunch, excursions)',
@@ -77,8 +77,8 @@ const TIERS = [
     ],
     inclusions: [
       'Unlimited concierge access for couple and VIP guests',
-      'Full weekend planning (Friday–Sunday)',
-      'Two to three planners on-site',
+      'Full weekend planning (Friday through Sunday)',
+      'Two to three planners on site',
       'Pre-wedding destination planning days',
       'Full guest itinerary creation (restaurants, activities, transport)',
       'Chauffeur and transport coordination',
@@ -119,13 +119,11 @@ function TierImage({ images, tierNumber }: { images: string[]; tierNumber: strin
         />
       </AnimatePresence>
       <div className="absolute inset-0 bg-teal/5 pointer-events-none" />
-      {/* Tier badge */}
       <div className="absolute top-6 left-6 z-10">
         <span className="text-[9px] uppercase tracking-[0.5em] text-off-white backdrop-blur-md px-5 py-2 border border-off-white/20 font-mono">
           Tier {tierNumber}
         </span>
       </div>
-      {/* Dot indicators */}
       <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
         {images.map((_, i) => (
           <button
@@ -139,13 +137,100 @@ function TierImage({ images, tierNumber }: { images: string[]; tierNumber: strin
   );
 }
 
+function TierContent({ tier }: { tier: typeof TIERS[0] }) {
+  return (
+    <FadeIn className="w-full h-full overflow-y-auto py-14 px-10 lg:px-16">
+      <h3 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-teal mb-4 leading-tight tracking-tight">
+        {tier.title}
+      </h3>
+      <p className="text-sm md:text-base text-teal italic mb-8 font-light leading-relaxed tracking-wide border-l border-mauve/50 pl-5">
+        {tier.tagline}
+      </p>
+      <p className="text-sm md:text-base text-teal mb-8 font-light leading-relaxed tracking-wide">
+        {tier.intro}
+      </p>
+
+      {tier.highlight && (
+        <p className="text-sm md:text-base text-teal font-semibold mb-8 leading-relaxed">
+          {tier.highlight}
+        </p>
+      )}
+
+      <div className="mb-8">
+        <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">Ideal for couples who want</h4>
+        <ul className="space-y-3">
+          {tier.idealFor.map((item) => (
+            <li key={item} className="flex items-start gap-3 text-[11px] text-teal">
+              <span className="w-1 h-3 bg-mauve/50 mt-0.5 shrink-0" />
+              <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="mb-8">
+        <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">What's Included</h4>
+        <ul className="space-y-3">
+          {tier.inclusions.map((item) => (
+            <li key={item} className="flex items-start gap-3 text-[11px] text-teal group">
+              <span className="w-1 h-3 bg-mauve/40 mt-0.5 shrink-0 transition-all group-hover:bg-mauve group-hover:h-4" />
+              <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="pt-8 border-t border-teal/10">
+        <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-3">Perfect For</h4>
+        <p className="text-[11px] text-teal font-light leading-relaxed tracking-wide">
+          {tier.perfectFor}
+        </p>
+        <p className="text-[10px] text-teal/70 italic mt-4 font-light">
+          Minimum fee applies. Percentage of total wedding investment also applies.
+        </p>
+      </div>
+    </FadeIn>
+  );
+}
+
 const ENHANCEMENTS = [
-  'Signature Guest Experience Concierge™',
+  'Signature Guest Experience Concierge',
   'Multi-day celebration planning',
   'Cultural and family liaison support',
   'Destination venue scouting',
   'Pre-wedding events and experiences',
 ];
+
+function HorizontalTiers() {
+  const outerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: outerRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const x = useTransform(scrollYProgress, [0, 1], ['0vw', `-${(TIERS.length - 1) * 100}vw`]);
+
+  return (
+    <div ref={outerRef} className="hidden lg:block relative" style={{ height: `${TIERS.length * 100}vh` }}>
+      <div className="sticky top-0 h-screen overflow-hidden">
+        <motion.div style={{ x }} className="flex h-full" style={{ width: `${TIERS.length * 100}vw` }}>
+          {TIERS.map((tier) => (
+            <div key={tier.id} className="w-screen h-screen flex shrink-0 border-t border-teal/5 bg-off-white">
+              {/* Image side */}
+              <div className="w-[45%] relative">
+                <TierImage images={tier.images} tierNumber={tier.number} />
+              </div>
+              {/* Content side */}
+              <div className="w-[55%] overflow-y-auto">
+                <TierContent tier={tier} />
+              </div>
+            </div>
+          ))}
+        </motion.div>
+      </div>
+    </div>
+  );
+}
 
 export default function Planning() {
   return (
@@ -157,7 +242,7 @@ export default function Planning() {
           <h1 className="text-4xl sm:text-5xl md:text-6xl text-teal mb-10 leading-[0.9] tracking-tight">
             Our Signature<br />Planning Experiences
           </h1>
-          <div className="space-y-5 text-sm md:text-base text-teal/60 font-light leading-relaxed tracking-wide italic max-w-2xl mx-auto">
+          <div className="space-y-5 text-sm md:text-base text-teal/80 font-light leading-relaxed tracking-wide italic max-w-2xl mx-auto">
             <p>
               Where luxury, culture, and intentional storytelling meet. Every celebration we curate is approached with depth, artistry, and emotional intelligence, honouring your story, your culture, and your vision.
             </p>
@@ -165,77 +250,33 @@ export default function Planning() {
               Our service structure is designed to give you the flexibility to choose the level of support and experience that feels right, while ensuring exceptional care at every stage.
             </p>
           </div>
+          <div className="mt-10">
+            <Link
+              to="/media"
+              className="inline-block text-[10px] uppercase tracking-[0.5em] border border-teal/30 text-teal px-8 py-4 hover:bg-teal hover:text-off-white transition-all duration-500"
+            >
+              Media
+            </Link>
+          </div>
         </FadeIn>
       </div>
 
-      {/* Service Tiers */}
-      <div className="flex flex-col">
+      {/* Desktop: horizontal scroll tiers */}
+      <HorizontalTiers />
+
+      {/* Mobile: vertical stacked tiers */}
+      <div className="lg:hidden flex flex-col">
         {TIERS.map((tier, i) => (
           <section key={tier.id} className="relative w-full border-t border-teal/5">
-            <div className={`grid grid-cols-1 lg:grid-cols-2 lg:items-stretch`}>
-              {/* Image side — padded so it doesn't touch the edges */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-stretch">
               <div className={`relative p-4 md:p-8 lg:p-10 bg-off-white ${i % 2 !== 0 ? 'lg:order-2' : ''}`}>
                 <div className="relative h-[40vh] sm:h-[55vh] md:h-[65vh] lg:h-full min-h-[500px] overflow-hidden">
                   <TierImage images={tier.images} tierNumber={tier.number} />
                 </div>
               </div>
 
-              {/* Content side — stretches to match image height */}
               <div className={`flex items-start justify-center p-6 sm:p-10 md:p-12 lg:p-16 bg-off-white self-stretch ${i % 2 !== 0 ? 'lg:order-1' : ''}`}>
-                <FadeIn className="w-full">
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl xl:text-5xl text-teal mb-4 leading-tight tracking-tight">
-                    {tier.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-teal/80 italic mb-10 font-light leading-relaxed tracking-wide border-l border-mauve/50 pl-5">
-                    {tier.tagline}
-                  </p>
-                  <p className="text-sm md:text-base text-teal/85 mb-8 font-light leading-relaxed tracking-wide">
-                    {tier.intro}
-                  </p>
-
-                  {tier.highlight && (
-                    <p className="text-sm md:text-base text-teal font-semibold mb-10 leading-relaxed">
-                      {tier.highlight}
-                    </p>
-                  )}
-
-                  {/* Ideal For */}
-                  <div className="mb-10">
-                    <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">Ideal for couples who want</h4>
-                    <ul className="space-y-3">
-                      {tier.idealFor.map((item) => (
-                        <li key={item} className="flex items-start gap-3 text-[11px] text-teal/85">
-                          <span className="w-1 h-3 bg-mauve/50 mt-0.5 shrink-0" />
-                          <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Inclusions */}
-                  <div className="mb-10">
-                    <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-5">What's Included</h4>
-                    <ul className="space-y-3">
-                      {tier.inclusions.map((item) => (
-                        <li key={item} className="flex items-start gap-3 text-[11px] text-teal group">
-                          <span className="w-1 h-3 bg-mauve/40 mt-0.5 shrink-0 transition-all group-hover:bg-mauve group-hover:h-4" />
-                          <span className="uppercase tracking-[0.12em] font-light leading-snug">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {/* Perfect For */}
-                  <div className="pt-8 border-t border-teal/10">
-                    <h4 className="text-[9px] uppercase tracking-[0.4em] text-mauve font-bold mb-3">Perfect For</h4>
-                    <p className="text-[11px] text-teal/80 font-light leading-relaxed tracking-wide">
-                      {tier.perfectFor}
-                    </p>
-                    <p className="text-[10px] text-teal/50 italic mt-4 font-light">
-                      Minimum fee applies. Percentage of total wedding investment also applies.
-                    </p>
-                  </div>
-                </FadeIn>
+                <TierContent tier={tier} />
               </div>
             </div>
 
@@ -257,10 +298,10 @@ export default function Planning() {
               <h2 className="text-3xl md:text-4xl text-teal mb-8 leading-tight tracking-tight">
                 Beyond the Experience
               </h2>
-              <p className="text-sm md:text-base text-teal/60 font-light leading-relaxed tracking-wide mb-8">
+              <p className="text-sm md:text-base text-teal/80 font-light leading-relaxed tracking-wide mb-8">
                 For couples desiring an even more immersive celebration, a selection of bespoke concierge and guest-experience services is available upon request.
               </p>
-              <p className="text-sm text-teal/40 font-light italic leading-relaxed tracking-wide">
+              <p className="text-sm text-teal/60 font-light italic leading-relaxed tracking-wide">
                 A full enhancement menu is shared privately during your consultation.
               </p>
             </FadeIn>
@@ -274,7 +315,7 @@ export default function Planning() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: i * 0.1 }}
-                    className="flex items-start gap-4 text-sm text-teal/70 font-light leading-relaxed"
+                    className="flex items-start gap-4 text-sm text-teal/80 font-light leading-relaxed"
                   >
                     <span className="w-1 h-3 bg-mauve/40 mt-1.5 shrink-0" />
                     {item}
@@ -294,7 +335,7 @@ export default function Planning() {
             to="/enquire"
             className="group text-2xl sm:text-3xl md:text-5xl font-serif italic border-b border-mauve inline-block pb-4 hover:text-mauve transition-all duration-700 hover:tracking-widest"
           >
-            Request Private Consultation →
+            Request Private Consultation
           </Link>
         </FadeIn>
       </section>

@@ -27,6 +27,7 @@ const DestinationWeddingPlanner = lazy(() => import('./pages/seo/DestinationWedd
 const LuxuryWeddingPlanner = lazy(() => import('./pages/seo/LuxuryWeddingPlanner'));
 const MulticulturalWeddingPlanner = lazy(() => import('./pages/seo/MulticulturalWeddingPlanner'));
 const NigerianWeddingPlanner = lazy(() => import('./pages/seo/NigerianWeddingPlanner'));
+const Media = lazy(() => import('./pages/Media'));
 
 const PAGE_TITLES: Record<string, string> = {
   '/': 'RIAH | Luxury Weddings & Celebrations Worldwide',
@@ -39,6 +40,7 @@ const PAGE_TITLES: Record<string, string> = {
   '/terms': 'Terms & Conditions | RIAH Weddings & Events',
   '/portal': 'Client Portal | RIAH Weddings & Events',
   '/faq': 'Frequently Asked Questions | RIAH Weddings & Events',
+  '/media': 'Media | RIAH Weddings & Events',
   '/wedding-planner-london': 'Wedding Planner London | RIAH Weddings & Events',
   '/wedding-planner-uk': 'Wedding Planner UK | RIAH Weddings & Events',
   '/destination-wedding-planner-uk': 'Destination Wedding Planner UK | RIAH Weddings & Events',
@@ -84,6 +86,7 @@ function AnimatedRoutes() {
             <Route path="/luxury-wedding-planner-uk" element={<PageTransition><LuxuryWeddingPlanner /></PageTransition>} />
             <Route path="/multicultural-wedding-planner-uk" element={<PageTransition><MulticulturalWeddingPlanner /></PageTransition>} />
             <Route path="/nigerian-wedding-planner-uk" element={<PageTransition><NigerianWeddingPlanner /></PageTransition>} />
+            <Route path="/media" element={<PageTransition><Media /></PageTransition>} />
             <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
           </Routes>
         </Suspense>
