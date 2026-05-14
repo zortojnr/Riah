@@ -3,9 +3,12 @@ import { motion, useInView } from 'motion/react';
 import FadeIn from './FadeIn';
 
 const PLATFORMS = [
-  { name: 'Hitched',     logo: '/assests/HITCHED.jpg' },
-  { name: 'PartySlate',  logo: '/assests/partyslate-social-preview.png' },
-  { name: 'BrideStory',  logo: '/assests/R.png' },
+  { logo: '/assests/logo1.jpg',  alt: '' },
+  { logo: '/assests/logo2.jpg',  alt: '' },
+  { logo: '/assests/logo3.png',  alt: '' },
+  { logo: '/assests/logo4.png',  alt: '' },
+  { logo: '/assests/logo5.jpeg', alt: '' },
+  { logo: '/assests/logo6.jpeg', alt: '' },
 ];
 
 const STATS = [
@@ -42,19 +45,13 @@ export default function TrustSignals() {
         <div className="luxury-container">
           <FadeIn className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 md:gap-20">
             <span className="text-[11px] uppercase tracking-[0.5em] text-teal/40 font-bold w-full text-center mb-4">As Seen On</span>
-            {PLATFORMS.map((p) => (
-              <div key={p.name} className="flex flex-col items-center gap-4">
-                <div className={[
-                  'overflow-hidden border border-teal/10 bg-white flex items-center justify-center shadow-sm',
-                  p.name === 'PartySlate' ? 'w-24 h-24 rounded-xl' : 'w-24 h-24 rounded-full',
-                ].join(' ')}>
-                  <img
-                    src={p.logo}
-                    alt={p.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <span className="text-[10px] uppercase tracking-[0.4em] text-teal/40 font-medium">{p.name}</span>
+            {PLATFORMS.map((p, i) => (
+              <div key={i} className="w-28 h-16 overflow-hidden border border-teal/10 bg-white flex items-center justify-center shadow-sm px-3">
+                <img
+                  src={p.logo}
+                  alt={p.alt}
+                  className="max-w-full max-h-full object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500"
+                />
               </div>
             ))}
           </FadeIn>
