@@ -58,7 +58,7 @@ function StatSlideshow({ images }: { images: string[] }) {
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
+          transition={{ duration: 0.9, ease: "easeInOut" }}
           src={images[index]}
           alt="Stat highlight"
           className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 transition-all duration-1000"

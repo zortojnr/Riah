@@ -86,6 +86,7 @@ function DestinationModal({ dest, onClose }: { dest: typeof DESTINATIONS[0]; onC
             alt={dest.country}
             className="absolute inset-0 w-full h-full object-cover"
             referrerPolicy="no-referrer"
+            decoding="async"
           />
         </div>
 
@@ -186,6 +187,7 @@ export default function DestinationsSection() {
                         className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
                         referrerPolicy="no-referrer"
                         loading="lazy"
+                        decoding="async"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
 

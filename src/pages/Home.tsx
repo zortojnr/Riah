@@ -42,7 +42,7 @@ function VideoInterlude() {
           observer.disconnect();
         }
       },
-      { rootMargin: '400px' }
+      { rootMargin: '150px' }
     );
     observer.observe(el);
     return () => observer.disconnect();
@@ -186,6 +186,7 @@ export default function Home() {
             muted
             loop
             playsInline
+            preload="none"
             className="w-full h-full object-cover object-center brightness-[0.65]"
           >
             <source src="https://res.cloudinary.com/dzr18sd58/video/upload/q_auto:best,vc_auto/v1778538684/RIAHS_WEDDING_jgl3j4.mp4" type="video/mp4" />

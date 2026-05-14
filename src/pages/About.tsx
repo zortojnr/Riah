@@ -65,6 +65,7 @@ export default function About() {
               <img
                 src="/assests/2b.webp"
                 alt="Tobi Yusuf, Founder of RIAH"
+                decoding="async"
                 className="w-full h-full object-cover object-top transition-transform duration-[4000ms] ease-out hover:scale-105"
               />
               <div className="absolute inset-0 bg-teal/5" />
@@ -81,6 +82,7 @@ export default function About() {
                 <img
                   src="/assests/4b.webp"
                   alt="Tobi Yusuf, Founder of RIAH"
+                  decoding="async"
                   className="w-full h-full object-cover object-top grayscale-[10%] transition-transform duration-[3000ms] hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-mauve/5 mix-blend-overlay" />
@@ -161,6 +163,7 @@ export default function About() {
                   <img
                     src={value.image}
                     alt={value.title}
+                    decoding="async"
                     className="w-full h-full object-cover grayscale transition-all duration-700 ease-out group-hover:scale-105 group-hover:grayscale-0"
                     referrerPolicy="no-referrer"
                     loading="lazy"
@@ -256,7 +259,7 @@ export default function About() {
                 <div className="mb-16">
                   <span className="text-[10px] uppercase tracking-[0.4em] text-teal/40 mb-6 block font-medium">Core Destinations</span>
                   <div className="flex flex-wrap gap-x-8 gap-y-4">
-                    {['Italy', 'France', 'United Kingdom', 'Greece', 'Portugal'].map((dest) => (
+                    {['Italy', 'France', 'United Kingdom', 'Greece', 'Spain'].map((dest) => (
                       <span key={dest} className="text-sm md:text-lg text-teal font-serif border-b border-mauve/20 pb-1">
                         {dest}
                       </span>

@@ -28,10 +28,11 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
   const [slotImages, setSlotImages] = useState([0, 1, 2, 3, 4]);
 
   useEffect(() => {
-    let imgCursor = 5; // next image index to bring in (wraps around GALLERY_IMAGES)
-    let slotCursor = 0; // which slot to update next
+    let imgCursor = 5;
+    let slotCursor = 0;
+    let t: ReturnType<typeof setInterval> | null = null;
 
-    const t = setInterval(() => {
+    const tick = () => {
       const nextImg = imgCursor % GALLERY_IMAGES.length;
       const targetSlot = slotCursor % 5;
       setSlotImages(prev => {
@@ -41,8 +42,15 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
       });
       imgCursor++;
       slotCursor++;
-    }, 4000);
-    return () => clearInterval(t);
+    };
+
+    const start = () => { t = setInterval(tick, 4000); };
+    const stop = () => { if (t) { clearInterval(t); t = null; } };
+    const onVisibility = () => document.hidden ? stop() : start();
+
+    start();
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => { stop(); document.removeEventListener('visibilitychange', onVisibility); };
   }, []);
 
   return (
@@ -220,6 +228,7 @@ export default function Enquire() {
                   muted
                   loop
                   playsInline
+                  preload="none"
                   className="w-full h-full object-cover"
                 >
                   <source src="https://res.cloudinary.com/dzr18sd58/video/upload/v1778771723/AFRO_qls22d.mp4" type="video/mp4" />
@@ -255,6 +264,8 @@ export default function Enquire() {
                       className="absolute inset-0 w-full h-full object-cover grayscale-[50%] group-hover:grayscale-0 transition-all duration-1000 opacity-35 group-hover:opacity-55 group-hover:scale-105"
                       alt={card.label}
                       referrerPolicy="no-referrer"
+                      loading="lazy"
+                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-teal/80 via-teal/20 to-transparent" />
                     <div className="relative z-10 p-5 sm:p-8 md:p-10">
