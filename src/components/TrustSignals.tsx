@@ -63,12 +63,12 @@ export default function TrustSignals() {
         <div ref={marqueeRef} className="relative overflow-hidden">
           <motion.div
             animate={marqueeInView && tabVisible ? { x: [0, '-50%'] } : false}
-            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 18, repeat: Infinity, ease: 'linear' }}
             style={{ willChange: 'transform', display: 'flex', whiteSpace: 'nowrap' }}
             className="flex items-center gap-8 pr-8"
           >
             {DOUBLED.map((p, i) => (
-              <div key={i} className="w-24 h-24 rounded-full border border-teal/10 flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
+              <div key={i} className="w-24 h-24 shrink-0 overflow-hidden flex items-center justify-center">
                 <img
                   src={p.logo}
                   alt={p.alt}

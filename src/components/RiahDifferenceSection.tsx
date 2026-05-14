@@ -87,14 +87,7 @@ function PortraitCard({ number, word, description, image, delay = 0 }: {
 
 export default function RiahDifferenceSection() {
   return (
-    <section className="relative py-20 sm:py-28 md:py-36 overflow-hidden">
-
-      {/* Section background */}
-      <div className="absolute inset-0 z-0">
-        <img src="/assests/11a.webp" alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-[#0E1B1B]/80" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0E1B1B]/60 via-transparent to-[#0E1B1B]/70" />
-      </div>
+    <section className="relative py-20 sm:py-28 md:py-36 overflow-hidden bg-[#0E1B1B]">
 
       {/* Ambient watermark */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden z-0">
