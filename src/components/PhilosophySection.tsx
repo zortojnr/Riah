@@ -119,7 +119,7 @@ export default function PhilosophySection() {
           />
           <div className="flex flex-col gap-8 max-w-3xl mx-auto">
             <AnimatedText 
-              text="We believe that the most impactful celebrations aren’t just seen, they are felt. Our design intelligence is rooted in the intersection of cultural heritage and contemporary minimalism, creating experiences that are emotionally resonant, visually refined, and deeply intentional."
+              text="We believe that the most impactful celebrations aren't just seen, they are felt. Our design intelligence is rooted in the intersection of cultural heritage and contemporary minimalism, creating experiences that are emotionally resonant, visually refined, and deeply intentional."
               className="text-base md:text-lg text-teal/70 font-light leading-relaxed italic w-full"
               delay={1.2}
             />
