@@ -79,7 +79,7 @@ function FullscreenMenu({ open, setOpen }: { open: boolean; setOpen: (v: boolean
           <div className="absolute bottom-8 md:bottom-16 w-full px-6 md:px-12 flex justify-between items-end">
             <span className="hidden lg:block text-[7px] tracking-[1em] uppercase text-mauve/30">Based in London · Operating Worldwide</span>
             <div className="flex gap-8">
-              <a href="https://instagram.com/riahweddings" target="_blank" rel="noopener noreferrer" className="text-[8px] uppercase tracking-[0.4em] text-teal/40 hover:text-mauve transition-colors">Instagram</a>
+              <a href="https://www.instagram.com/riahevents" target="_blank" rel="noopener noreferrer" className="text-[8px] uppercase tracking-[0.4em] text-teal/40 hover:text-mauve transition-colors">Instagram</a>
               <a href="https://pinterest.com/riahweddings" target="_blank" rel="noopener noreferrer" className="text-[8px] uppercase tracking-[0.4em] text-teal/40 hover:text-mauve transition-colors">Pinterest</a>
             </div>
           </div>

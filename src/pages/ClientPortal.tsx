@@ -59,7 +59,7 @@ export default function ClientPortal() {
         </form>
 
         <p className="text-center mt-10 text-[10px] text-teal/30 font-light tracking-wide">
-          Access is provided to RIAH couples upon booking.
+          Access is provided to RIAH clients upon booking.
         </p>
       </motion.div>
     </div>

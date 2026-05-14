@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView, useSpring, useTransform, AnimatePresence } from 'motion/react';
-import { Link } from 'react-router-dom';
 
 function Counter({ value, suffix = "" }: { value: number, suffix?: string }) {
   const ref = useRef(null);
@@ -70,119 +69,119 @@ function StatSlideshow({ images }: { images: string[] }) {
   );
 }
 
-export default function ImpactSection() {
-  const [isFlipped, setIsFlipped] = useState(false);
+// Add your testimonials here when ready.
+// Each entry needs: quote, client, location, image (webp in /public/assests/)
+const TESTIMONIALS: { quote: string; client: string; location: string; image: string }[] = [
+  // Example format — replace with real content:
+  // { quote: “...”, client: “Private Client”, location: “Lake Como”, image: “/assests/testimonial-1.webp” },
+];
+
+function TestimonialCard() {
+  const [index, setIndex] = useState(0);
+  const [tabVisible, setTabVisible] = useState(true);
+
+  useEffect(() => {
+    const onVisibility = () => setTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => document.removeEventListener('visibilitychange', onVisibility);
+  }, []);
+
+  useEffect(() => {
+    if (TESTIMONIALS.length < 2 || !tabVisible) return;
+    const t = setInterval(() => setIndex(i => (i + 1) % TESTIMONIALS.length), 6000);
+    return () => clearInterval(t);
+  }, [tabVisible]);
+
+  // Nothing to show until testimonials are added
+  if (TESTIMONIALS.length === 0) return null;
+
+  const t = TESTIMONIALS[index];
 
   return (
-    <section className="bg-[#0E1B1B] text-off-white py-16 sm:py-24 md:py-32 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center">
-          
+    <div className=”relative w-full max-w-[450px] aspect-[4/5] bg-off-white border border-teal/10 shadow-2xl overflow-hidden”>
+      {/* Image half */}
+      <AnimatePresence mode=”wait”>
+        <motion.div
+          key={index + '-img'}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
+          className=”absolute inset-0 w-full h-[55%]”
+        >
+          <img src={t.image} alt=”” className=”w-full h-full object-cover grayscale-[15%]” />
+          <div className=”absolute inset-0 bg-gradient-to-b from-transparent to-off-white” />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Text half */}
+      <AnimatePresence mode=”wait”>
+        <motion.div
+          key={index + '-text'}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.1 }}
+          className=”absolute bottom-0 left-0 right-0 p-10 md:p-12 flex flex-col justify-end”
+        >
+          <span className=”text-[3rem] font-serif leading-none italic text-teal/15 mb-1”>”</span>
+          <p className=”text-base md:text-lg font-serif italic leading-relaxed text-teal mb-8”>
+            {t.quote}
+          </p>
+          <div className=”border-t border-teal/10 pt-6”>
+            <p className=”text-[10px] uppercase tracking-[0.4em] font-semibold text-mauve”>{t.client}</p>
+            <p className=”text-[11px] font-serif italic mt-1 opacity-50 text-teal”>{t.location}</p>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Decorative elements */}
+      <div className=”absolute -top-12 -right-12 w-24 h-24 bg-mauve/8 rounded-full pointer-events-none” />
+      <div className=”absolute -bottom-12 -left-12 w-32 h-32 bg-teal/4 rounded-full pointer-events-none” />
+    </div>
+  );
+}
+
+export default function ImpactSection() {
+  return (
+    <section className=”bg-[#0E1B1B] text-off-white py-16 sm:py-24 md:py-32 overflow-hidden”>
+      <div className=”max-w-7xl mx-auto px-5 sm:px-8 md:px-12”>
+        <div className=”grid grid-cols-1 lg:grid-cols-2 gap-12 sm:gap-16 lg:gap-24 items-center”>
+
           {/* STATS COLUMN */}
-          <div className="space-y-16 md:space-y-20">
+          <div className=”space-y-16 md:space-y-20”>
 
             {/* 42+ card — image overlaps number from left */}
-            <div className="relative flex items-end">
-              {/* Image — sits behind the number, overlapping */}
-              <div className="w-32 sm:w-44 md:w-60 h-44 sm:h-56 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
+            <div className=”relative flex items-end”>
+              <div className=”w-32 sm:w-44 md:w-60 h-44 sm:h-56 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10”>
                 <StatSlideshow images={STAT_IMAGES_1} />
               </div>
-              {/* Number + label — pulled left so image touches it */}
-              <div className="flex flex-col -ml-4 sm:-ml-6 z-20 min-w-0">
-                <Counter value={42} suffix="+" />
-                <span className="text-[9px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
+              <div className=”flex flex-col -ml-4 sm:-ml-6 z-20 min-w-0”>
+                <Counter value={42} suffix=”+” />
+                <span className=”text-[9px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-40 mt-3 leading-relaxed”>
                   Global commissions<br />uniquely executed
                 </span>
               </div>
             </div>
 
             {/* 5 card — image overlaps number from right */}
-            <div className="relative flex items-end justify-end">
-              {/* Number + label */}
-              <div className="flex flex-col text-right -mr-4 sm:-mr-6 z-20 min-w-0">
+            <div className=”relative flex items-end justify-end”>
+              <div className=”flex flex-col text-right -mr-4 sm:-mr-6 z-20 min-w-0”>
                 <Counter value={5} />
-                <span className="text-[9px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-40 mt-3 leading-relaxed">
+                <span className=”text-[9px] md:text-[11px] uppercase tracking-[0.3em] md:tracking-[0.4em] opacity-40 mt-3 leading-relaxed”>
                   Destinations<br />currently managed
                 </span>
               </div>
-              {/* Image — overlaps from the right */}
-              <div className="w-32 sm:w-44 md:w-60 h-44 sm:h-56 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10">
+              <div className=”w-32 sm:w-44 md:w-60 h-44 sm:h-56 md:h-72 overflow-hidden shadow-2xl shrink-0 z-10”>
                 <StatSlideshow images={STAT_IMAGES_2} />
               </div>
             </div>
 
           </div>
 
-          {/* FLIP CARD COLUMN */}
-          <div className="flex justify-center perspective-2000 relative z-0">
-            <div className="relative w-full max-w-[450px] aspect-[4/5]">
-              <motion.div
-                initial={false}
-                animate={{ rotateY: isFlipped ? 180 : 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full h-full relative preserve-3d"
-              >
-                {/* FRONT SIDE */}
-                <div 
-                  className={`absolute inset-0 backface-hidden bg-[#1e3331] p-8 md:p-16 flex flex-col items-center justify-center border border-white/5 shadow-2xl transition-opacity duration-300 ${isFlipped ? 'opacity-0' : 'opacity-100'}`}
-                >
-                  <div className="mb-12">
-                    <h2 className="text-5xl md:text-6xl font-serif tracking-[0.3em] text-white/20 select-none">RIAH</h2>
-                  </div>
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setIsFlipped(true)}
-                    className="group flex flex-col items-center gap-4 cursor-pointer"
-                  >
-                    <div className="w-20 h-20 rounded-full border border-white/20 flex items-center justify-center transition-colors group-hover:bg-off-white group-hover:border-off-white">
-                       <span className="text-white group-hover:text-teal transition-colors text-xl">↺</span>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-[0.6em] font-medium text-off-white/40 group-hover:text-off-white transition-colors">
-                      Turn Me
-                    </span>
-                  </motion.button>
-                </div>
-
-                {/* BACK SIDE */}
-                <div 
-                  style={{ transform: 'rotateY(180deg)' }}
-                  className={`absolute inset-0 backface-hidden bg-off-white text-teal p-12 md:p-16 flex flex-col justify-between border border-teal/10 shadow-2xl transition-opacity duration-300 ${isFlipped ? 'opacity-100' : 'opacity-0'}`}
-                >
-                  <div>
-                    <span className="text-[4rem] font-serif leading-none italic opacity-20">“</span>
-                    <p className="text-xl md:text-2xl font-serif italic leading-relaxed">
-                      RIAH redefined what we thought was possible. They created an atmosphere that felt like a living memory.
-                    </p>
-                  </div>
-                  
-                  <div className="border-t border-teal/10 pt-8 flex justify-between items-end">
-                    <div className="flex flex-col gap-4">
-                      <div>
-                        <p className="text-[10px] uppercase tracking-[0.4em] font-semibold text-mauve">Private Client</p>
-                        <p className="text-[12px] font-serif italic mt-1 opacity-60 text-teal">Lake Como</p>
-                      </div>
-                      <Link
-                        to="/about"
-                        className="text-[10px] uppercase tracking-[0.3em] font-bold text-mauve hover:text-teal transition-colors flex items-center gap-2 py-3 min-h-[44px]"
-                      >
-                        See More <span>→</span>
-                      </Link>
-                    </div>
-                    <button
-                      onClick={() => setIsFlipped(false)}
-                      className="text-[10px] uppercase tracking-[0.3em] font-black text-teal/40 hover:text-teal transition-colors py-3 min-h-[44px]"
-                    >
-                      Back
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-              
-              {/* Static decorative elements — no animation/blur (perf) */}
-              <div className="absolute -top-12 -right-12 w-24 h-24 bg-mauve/8 rounded-full" />
-              <div className="absolute -bottom-12 -left-12 w-32 h-32 bg-white/4 rounded-full" />
-            </div>
+          {/* TESTIMONIAL CARD COLUMN */}
+          <div className=”flex justify-center relative z-0”>
+            <TestimonialCard />
           </div>
 
         </div>

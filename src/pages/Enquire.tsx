@@ -29,7 +29,7 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
   const [slotImages, setSlotImages] = useState([0, 1, 2, 3, 4]);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
+    if (window.innerWidth < 1024) document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
 
@@ -206,7 +206,7 @@ export default function Enquire() {
               <FadeIn className="text-center mb-20">
                 <span className="text-[10px] uppercase tracking-[0.6em] text-mauve font-semibold mb-8 block">Begin Your Journey</span>
                 <h1 className="text-4xl sm:text-5xl md:text-7xl text-teal mt-6 leading-none tracking-tight font-serif">
-                  Begin Your RIAH Journey
+                  You will be invited to a private consultation to explore your celebration in greater depth.
                 </h1>
                 <div className="mt-10 max-w-2xl mx-auto space-y-4">
                   <p className="text-sm text-teal/55 font-light leading-relaxed tracking-wide">
@@ -267,8 +267,8 @@ export default function Enquire() {
               {/* Press aside */}
               <p className="text-[10px] text-slate/60 text-center font-light tracking-wide">
                 For press, partnerships, or speaking enquiries, please contact{' '}
-                <a href="mailto:press@riah.co.uk" className="hover:text-mauve transition-colors duration-300 underline underline-offset-4 decoration-slate/20 inline-flex items-center min-h-[44px] px-1">
-                  press@riah.co.uk
+                <a href="mailto:press@riahevents.com" className="hover:text-mauve transition-colors duration-300 underline underline-offset-4 decoration-slate/20 inline-flex items-center min-h-[44px] px-1">
+                  press@riahevents.com
                 </a>
               </p>
             </motion.div>

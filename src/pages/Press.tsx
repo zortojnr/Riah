@@ -11,9 +11,7 @@ const FEATURED_IN = [
 ];
 
 const SPEAKING = [
-  { event: 'ENGAGE! Luxury Wedding Summits', topic: 'Cultural Intelligence in Luxury Planning' },
-  { event: 'The Global Luxury Forum', topic: 'Redefining Heritage in High-End Celebrations' },
-  { event: 'Designers & Curators Panel 2025', topic: 'Intentionality as a Design Philosophy' },
+  { event: 'Wedding Planners Pro Meet Up 2025', topic: 'Rome' },
 ];
 
 const AWARDS = [
@@ -322,11 +320,11 @@ export default function Press() {
             For press, partnerships, or speaking enquiries, please contact us directly.
           </p>
           <a
-            href="mailto:tobi@riahevents.com"
+            href="mailto:press@riahevents.com"
             className="group inline-flex flex-col items-center gap-4"
           >
             <span className="text-xl md:text-2xl font-serif italic text-teal group-hover:text-mauve transition-colors duration-700 tracking-wide">
-              tobi@riahevents.com
+              press@riahevents.com
             </span>
             <div className="w-0 h-[1px] bg-mauve group-hover:w-full transition-all duration-1000" />
           </a>

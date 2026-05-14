@@ -27,9 +27,9 @@ const DESTINATIONS = [
     delay: 0.3,
   },
   {
-    country: 'PORTUGAL',
-    image: 'https://images.unsplash.com/photo-1555881400-74d7acaacd8b?q=80&w=1200',
-    blurb: "Sun-drenched quintas, coastal retreats, and heritage palaces. Portugal's warmth reflected in every detail we place.",
+    country: 'SPAIN',
+    image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?q=80&w=1200',
+    blurb: "Andalusian fincas, Balearic coastlines, and Catalonian estates. Spain's passion and elegance woven into every celebration.",
     delay: 0.4,
   },
 ];

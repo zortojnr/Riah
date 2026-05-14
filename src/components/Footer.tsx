@@ -85,7 +85,7 @@ export default function Footer() {
             <h4 className="text-[9px] uppercase tracking-[0.4em] font-semibold mb-8 text-off-white/30">Connect</h4>
             <div className="flex flex-col gap-1 mb-12">
               <a
-                href="https://instagram.com/riahweddings"
+                href="https://www.instagram.com/riahevents"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-[10px] uppercase tracking-[0.3em] text-off-white/60 hover:text-mauve transition-colors duration-400 py-3 min-h-[44px] flex items-center"
@@ -93,10 +93,10 @@ export default function Footer() {
                 Instagram
               </a>
               <a
-                href="mailto:press@riah.co.uk"
+                href="mailto:press@riahevents.com"
                 className="text-[10px] uppercase tracking-[0.3em] text-off-white/60 hover:text-mauve transition-colors duration-400 py-3 min-h-[44px] flex items-center"
               >
-                press@riah.co.uk
+                press@riahevents.com
               </a>
               <Link
                 to="/enquire"
