@@ -4,6 +4,7 @@ import FadeIn from '../components/FadeIn';
 
 type CelebrationType = 'wedding' | 'private' | null;
 
+// All images must be .webp — convert any new assets before adding
 const GALLERY_IMAGES = [
   '/assests/Stefflon(1).webp',
   '/assests/Stefflon(2).webp',
@@ -29,7 +30,7 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
   const [slotImages, setSlotImages] = useState([0, 1, 2, 3, 4]);
 
   useEffect(() => {
-    if (window.innerWidth < 1024) document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, []);
 
@@ -98,17 +99,11 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
           ))}
         </div>
 
-        {/* Footer CTA — prominent and clear */}
-        <div className="mt-12 md:mt-16 flex flex-col md:flex-row items-center justify-between gap-8 border-t border-white/10 pt-10">
+        {/* Footer note */}
+        <div className="mt-12 md:mt-16 border-t border-white/10 pt-10">
           <p className="text-off-white/55 text-sm font-light max-w-sm leading-relaxed font-serif italic text-center md:text-left">
             From milestone gatherings to exclusive cultural ceremonies, every detail curated with depth and discretion.
           </p>
-          <button
-            onClick={onEnquire}
-            className="shrink-0 bg-mauve text-off-white text-[9px] uppercase tracking-[0.5em] px-10 py-4 hover:bg-mauve/80 transition-all duration-500 shadow-lg"
-          >
-            Begin Your Enquiry →
-          </button>
         </div>
 
       </div>
@@ -217,6 +212,25 @@ export default function Enquire() {
                   </p>
                 </div>
               </FadeIn>
+
+              {/* Private Celebration Hero — swap inner div for <video> when asset is ready */}
+              <div className="relative w-full h-[55vh] overflow-hidden mb-12 bg-[#0b1614]">
+                <div className="w-full h-full bg-[#0b1614] flex items-center justify-center">
+                  <span className="text-[9px] uppercase tracking-[0.5em] text-off-white/20">Video coming soon</span>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-10 left-0 right-0 flex flex-col items-center z-10">
+                  <FadeIn>
+                    <span className="text-[9px] uppercase tracking-[0.6em] text-off-white/50 block text-center mb-4">Private Celebration</span>
+                    <button
+                      onClick={() => setShowPrivateGallery(true)}
+                      className="bg-mauve text-off-white text-[9px] uppercase tracking-[0.5em] px-10 py-4 hover:bg-mauve/80 transition-all duration-500 shadow-lg"
+                    >
+                      Begin Your Enquiry →
+                    </button>
+                  </FadeIn>
+                </div>
+              </div>
 
               {/* Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-4xl mb-12">
