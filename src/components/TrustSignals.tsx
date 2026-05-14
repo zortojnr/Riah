@@ -3,12 +3,15 @@ import { motion, useInView } from 'motion/react';
 import FadeIn from './FadeIn';
 
 const PLATFORMS = [
-  { logo: '/assests/logo1.jpg',  alt: '' },
-  { logo: '/assests/logo2.jpg',  alt: '' },
-  { logo: '/assests/logo3.png',  alt: '' },
-  { logo: '/assests/logo4.png',  alt: '' },
-  { logo: '/assests/logo5.jpeg', alt: '' },
-  { logo: '/assests/logo6.jpeg', alt: '' },
+  { logo: '/assests/HITCHED.jpg',                   alt: 'Hitched' },
+  { logo: '/assests/partyslate-social-preview.png', alt: 'PartySlate' },
+  { logo: '/assests/R.png',                         alt: 'BrideStory' },
+  { logo: '/assests/logo1.jpg',                     alt: '' },
+  { logo: '/assests/logo2.jpg',                     alt: '' },
+  { logo: '/assests/logo3.png',                     alt: '' },
+  { logo: '/assests/logo4.png',                     alt: '' },
+  { logo: '/assests/logo5.jpeg',                    alt: '' },
+  { logo: '/assests/logo6.jpeg',                    alt: '' },
 ];
 
 const STATS = [
@@ -43,14 +46,14 @@ export default function TrustSignals() {
       {/* Platform Badge Bar */}
       <section className="py-16 border-y border-teal/5 bg-off-white">
         <div className="luxury-container">
-          <FadeIn className="flex flex-wrap items-center justify-center gap-8 sm:gap-12 md:gap-20">
+          <FadeIn className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 md:gap-10">
             <span className="text-[11px] uppercase tracking-[0.5em] text-teal/40 font-bold w-full text-center mb-4">As Seen On</span>
             {PLATFORMS.map((p, i) => (
-              <div key={i} className="w-28 h-16 overflow-hidden border border-teal/10 bg-white flex items-center justify-center shadow-sm px-3">
+              <div key={i} className="w-20 h-20 rounded-full overflow-hidden border border-teal/10 bg-white flex items-center justify-center shadow-sm p-2 shrink-0">
                 <img
                   src={p.logo}
                   alt={p.alt}
-                  className="max-w-full max-h-full object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500"
+                  className="w-full h-full object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500"
                 />
               </div>
             ))}
