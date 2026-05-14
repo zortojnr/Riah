@@ -129,7 +129,7 @@ function TestimonialCard() {
           transition={{ duration: 1.2, ease: 'easeInOut', delay: 0.15 }}
           className="absolute bottom-0 left-0 right-0 p-7 md:p-9 overflow-y-auto max-h-[85%]"
         >
-          <p className="text-[13px] md:text-sm font-serif italic leading-relaxed text-off-white mb-5 whitespace-pre-line">
+          <p className="text-[13px] md:text-sm font-serif font-bold leading-relaxed text-off-white mb-5 whitespace-pre-line">
             {t.quote}
           </p>
           <div className="border-t border-white/20 pt-4">
