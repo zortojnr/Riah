@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
-import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect } from 'react';
 import FadeIn from '../components/FadeIn';
 
 const TIERS = [
@@ -201,36 +201,6 @@ const ENHANCEMENTS = [
   'Pre-wedding events and experiences',
 ];
 
-function HorizontalTiers() {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: outerRef,
-    offset: ['start start', 'end end'],
-  });
-
-  const x = useTransform(scrollYProgress, [0, 1], ['0vw', `-${(TIERS.length - 1) * 100}vw`]);
-
-  return (
-    <div ref={outerRef} className="hidden lg:block relative" style={{ height: `${TIERS.length * 100}vh` }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
-        <motion.div style={{ x }} className="flex h-full" style={{ width: `${TIERS.length * 100}vw` }}>
-          {TIERS.map((tier) => (
-            <div key={tier.id} className="w-screen h-screen flex shrink-0 border-t border-teal/5 bg-off-white">
-              {/* Image side */}
-              <div className="w-[45%] relative">
-                <TierImage images={tier.images} tierNumber={tier.number} />
-              </div>
-              {/* Content side */}
-              <div className="w-[55%] overflow-y-auto">
-                <TierContent tier={tier} />
-              </div>
-            </div>
-          ))}
-        </motion.div>
-      </div>
-    </div>
-  );
-}
 
 export default function Planning() {
   return (
@@ -261,11 +231,8 @@ export default function Planning() {
         </FadeIn>
       </div>
 
-      {/* Desktop: horizontal scroll tiers */}
-      <HorizontalTiers />
-
-      {/* Mobile: vertical stacked tiers */}
-      <div className="lg:hidden flex flex-col">
+      {/* Tier sections */}
+      <div className="flex flex-col">
         {TIERS.map((tier, i) => (
           <section key={tier.id} className="relative w-full border-t border-teal/5">
             <div className="grid grid-cols-1 lg:grid-cols-2 lg:items-stretch">

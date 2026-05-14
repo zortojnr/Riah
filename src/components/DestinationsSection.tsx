@@ -1,6 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
-import { Link } from 'react-router-dom';
 
 const DESTINATIONS = [
   {
@@ -67,8 +66,8 @@ function DestinationModal({ dest, onClose }: { dest: typeof DESTINATIONS[0]; onC
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.96, y: 10 }}
         transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="relative bg-off-white w-full max-w-3xl flex flex-col sm:flex-row overflow-hidden shadow-2xl z-10"
-        style={{ maxHeight: '90vh' }}
+        className="relative bg-off-white w-full max-w-4xl flex flex-col sm:flex-row overflow-hidden shadow-2xl z-10"
+        style={{ maxHeight: '92vh' }}
         onClick={e => e.stopPropagation()}
       >
         {/* X close */}
@@ -81,7 +80,7 @@ function DestinationModal({ dest, onClose }: { dest: typeof DESTINATIONS[0]; onC
         </button>
 
         {/* Image */}
-        <div className="w-full sm:w-[40%] h-52 sm:h-auto relative shrink-0">
+        <div className="w-full sm:w-[45%] h-52 sm:h-auto relative shrink-0">
           <img
             src={dest.image}
             alt={dest.country}
@@ -104,15 +103,6 @@ function DestinationModal({ dest, onClose }: { dest: typeof DESTINATIONS[0]; onC
             <p className="text-[13px] text-teal/80 font-light leading-relaxed tracking-wide">
               {dest.detail}
             </p>
-          </div>
-          <div className="mt-8 pt-6 border-t border-teal/10">
-            <Link
-              to="/enquire"
-              onClick={onClose}
-              className="text-[10px] uppercase tracking-[0.5em] text-teal border border-teal/30 px-8 py-4 inline-block hover:bg-teal hover:text-off-white transition-all duration-500"
-            >
-              Enquire about this destination
-            </Link>
           </div>
         </div>
       </motion.div>
