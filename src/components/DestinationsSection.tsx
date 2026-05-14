@@ -28,7 +28,7 @@ const DESTINATIONS = [
   },
   {
     country: 'SPAIN',
-    image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?q=80&w=1200',
+    image: '/assests/spain.webp',
     blurb: "Andalusian fincas, Balearic coastlines, and Catalonian estates. Spain's passion and elegance woven into every celebration.",
     delay: 0.4,
   },
