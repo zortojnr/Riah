@@ -71,15 +71,9 @@ function StatSlideshow({ images }: { images: string[] }) {
 
 const TESTIMONIALS: { quote: string; client: string; location: string; image: string }[] = [
   {
-    quote: `Tobi… thank you truly for everything.
+    quote: `RIAH handled our celebration with such calmness, professionalism, and care from beginning to end. Every detail was executed beautifully, and even under pressure, everything felt seamless and intentional.
 
-From the very beginning, your calmness, professionalism, and reassuring presence made the entire experience feel effortless. Every detail was handled with such care, urgency, and precision, and throughout it all, you remained composed, attentive, and incredibly efficient.
-
-You didn't just plan a celebration, you created an experience that felt deeply intentional, beautiful, and completely seamless for us and our families.
-
-Thank you for being such an important part of one of the most meaningful moments of our lives. Your excellence, warmth, and dedication did not go unnoticed.
-
-You are truly a star.`,
+Their efficiency, warmth, and attention to detail made the entire experience unforgettable. We truly felt supported every step of the way.`,
     client: 'Tosan & Tayo',
     location: '',
     image: '/assests/testimonial1.webp',
