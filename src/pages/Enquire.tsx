@@ -289,9 +289,9 @@ export default function Enquire() {
           {celebrationType === 'wedding' && (
             <motion.div
               key="wedding-form"
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: -40 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 1, ease: 'easeOut' }}
               className="max-w-2xl mx-auto"
             >
@@ -428,9 +428,9 @@ export default function Enquire() {
           {celebrationType === 'private' && (
             <motion.div
               key="private-form"
-              initial={{ opacity: 0, y: 40 }}
+              initial={{ opacity: 0, y: -40 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
+              exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 1, ease: 'easeOut' }}
               className="max-w-2xl mx-auto"
             >
