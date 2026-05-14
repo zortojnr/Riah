@@ -114,10 +114,10 @@ function PrivateGallery({ onEnquire, onClose }: { onEnquire: () => void; onClose
 }
 
 const INPUT_CLASS =
-  'w-full bg-transparent border-b border-teal/40 py-4 md:py-5 outline-none focus:border-mauve text-teal font-light placeholder:text-teal/50 transition-all duration-700 text-sm md:text-base tracking-wide';
+  'w-full bg-transparent border-b border-black/20 py-4 md:py-5 outline-none focus:border-mauve text-black font-medium placeholder:text-black/40 transition-all duration-700 text-sm md:text-base tracking-wide';
 
 const SELECT_CLASS =
-  'w-full bg-transparent border-b border-teal/40 py-4 md:py-5 outline-none focus:border-mauve text-teal font-light appearance-none cursor-pointer text-sm md:text-base tracking-wide';
+  'w-full bg-transparent border-b border-black/20 py-4 md:py-5 outline-none focus:border-mauve text-black font-medium appearance-none cursor-pointer text-sm md:text-base tracking-wide';
 
 export default function Enquire() {
   const [celebrationType, setCelebrationType] = useState<CelebrationType>(null);
@@ -298,7 +298,7 @@ export default function Enquire() {
               {/* Back */}
               <button
                 onClick={() => { setCelebrationType(null); setStep(1); }}
-                className="flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-teal/30 hover:text-teal/80 transition-all duration-500 mb-16 group py-3 min-h-[44px] pr-6"
+                className="flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-black/40 hover:text-black transition-all duration-500 mb-16 group py-3 min-h-[44px] pr-6"
               >
                 <span className="group-hover:-translate-x-1 transition-transform duration-500">←</span>
                 Back to selection
@@ -314,13 +314,13 @@ export default function Enquire() {
                     {n < 3 && <div className={`h-[1px] w-8 transition-all duration-500 ${step > n ? 'bg-mauve/60' : 'bg-teal/10'}`} />}
                   </div>
                 ))}
-                <span className="text-[9px] uppercase tracking-[0.3em] text-teal/55 ml-2">
+                <span className="text-[9px] uppercase tracking-[0.3em] text-black/60 font-semibold ml-2">
                   {step === 1 ? 'Personal Details' : step === 2 ? 'The Celebration' : 'Investment Alignment'}
                 </span>
               </div>
 
               <span className="text-[10px] uppercase tracking-[0.5em] text-mauve font-semibold mb-6 block">Wedding Enquiry</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl text-teal mb-16 leading-none tracking-tight font-serif">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl text-black mb-16 leading-none tracking-tight font-serif">
                 {step === 1 ? 'About You' : step === 2 ? 'Your Celebration' : 'Investment Alignment'}
               </h2>
 
@@ -375,7 +375,7 @@ export default function Enquire() {
                   {/* Step 3 */}
                   {step === 3 && (
                     <motion.div key="s3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.5 }} className="space-y-8">
-                      <p className="text-[10px] text-teal/60 uppercase tracking-[0.3em] -mb-2">
+                      <p className="text-[10px] text-black font-semibold uppercase tracking-[0.3em] -mb-2">
                         Investment ranges are presented to help us ensure we can serve you at the level you deserve.
                       </p>
                       <select name="investment" value={weddingForm.investment} onChange={updateWedding} className={SELECT_CLASS} required>
@@ -395,7 +395,7 @@ export default function Enquire() {
                         <option value="google">Google</option>
                         <option value="other">Other</option>
                       </select>
-                      <p className="text-[10px] text-teal/55 font-light italic leading-relaxed tracking-wide pt-2">
+                      <p className="text-[10px] text-black font-semibold italic leading-relaxed tracking-wide pt-2">
                         Thank you for considering RIAH to curate your celebration. Our team will be in touch within 48 hours should your date and vision align with our availability.
                       </p>
                     </motion.div>
@@ -407,7 +407,7 @@ export default function Enquire() {
                     <button
                       type="button"
                       onClick={() => setStep(prev => prev - 1)}
-                      className="text-[10px] uppercase tracking-[0.4em] text-teal/30 hover:text-teal/70 transition-colors duration-500"
+                      className="text-[10px] uppercase tracking-[0.4em] text-black/40 hover:text-black transition-colors duration-500"
                     >
                       ← Previous
                     </button>
@@ -436,14 +436,14 @@ export default function Enquire() {
             >
               <button
                 onClick={() => setCelebrationType(null)}
-                className="flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-teal/30 hover:text-teal/80 transition-all duration-500 mb-16 group py-3 min-h-[44px] pr-6"
+                className="flex items-center gap-2 text-[10px] tracking-[0.4em] uppercase text-black/40 hover:text-black transition-all duration-500 mb-16 group py-3 min-h-[44px] pr-6"
               >
                 <span className="group-hover:-translate-x-1 transition-transform duration-500">←</span>
                 Back to selection
               </button>
 
               <span className="text-[10px] uppercase tracking-[0.5em] text-mauve font-semibold mb-6 block">Private Enquiry</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl text-teal mb-16 leading-none tracking-tight font-serif">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl text-black mb-16 leading-none tracking-tight font-serif">
                 The Private Enquiry
               </h2>
 
@@ -485,7 +485,7 @@ export default function Enquire() {
                   </select>
                 </div>
 
-                <p className="text-[10px] text-teal/30 font-light italic leading-relaxed tracking-wide">
+                <p className="text-[10px] text-black font-semibold italic leading-relaxed tracking-wide">
                   Thank you for your enquiry. Our team will review your details and be in touch shortly.
                 </p>
 
