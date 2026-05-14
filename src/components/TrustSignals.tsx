@@ -68,7 +68,7 @@ export default function TrustSignals() {
             className="flex items-center gap-8 pr-8"
           >
             {DOUBLED.map((p, i) => (
-              <div key={i} className="w-44 h-24 rounded-xl border border-teal/10 flex items-center justify-center shadow-sm shrink-0">
+              <div key={i} className="w-24 h-24 rounded-full border border-teal/10 flex items-center justify-center shadow-sm shrink-0 overflow-hidden">
                 <img
                   src={p.logo}
                   alt={p.alt}
