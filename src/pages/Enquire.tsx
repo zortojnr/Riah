@@ -215,11 +215,17 @@ export default function Enquire() {
                 </div>
               </FadeIn>
 
-              {/* Private Celebration Hero — swap inner div for <video> when asset is ready */}
+              {/* Private Celebration Hero */}
               <div className="relative w-full h-[55vh] overflow-hidden mb-12 bg-[#0b1614]">
-                <div className="w-full h-full bg-[#0b1614] flex items-center justify-center">
-                  <span className="text-[9px] uppercase tracking-[0.5em] text-off-white/20">Video coming soon</span>
-                </div>
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover"
+                >
+                  <source src="https://res.cloudinary.com/dzr18sd58/video/upload/v1778771723/AFRO_qls22d.mp4" type="video/mp4" />
+                </video>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
               </div>
 

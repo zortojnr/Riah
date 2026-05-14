@@ -7,13 +7,13 @@ const VALUES = [
   {
     title: 'Intentionality',
     desc: 'Every decision is purposeful. Nothing is filler.',
-    image: '/assests/7a.webp',
+    image: '/assests/intentionality.webp',
     yPos: 'md:-mt-12',
   },
   {
     title: 'Discretion',
     desc: "Luxury is private. We protect our couples' experience with care.",
-    image: '/assests/15a.webp',
+    image: '/assests/discretion1.webp',
     yPos: 'md:mt-12',
   },
   {

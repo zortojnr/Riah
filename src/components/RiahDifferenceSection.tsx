@@ -3,22 +3,22 @@ import FadeIn from './FadeIn';
 
 const PORTRAITS = [
   {
-    number: '01',
-    word: 'Luxury',
-    description: 'Uncompromising attention to detail, refined aesthetics, and world-class execution.',
-    image: '/assests/3a.webp',
+    number: '03',
+    word: 'Experience',
+    description: 'From the first enquiry to the final dance, we create an experience that transcends the ordinary.',
+    image: '/assests/experience.webp',
   },
   {
     number: '02',
     word: 'Culture',
     description: 'Deep understanding of heritage, tradition, and the rituals that make a celebration yours.',
-    image: '/assests/8a.webp',
+    image: '/assests/culture.webp',
   },
   {
     number: '04',
     word: 'Storytelling',
     description: 'Every wedding tells a story. We design yours so it unfolds with intention and beauty.',
-    image: '/assests/4a.webp',
+    image: '/assests/discretion4.webp',
   },
   {
     number: '05',
@@ -29,9 +29,9 @@ const PORTRAITS = [
 ];
 
 const LANDSCAPE = {
-  number: '03',
-  word: 'Experience',
-  description: 'From the first enquiry to the final dance, we create an experience that transcends the ordinary.',
+  number: '01',
+  word: 'Luxury',
+  description: 'Uncompromising attention to detail, refined aesthetics, and world-class execution.',
   image: '/assests/14a.webp',
 };
 
@@ -56,7 +56,7 @@ function PortraitCard({ number, word, description, image, delay = 0 }: {
         className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
         loading="lazy"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-black/5" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/5" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_65%,rgba(191,168,187,0.10)_0%,transparent_65%)]" />
 
       {/* Left accent bar */}
@@ -77,7 +77,7 @@ function PortraitCard({ number, word, description, image, delay = 0 }: {
           {word}
         </h3>
         <div className="w-6 h-[1px] bg-mauve/50 mb-3" />
-        <p className="text-[10px] text-off-white/50 font-light leading-relaxed tracking-wide max-w-[140px]">
+        <p className="text-[10px] text-off-white/75 font-light leading-relaxed tracking-wide max-w-[180px]">
           {description}
         </p>
       </div>
@@ -130,9 +130,9 @@ export default function RiahDifferenceSection() {
           {/*
             Padding on the outer wrapper = half the portrait card width so the
             absolutely-positioned portraits (centred on each corner) don't get clipped.
-            Portrait card width = 240px  →  padding = 120px
+            Portrait card width = 280px  →  padding = 140px
           */}
-          <div className="relative" style={{ padding: '120px' }}>
+          <div className="relative" style={{ padding: '140px' }}>
 
             {/* Landscape — fills the padded inner area, full width */}
             <motion.div
@@ -149,8 +149,8 @@ export default function RiahDifferenceSection() {
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
         loading="lazy"
               />
-              <div className="absolute inset-0 bg-teal/25 mix-blend-multiply" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+              <div className="absolute inset-0 bg-teal/35 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
 
               {/* Corner brackets */}
               <div className="absolute top-6 left-6 w-10 h-10 border-l border-t border-mauve/30" />
@@ -175,19 +175,19 @@ export default function RiahDifferenceSection() {
 
             {/* Portrait cards — centred exactly on each corner of the landscape */}
             {/* Top-left */}
-            <div className="absolute z-20" style={{ top: '120px', left: '120px', width: '240px', transform: 'translate(-50%, -50%)' }}>
+            <div className="absolute z-20" style={{ top: '140px', left: '140px', width: '280px', transform: 'translate(-50%, -50%)' }}>
               <PortraitCard {...PORTRAITS[0]} delay={0} />
             </div>
             {/* Top-right */}
-            <div className="absolute z-20" style={{ top: '120px', right: '120px', width: '240px', transform: 'translate(50%, -50%)' }}>
+            <div className="absolute z-20" style={{ top: '140px', right: '140px', width: '280px', transform: 'translate(50%, -50%)' }}>
               <PortraitCard {...PORTRAITS[1]} delay={0.1} />
             </div>
             {/* Bottom-left */}
-            <div className="absolute z-20" style={{ bottom: '120px', left: '120px', width: '240px', transform: 'translate(-50%, 50%)' }}>
+            <div className="absolute z-20" style={{ bottom: '140px', left: '140px', width: '280px', transform: 'translate(-50%, 50%)' }}>
               <PortraitCard {...PORTRAITS[2]} delay={0.3} />
             </div>
             {/* Bottom-right */}
-            <div className="absolute z-20" style={{ bottom: '120px', right: '120px', width: '240px', transform: 'translate(50%, 50%)' }}>
+            <div className="absolute z-20" style={{ bottom: '140px', right: '140px', width: '280px', transform: 'translate(50%, 50%)' }}>
               <PortraitCard {...PORTRAITS[3]} delay={0.4} />
             </div>
 
@@ -216,8 +216,8 @@ export default function RiahDifferenceSection() {
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
         loading="lazy"
             />
-            <div className="absolute inset-0 bg-teal/25 mix-blend-multiply" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent" />
+            <div className="absolute inset-0 bg-teal/35 mix-blend-multiply" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-transparent" />
             <div className="absolute top-4 left-4 w-6 h-6 border-l border-t border-mauve/30" />
             <div className="absolute bottom-4 right-4 w-6 h-6 border-r border-b border-mauve/30" />
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6">
