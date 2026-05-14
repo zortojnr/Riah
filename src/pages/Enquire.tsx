@@ -8,7 +8,7 @@ type CelebrationType = 'wedding' | 'private' | null;
 const GALLERY_IMAGES = [
   '/assests/Stefflon(1).webp',
   '/assests/Stefflon(2).webp',
-  '/assests/Stefflon2 (1).jpg',
+  '/assests/Stefflon2-1.webp',
   '/assests/Steff3.webp',
   '/assests/Stefflon(4).webp',
   '/assests/StefflonDon.webp',
