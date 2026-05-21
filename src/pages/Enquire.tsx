@@ -12,6 +12,8 @@ const GALLERY_IMAGES = [
   '/assests/Steff3.webp',
   '/assests/Stefflon(4).webp',
   '/assests/StefflonDon.webp',
+  '/assests/GSON3339.webp',
+  '/assests/GSON3366.webp',
 ];
 
 // Each slot has a fixed size — images crossfade inside without any layout shift

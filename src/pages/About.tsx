@@ -111,6 +111,14 @@ export default function About() {
                 Today, RIAH serves clients across London, Italy, France, and international destinations, curating celebrations that live far beyond the wedding day.
               </p>
             </div>
+            <a
+              href="https://www.tobiyusuf.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-10 text-[10px] uppercase tracking-[0.6em] border border-teal text-teal px-8 py-4 hover:bg-teal hover:text-off-white transition-all duration-700"
+            >
+              More about Tobi
+            </a>
           </FadeIn>
         </div>
       </section>

@@ -21,6 +21,8 @@ const MEDIA_IMAGES = [
   '/assests/12b.webp',
   '/assests/Steff3.webp',
   '/assests/StefflonDon.webp',
+  '/assests/GSON3339.webp',
+  '/assests/GSON3366.webp',
 ];
 
 export default function Media() {
