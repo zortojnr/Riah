@@ -1,7 +1,7 @@
 import { Resend } from 'resend';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const TO = 'tobi@riahevents.com';
+const TO = 'contact@riahevents.com';
 
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== 'POST') {
@@ -44,7 +44,7 @@ export default async function handler(req: Request): Promise<Response> {
     `;
 
     const { error } = await resend.emails.send({
-      from: 'RIAH Enquiries <tobi@riahevents.com>',
+      from: 'RIAH Enquiries <contact@riahevents.com>',
       to: TO,
       subject: 'Wedding Celebration Enquiry — RIAH',
       html,
@@ -84,7 +84,7 @@ export default async function handler(req: Request): Promise<Response> {
     `;
 
     const { error } = await resend.emails.send({
-      from: 'RIAH Enquiries <tobi@riahevents.com>',
+      from: 'RIAH Enquiries <contact@riahevents.com>',
       to: TO,
       subject: 'Private Celebration Enquiry — RIAH',
       html,
