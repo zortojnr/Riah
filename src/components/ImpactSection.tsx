@@ -78,6 +78,14 @@ Their efficiency, warmth, and attention to detail made the entire experience unf
     location: '',
     image: '/assests/testimonial1.webp',
   },
+  {
+    quote: `RIAH coordinated both my wedding celebration and my 50th birthday with exceptional professionalism, care, and attention to detail. Every aspect was handled seamlessly, and the experience felt intentional from beginning to end.
+
+What stood out most was the level of coordination, calm execution, and thoughtfulness throughout the process. Every moment was beautifully managed, and I truly loved every part of the experience.`,
+    client: 'Mrs. Rita Dominic',
+    location: '',
+    image: '/assests/GSON2380.webp',
+  },
 ];
 
 function TestimonialCard() {
