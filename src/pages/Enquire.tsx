@@ -160,17 +160,31 @@ export default function Enquire() {
     e.preventDefault();
     if (step < 3) { setStep(prev => prev + 1); return; }
     setIsLoading(true);
-    await new Promise(r => setTimeout(r, 800));
-    setIsLoading(false);
-    setIsSubmitted(true);
+    try {
+      await fetch('/api/enquire', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'wedding', ...weddingForm }),
+      });
+    } finally {
+      setIsLoading(false);
+      setIsSubmitted(true);
+    }
   };
 
   const handlePrivateSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await new Promise(r => setTimeout(r, 800));
-    setIsLoading(false);
-    setIsSubmitted(true);
+    try {
+      await fetch('/api/enquire', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type: 'private', ...privateForm }),
+      });
+    } finally {
+      setIsLoading(false);
+      setIsSubmitted(true);
+    }
   };
 
   if (isSubmitted) {
