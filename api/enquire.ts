@@ -44,7 +44,7 @@ export default async function handler(req: Request): Promise<Response> {
     `;
 
     const { error } = await resend.emails.send({
-      from: 'RIAH Enquiries <enquiries@riahevents.com>',
+      from: 'RIAH Enquiries <tobi@riahevents.com>',
       to: TO,
       subject: 'Wedding Celebration Enquiry — RIAH',
       html,
@@ -84,7 +84,7 @@ export default async function handler(req: Request): Promise<Response> {
     `;
 
     const { error } = await resend.emails.send({
-      from: 'RIAH Enquiries <enquiries@riahevents.com>',
+      from: 'RIAH Enquiries <tobi@riahevents.com>',
       to: TO,
       subject: 'Private Celebration Enquiry — RIAH',
       html,
