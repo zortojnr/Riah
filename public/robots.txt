@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /portal
 
-Sitemap: https://riahevents.com/sitemap.xml
+Sitemap: https://www.riahevents.com/sitemap.xml
