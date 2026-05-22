@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, type FC } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 

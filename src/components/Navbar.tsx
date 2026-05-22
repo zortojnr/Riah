@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 const links = [
+  { name: 'HOME', path: '/' },
   { name: 'ABOUT', path: '/about' },
   { name: 'PLANNING', path: '/planning' },
   { name: 'JOURNAL', path: '/journal' },
