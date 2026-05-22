@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import FadeIn from '../components/FadeIn';
@@ -39,6 +40,36 @@ const ARTICLES: Record<string, {
 export default function JournalArticle() {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? ARTICLES[slug] : undefined;
+
+  useEffect(() => {
+    if (!article) return;
+    document.title = `${article.title} | RIAH Journal`;
+    const metaEl = document.querySelector('meta[name="description"]');
+    if (metaEl) metaEl.setAttribute('content', article.body[0].slice(0, 155));
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'article-schema';
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BlogPosting',
+      headline: article.title,
+      description: article.body[0].slice(0, 155),
+      image: article.image,
+      author: { '@type': 'Person', name: 'Tobi Yusuf' },
+      publisher: {
+        '@type': 'Organization',
+        name: 'RIAH Weddings & Events',
+        logo: { '@type': 'ImageObject', url: 'https://riahevents.com/favicon.svg' },
+      },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': `https://riahevents.com/journal/${slug}` },
+    });
+    document.head.appendChild(script);
+
+    return () => {
+      document.getElementById('article-schema')?.remove();
+    };
+  }, [article, slug]);
 
   if (!article) {
     return (

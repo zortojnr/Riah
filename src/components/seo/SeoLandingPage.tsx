@@ -45,6 +45,23 @@ export default function SeoLandingPage({
     document.title = `${keyword} | RIAH Weddings & Events`;
     const metaEl = document.querySelector('meta[name="description"]');
     if (metaEl) metaEl.setAttribute('content', metaDescription);
+
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.id = 'breadcrumb-schema';
+    script.textContent = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://riahevents.com' },
+        { '@type': 'ListItem', position: 2, name: keyword, item: `https://riahevents.com${window.location.pathname}` },
+      ],
+    });
+    document.head.appendChild(script);
+
+    return () => {
+      document.getElementById('breadcrumb-schema')?.remove();
+    };
   }, [keyword, metaDescription]);
 
   return (
