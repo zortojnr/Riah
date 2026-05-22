@@ -1,6 +1,28 @@
-import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react'; // useEffect used in PrivateGallery
+import { useState, useEffect, type FormEvent, type ChangeEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import FadeIn from '../components/FadeIn';
+
+function Toast({ message, type, onDismiss }: { message: string; type: 'success' | 'error'; onDismiss: () => void }) {
+  useEffect(() => {
+    const t = setTimeout(onDismiss, 5000);
+    return () => clearTimeout(t);
+  }, [onDismiss]);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 24 }}
+      transition={{ duration: 0.4, ease: 'easeOut' }}
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-[500] px-6 py-4 text-[11px] uppercase tracking-[0.4em] font-semibold shadow-xl ${
+        type === 'success' ? 'bg-teal text-off-white' : 'bg-red-700 text-white'
+      }`}
+    >
+      <span>{message}</span>
+      <button onClick={onDismiss} className="ml-6 opacity-60 hover:opacity-100 transition-opacity">✕</button>
+    </motion.div>
+  );
+}
 
 type CelebrationType = 'wedding' | 'private' | null;
 
@@ -137,6 +159,7 @@ export default function Enquire() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
   const [weddingForm, setWeddingForm] = useState({
     fullName: '', partnerName: '', email: '', phone: '', basedIn: '',
@@ -169,9 +192,12 @@ export default function Enquire() {
         body: JSON.stringify({ type: 'wedding', ...weddingForm }),
       });
       if (!res.ok) throw new Error('Failed to send');
+      setToast({ message: 'Enquiry sent — we\'ll be in touch within 48 hours', type: 'success' });
       setIsSubmitted(true);
     } catch {
-      setError('Something went wrong. Please try again or email us directly at contact@riahevents.com');
+      const msg = 'Something went wrong. Please try again or email contact@riahevents.com';
+      setError(msg);
+      setToast({ message: msg, type: 'error' });
     } finally {
       setIsLoading(false);
     }
@@ -188,9 +214,12 @@ export default function Enquire() {
         body: JSON.stringify({ type: 'private', ...privateForm }),
       });
       if (!res.ok) throw new Error('Failed to send');
+      setToast({ message: 'Enquiry sent — we\'ll be in touch within 48 hours', type: 'success' });
       setIsSubmitted(true);
     } catch {
-      setError('Something went wrong. Please try again or email us directly at contact@riahevents.com');
+      const msg = 'Something went wrong. Please try again or email contact@riahevents.com';
+      setError(msg);
+      setToast({ message: msg, type: 'error' });
     } finally {
       setIsLoading(false);
     }
@@ -213,6 +242,11 @@ export default function Enquire() {
 
   return (
     <div className="pt-24 md:pt-36 pb-20 md:pb-32">
+      <AnimatePresence>
+        {toast && (
+          <Toast key="toast" message={toast.message} type={toast.type} onDismiss={() => setToast(null)} />
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {showPrivateGallery && (
           <PrivateGallery

@@ -1,35 +1,19 @@
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 const TO = 'contact@riahevents.com';
-const RESEND_URL = 'https://api.resend.com/emails';
 
-async function sendEmail(payload: {
-  from: string;
-  to: string;
-  subject: string;
-  html: string;
-  reply_to: string;
-}): Promise<void> {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8_000);
-
-  let res: Response;
-  try {
-    res = await fetch(RESEND_URL, {
-      method: 'POST',
-      signal: controller.signal,
-      headers: {
-        Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-  } finally {
-    clearTimeout(timer);
-  }
-
-  if (!res.ok) {
-    const detail = await res.text().catch(() => res.statusText);
-    throw new Error(`Resend ${res.status}: ${detail}`);
-  }
+function buildTable(title: string, rows: [string, string | undefined][]): string {
+  return `
+    <h2 style="font-family:sans-serif;color:#1a3330;margin-bottom:20px">${title}</h2>
+    <table style="font-family:sans-serif;border-collapse:collapse;width:100%;max-width:600px">
+      ${rows.map(([label, value]) => `
+        <tr>
+          <td style="padding:10px 14px;background:#f5f4f0;font-weight:600;color:#1a3330;width:38%;border-bottom:1px solid #e0ddd6">${label}</td>
+          <td style="padding:10px 14px;color:#333;border-bottom:1px solid #e0ddd6">${value || '—'}</td>
+        </tr>`).join('')}
+    </table>
+  `;
 }
 
 export default async function handler(req: Request): Promise<Response> {
@@ -38,10 +22,12 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   if (!process.env.RESEND_API_KEY) {
-    console.error('RESEND_API_KEY is not set');
-    return new Response(JSON.stringify({ error: 'RESEND_API_KEY not set' }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    console.error('[enquire] RESEND_API_KEY is not set');
+    return new Response(JSON.stringify({ error: 'Server misconfiguration' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
-  console.log('RESEND_API_KEY present, length:', process.env.RESEND_API_KEY.length);
 
   let body: Record<string, string>;
   try {
@@ -53,7 +39,11 @@ export default async function handler(req: Request): Promise<Response> {
   const { type, ...fields } = body;
 
   if (type === 'wedding') {
-    const rows: [string, string][] = [
+    if (!fields.fullName || !fields.email) {
+      return new Response('Missing required fields', { status: 400 });
+    }
+
+    const rows: [string, string | undefined][] = [
       ['Name', fields.fullName],
       ["Partner's Name", fields.partnerName],
       ['Email', fields.email],
@@ -67,24 +57,29 @@ export default async function handler(req: Request): Promise<Response> {
       ['How They Heard', fields.howHeard],
     ];
 
-    try {
-      await sendEmail({
-        from: 'RIAH Enquiries <contact@riahevents.com>',
-        to: TO,
-        subject: 'Wedding Celebration Enquiry — RIAH',
-        html: buildTable('New Wedding Celebration Enquiry', rows),
-        reply_to: fields.email,
-      });
-    } catch (err) {
-      console.error('Email send failed (wedding):', err instanceof Error ? err.message : err);
+    const { error } = await resend.emails.send({
+      from: 'RIAH Enquiries <contact@riahevents.com>',
+      to: TO,
+      subject: 'Wedding Celebration Enquiry — RIAH',
+      html: buildTable('New Wedding Celebration Enquiry', rows),
+      replyTo: fields.email,
+    });
+
+    if (error) {
+      console.error(`[enquire] Wedding send failed for ${fields.fullName} <${fields.email}>:`, error);
       return new Response('Email failed', { status: 500 });
     }
 
+    console.log(`[enquire] Wedding enquiry sent — ${fields.fullName} <${fields.email}>`);
     return new Response('OK', { status: 200 });
   }
 
   if (type === 'private') {
-    const rows: [string, string][] = [
+    if (!fields.name || !fields.email) {
+      return new Response('Missing required fields', { status: 400 });
+    }
+
+    const rows: [string, string | undefined][] = [
       ['Name', fields.name],
       ['Email', fields.email],
       ['Phone', fields.phone],
@@ -96,34 +91,22 @@ export default async function handler(req: Request): Promise<Response> {
       ['How They Heard', fields.howHeard],
     ];
 
-    try {
-      await sendEmail({
-        from: 'RIAH Enquiries <contact@riahevents.com>',
-        to: TO,
-        subject: 'Private Celebration Enquiry — RIAH',
-        html: buildTable('New Private Celebration Enquiry', rows),
-        reply_to: fields.email,
-      });
-    } catch (err) {
-      console.error('Email send failed (private):', err instanceof Error ? err.message : err);
+    const { error } = await resend.emails.send({
+      from: 'RIAH Enquiries <contact@riahevents.com>',
+      to: TO,
+      subject: 'Private Celebration Enquiry — RIAH',
+      html: buildTable('New Private Celebration Enquiry', rows),
+      replyTo: fields.email,
+    });
+
+    if (error) {
+      console.error(`[enquire] Private send failed for ${fields.name} <${fields.email}>:`, error);
       return new Response('Email failed', { status: 500 });
     }
 
+    console.log(`[enquire] Private enquiry sent — ${fields.name} <${fields.email}>`);
     return new Response('OK', { status: 200 });
   }
 
   return new Response('Unknown enquiry type', { status: 400 });
-}
-
-function buildTable(title: string, rows: [string, string][]): string {
-  return `
-    <h2 style="font-family:sans-serif;color:#1a3330">${title}</h2>
-    <table style="font-family:sans-serif;border-collapse:collapse;width:100%;max-width:600px">
-      ${rows.map(([label, value]) => `
-        <tr>
-          <td style="padding:10px 14px;background:#f5f4f0;font-weight:600;color:#1a3330;width:38%;border-bottom:1px solid #e0ddd6">${label}</td>
-          <td style="padding:10px 14px;color:#333;border-bottom:1px solid #e0ddd6">${value || '—'}</td>
-        </tr>`).join('')}
-    </table>
-  `;
 }
