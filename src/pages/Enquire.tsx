@@ -136,6 +136,7 @@ export default function Enquire() {
   const [step, setStep] = useState(1);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [weddingForm, setWeddingForm] = useState({
     fullName: '', partnerName: '', email: '', phone: '', basedIn: '',
@@ -160,30 +161,38 @@ export default function Enquire() {
     e.preventDefault();
     if (step < 3) { setStep(prev => prev + 1); return; }
     setIsLoading(true);
+    setError(null);
     try {
-      await fetch('/api/enquire', {
+      const res = await fetch('/api/enquire', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'wedding', ...weddingForm }),
       });
+      if (!res.ok) throw new Error('Failed to send');
+      setIsSubmitted(true);
+    } catch {
+      setError('Something went wrong. Please try again or email us directly at contact@riahevents.com');
     } finally {
       setIsLoading(false);
-      setIsSubmitted(true);
     }
   };
 
   const handlePrivateSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setError(null);
     try {
-      await fetch('/api/enquire', {
+      const res = await fetch('/api/enquire', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type: 'private', ...privateForm }),
       });
+      if (!res.ok) throw new Error('Failed to send');
+      setIsSubmitted(true);
+    } catch {
+      setError('Something went wrong. Please try again or email us directly at contact@riahevents.com');
     } finally {
       setIsLoading(false);
-      setIsSubmitted(true);
     }
   };
 
@@ -430,6 +439,9 @@ export default function Enquire() {
                   )}
                 </AnimatePresence>
 
+                {error && (
+                  <p className="text-[11px] text-red-500 font-light leading-relaxed tracking-wide">{error}</p>
+                )}
                 <div className="pt-8 flex items-center gap-6">
                   {step > 1 && (
                     <button
@@ -517,6 +529,9 @@ export default function Enquire() {
                   Thank you for your enquiry. Our team will review your details and be in touch shortly.
                 </p>
 
+                {error && (
+                  <p className="text-[11px] text-red-500 font-light leading-relaxed tracking-wide">{error}</p>
+                )}
                 <div className="pt-8">
                   <button
                     type="submit"
