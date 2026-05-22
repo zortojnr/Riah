@@ -1,4 +1,5 @@
 import { Resend } from 'resend';
+import type { IncomingMessage, ServerResponse } from 'http';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const TO = 'contact@riahevents.com';
@@ -16,31 +17,42 @@ function buildTable(title: string, rows: [string, string | undefined][]): string
   `;
 }
 
-export default async function handler(req: Request): Promise<Response> {
+function readBody(req: IncomingMessage): Promise<string> {
+  return new Promise((resolve, reject) => {
+    let data = '';
+    req.on('data', chunk => { data += chunk; });
+    req.on('end', () => resolve(data));
+    req.on('error', reject);
+  });
+}
+
+export default async function handler(req: IncomingMessage, res: ServerResponse): Promise<void> {
   if (req.method !== 'POST') {
-    return new Response('Method not allowed', { status: 405 });
+    res.writeHead(405).end('Method not allowed');
+    return;
   }
 
   if (!process.env.RESEND_API_KEY) {
     console.error('[enquire] RESEND_API_KEY is not set');
-    return new Response(JSON.stringify({ error: 'Server misconfiguration' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
+    res.writeHead(500, { 'Content-Type': 'application/json' }).end(JSON.stringify({ error: 'Server misconfiguration' }));
+    return;
   }
 
   let body: Record<string, string>;
   try {
-    body = await req.json();
+    const raw = await readBody(req);
+    body = JSON.parse(raw);
   } catch {
-    return new Response('Invalid JSON', { status: 400 });
+    res.writeHead(400).end('Invalid JSON');
+    return;
   }
 
   const { type, ...fields } = body;
 
   if (type === 'wedding') {
     if (!fields.fullName || !fields.email) {
-      return new Response('Missing required fields', { status: 400 });
+      res.writeHead(400).end('Missing required fields');
+      return;
     }
 
     const rows: [string, string | undefined][] = [
@@ -67,16 +79,19 @@ export default async function handler(req: Request): Promise<Response> {
 
     if (error) {
       console.error(`[enquire] Wedding send failed for ${fields.fullName} <${fields.email}>:`, error);
-      return new Response('Email failed', { status: 500 });
+      res.writeHead(500).end('Email failed');
+      return;
     }
 
     console.log(`[enquire] Wedding enquiry sent — ${fields.fullName} <${fields.email}>`);
-    return new Response('OK', { status: 200 });
+    res.writeHead(200).end('OK');
+    return;
   }
 
   if (type === 'private') {
     if (!fields.name || !fields.email) {
-      return new Response('Missing required fields', { status: 400 });
+      res.writeHead(400).end('Missing required fields');
+      return;
     }
 
     const rows: [string, string | undefined][] = [
@@ -101,12 +116,14 @@ export default async function handler(req: Request): Promise<Response> {
 
     if (error) {
       console.error(`[enquire] Private send failed for ${fields.name} <${fields.email}>:`, error);
-      return new Response('Email failed', { status: 500 });
+      res.writeHead(500).end('Email failed');
+      return;
     }
 
     console.log(`[enquire] Private enquiry sent — ${fields.name} <${fields.email}>`);
-    return new Response('OK', { status: 200 });
+    res.writeHead(200).end('OK');
+    return;
   }
 
-  return new Response('Unknown enquiry type', { status: 400 });
+  res.writeHead(400).end('Unknown enquiry type');
 }
