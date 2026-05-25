@@ -17,6 +17,41 @@ function buildTable(title: string, rows: [string, string | undefined][]): string
   `;
 }
 
+function buildConfirmation(name: string, type: 'wedding' | 'private'): string {
+  const intro = type === 'wedding'
+    ? `Thank you for considering RIAH to curate your wedding celebration, ${name}.`
+    : `Thank you for reaching out to RIAH, ${name}.`;
+
+  return `
+    <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#1a3330">
+      <div style="border-bottom:1px solid #e0ddd6;padding-bottom:24px;margin-bottom:32px">
+        <p style="font-size:11px;letter-spacing:0.4em;text-transform:uppercase;color:#8a7e72;margin:0">RIAH</p>
+      </div>
+
+      <p style="font-size:15px;line-height:1.8;font-weight:300;margin-bottom:24px">${intro}</p>
+
+      <p style="font-size:15px;line-height:1.8;font-weight:300;margin-bottom:24px">
+        We have received your enquiry and our team will thoughtfully review your details.
+        Should your date and vision align with our availability, we will be in touch within
+        <strong>48 hours</strong> to invite you to a private consultation.
+      </p>
+
+      <p style="font-size:15px;line-height:1.8;font-weight:300;margin-bottom:40px">
+        We accept a limited number of celebrations each year in order to preserve the depth,
+        care, and artistry our clients deserve. Thank you for your patience.
+      </p>
+
+      <div style="border-top:1px solid #e0ddd6;padding-top:24px;margin-top:32px">
+        <p style="font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:#8a7e72;margin:0 0 4px">Tobi Yusuf</p>
+        <p style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:#b0a89e;margin:0">Founder, RIAH</p>
+        <p style="margin-top:16px;margin-bottom:0">
+          <a href="https://www.riahevents.com" style="font-size:11px;color:#8a7e72;text-decoration:none;letter-spacing:0.2em">www.riahevents.com</a>
+        </p>
+      </div>
+    </div>
+  `;
+}
+
 function readBody(req: IncomingMessage): Promise<string> {
   return new Promise((resolve, reject) => {
     let data = '';
@@ -69,16 +104,25 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       ['How They Heard', fields.howHeard],
     ];
 
-    const { error } = await resend.emails.send({
-      from: 'RIAH Enquiries <contact@riahevents.com>',
-      to: TO,
-      subject: 'Wedding Celebration Enquiry — RIAH',
-      html: buildTable('New Wedding Celebration Enquiry', rows),
-      replyTo: fields.email,
-    });
+    const [{ error: e1 }, { error: e2 }] = await Promise.all([
+      resend.emails.send({
+        from: 'RIAH <contact@riahevents.com>',
+        to: TO,
+        subject: 'Wedding Celebration Enquiry — RIAH',
+        html: buildTable('New Wedding Celebration Enquiry', rows),
+        replyTo: fields.email,
+      }),
+      resend.emails.send({
+        from: 'RIAH <contact@riahevents.com>',
+        to: fields.email,
+        subject: 'Your Enquiry Has Been Received — RIAH',
+        html: buildConfirmation(fields.fullName, 'wedding'),
+        replyTo: TO,
+      }),
+    ]);
 
-    if (error) {
-      console.error(`[enquire] Wedding send failed for ${fields.fullName} <${fields.email}>:`, error);
+    if (e1 || e2) {
+      console.error(`[enquire] Wedding send failed for ${fields.fullName} <${fields.email}>:`, e1 || e2);
       res.writeHead(500).end('Email failed');
       return;
     }
@@ -106,16 +150,25 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       ['How They Heard', fields.howHeard],
     ];
 
-    const { error } = await resend.emails.send({
-      from: 'RIAH Enquiries <contact@riahevents.com>',
-      to: TO,
-      subject: 'Private Celebration Enquiry — RIAH',
-      html: buildTable('New Private Celebration Enquiry', rows),
-      replyTo: fields.email,
-    });
+    const [{ error: e1 }, { error: e2 }] = await Promise.all([
+      resend.emails.send({
+        from: 'RIAH <contact@riahevents.com>',
+        to: TO,
+        subject: 'Private Celebration Enquiry — RIAH',
+        html: buildTable('New Private Celebration Enquiry', rows),
+        replyTo: fields.email,
+      }),
+      resend.emails.send({
+        from: 'RIAH <contact@riahevents.com>',
+        to: fields.email,
+        subject: 'Your Enquiry Has Been Received — RIAH',
+        html: buildConfirmation(fields.name, 'private'),
+        replyTo: TO,
+      }),
+    ]);
 
-    if (error) {
-      console.error(`[enquire] Private send failed for ${fields.name} <${fields.email}>:`, error);
+    if (e1 || e2) {
+      console.error(`[enquire] Private send failed for ${fields.name} <${fields.email}>:`, e1 || e2);
       res.writeHead(500).end('Email failed');
       return;
     }
