@@ -262,10 +262,10 @@ export default function Enquire() {
           {!celebrationType && (
             <motion.div
               key="gateway"
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.04 }}
-              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="min-h-[70vh] flex flex-col justify-center items-center"
             >
               <FadeIn className="text-center mb-20">
@@ -360,10 +360,10 @@ export default function Enquire() {
           {celebrationType === 'wedding' && (
             <motion.div
               key="wedding-form"
-              initial={{ opacity: 0, y: -40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 1, ease: 'easeOut' }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="max-w-2xl mx-auto"
             >
               {/* Back */}
@@ -502,10 +502,10 @@ export default function Enquire() {
           {celebrationType === 'private' && (
             <motion.div
               key="private-form"
-              initial={{ opacity: 0, y: -40 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 1, ease: 'easeOut' }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="max-w-2xl mx-auto"
             >
               <button
