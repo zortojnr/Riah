@@ -8,6 +8,7 @@ import PageTransition from './components/PageTransition';
 import CursorTracker from './components/CursorTracker';
 import SmoothScroll from './components/SmoothScroll';
 import RouteFallback from './components/RouteFallback';
+import { updatePageSEO } from './utils/seo';
 
 const Home = lazy(() => import('./pages/Home'));
 const About = lazy(() => import('./pages/About'));
@@ -29,32 +30,69 @@ const MulticulturalWeddingPlanner = lazy(() => import('./pages/seo/Multicultural
 const NigerianWeddingPlanner = lazy(() => import('./pages/seo/NigerianWeddingPlanner'));
 const Media = lazy(() => import('./pages/Media'));
 
-const PAGE_TITLES: Record<string, string> = {
-  '/': 'RIAH | Luxury Weddings & Celebrations Worldwide',
-  '/about': 'About | RIAH Weddings & Events',
-  '/planning': 'Planning Experiences | RIAH Weddings & Events',
-  '/journal': 'The Journal | RIAH Weddings & Events',
-  '/press': 'Press & Recognition | RIAH Weddings & Events',
-  '/enquire': 'Enquire | RIAH Weddings & Events',
-  '/privacy': 'Privacy Policy | RIAH Weddings & Events',
-  '/terms': 'Terms & Conditions | RIAH Weddings & Events',
-  '/portal': 'Client Portal | RIAH Weddings & Events',
-  '/faq': 'Frequently Asked Questions | RIAH Weddings & Events',
-  '/media': 'Media | RIAH Weddings & Events',
-  '/wedding-planner-london': 'Wedding Planner London | RIAH Weddings & Events',
-  '/wedding-planner-uk': 'Wedding Planner UK | RIAH Weddings & Events',
-  '/destination-wedding-planner-uk': 'Destination Wedding Planner UK | RIAH Weddings & Events',
-  '/luxury-wedding-planner-uk': 'Luxury Wedding Planner UK | RIAH Weddings & Events',
-  '/multicultural-wedding-planner-uk': 'Multicultural Wedding Planner UK | RIAH Weddings & Events',
-  '/nigerian-wedding-planner-uk': 'Nigerian Wedding Planner UK | RIAH Weddings & Events',
+const BASE_URL = 'https://www.riahevents.com';
+
+const PAGE_SEO: Record<string, { title: string; description: string }> = {
+  '/': {
+    title: 'RIAH | Luxury Weddings & Celebrations Worldwide',
+    description: "RIAH is London's leading luxury wedding planning house for culturally rich couples. Full-service planning across the UK, Italy, France, Greece & beyond. Founded by Tobi Yusuf.",
+  },
+  '/about': {
+    title: 'About RIAH | Luxury Wedding Planning House, London',
+    description: "Meet Tobi Yusuf, founder of RIAH — London's luxury wedding planning house. Discover our philosophy of intentionality, cultural depth, and discretion that defines every celebration we create.",
+  },
+  '/planning': {
+    title: 'Wedding Planning Experiences | RIAH Weddings & Events',
+    description: "Explore RIAH's full-service wedding planning tiers — Essential, Signature, and Luxury Elite. Bespoke planning for UK, European, and destination weddings starting from £80,000.",
+  },
+  '/journal': {
+    title: 'The RIAH Journal | Wedding Planning Insights & Inspiration',
+    description: 'The RIAH Journal: insights on luxury wedding planning, cultural celebrations, destination guides, and the art of curating extraordinary moments.',
+  },
+  '/press': {
+    title: 'Press & Recognition | RIAH Weddings & Events',
+    description: 'RIAH has been featured in British Vogue Weddings, Tatler, the Evening Standard, and Metro. Winner of Best Luxury Wedding Planner 2024 at the Global Wedding Awards.',
+  },
+  '/enquire': {
+    title: 'Enquire | Begin Your RIAH Wedding Journey',
+    description: 'Start your luxury wedding planning journey with RIAH. Submit an enquiry and our team, led by founder Tobi Yusuf, will review your date, vision, and investment alignment personally.',
+  },
+  '/faq': {
+    title: 'Frequently Asked Questions | RIAH Weddings & Events',
+    description: "Answers to common questions about RIAH's luxury wedding planning services, timelines, destinations, multicultural weddings, and how to begin your enquiry.",
+  },
+  '/media': {
+    title: 'Wedding Gallery | RIAH Celebrations — Captured & Curated',
+    description: 'A curated gallery of RIAH weddings and celebrations — luxury multicultural events across London, Europe, and international destinations.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy | RIAH Weddings & Events',
+    description: 'RIAH Weddings & Events privacy policy. How we collect, use, and protect your personal data in accordance with UK GDPR.',
+  },
+  '/terms': {
+    title: 'Terms & Conditions | RIAH Weddings & Events',
+    description: 'Terms and conditions for RIAH Weddings & Events planning services. Please read carefully before engaging our services.',
+  },
+  '/portal': {
+    title: 'Client Portal | RIAH Weddings & Events',
+    description: 'Secure client portal for RIAH couples.',
+  },
 };
 
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
-    const title = PAGE_TITLES[pathname] ?? 'RIAH Weddings & Events';
-    document.title = title;
+    const seo = PAGE_SEO[pathname];
+    if (seo) {
+      updatePageSEO({
+        title: seo.title,
+        description: seo.description,
+        canonical: `${BASE_URL}${pathname === '/' ? '' : pathname}`,
+      });
+    } else {
+      document.title = 'RIAH Weddings & Events';
+    }
   }, [pathname]);
   return null;
 }

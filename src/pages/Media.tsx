@@ -52,7 +52,7 @@ export default function Media() {
               <div key={src} className="break-inside-avoid mb-3 md:mb-4 overflow-hidden">
                 <img
                   src={src}
-                  alt=""
+                  alt={`RIAH luxury wedding celebration — curated moment ${i + 1}`}
                   loading={i < 8 ? 'eager' : 'lazy'}
                   className="w-full object-cover hover:scale-105 transition-transform duration-[2s] ease-out"
                 />

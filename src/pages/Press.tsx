@@ -38,7 +38,7 @@ export default function Press() {
         <motion.div style={{ y: heroY }} className="absolute inset-0 z-0">
           <img
             src="/assests/11a.webp"
-            alt=""
+            alt="RIAH luxury wedding — featured in British Vogue, Tatler and Evening Standard"
             className="w-full h-full object-cover brightness-[0.45]"
             loading="eager"
           />
@@ -217,7 +217,7 @@ export default function Press() {
                 >
                   <img
                     src="/assests/GSON3031.webp"
-                    alt=""
+                    alt="Tobi Yusuf, founder of RIAH, speaking at a luxury wedding industry event"
                     className="w-full h-full object-cover transition-transform duration-[2s] ease-out hover:scale-110"
                     loading="lazy"
                   />
@@ -285,7 +285,7 @@ export default function Press() {
                 >
                   <img
                     src="/assests/7b.webp"
-                    alt=""
+                    alt="RIAH award-winning luxury wedding celebration"
                     className="w-full h-full object-cover transition-transform duration-[2s] ease-out hover:scale-110"
                     loading="lazy"
                   />

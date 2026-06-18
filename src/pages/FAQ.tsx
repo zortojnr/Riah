@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { useState } from 'react';
 import FadeIn from '../components/FadeIn';
+import { updatePageSEO } from '../utils/seo';
 
 const FAQS = [
   {
@@ -49,18 +50,20 @@ function FaqItem({ item, index }: { item: typeof FAQS[0]; index: number }) {
   return (
     <FadeIn delay={index * 0.04}>
       <div className="border-b border-teal/8">
-        <button
-          onClick={() => setOpen(!open)}
-          className="w-full text-left py-6 flex items-start justify-between gap-6 group min-h-[44px]"
-          aria-expanded={open}
-        >
-          <span className="text-sm md:text-base text-teal font-light leading-relaxed tracking-wide group-hover:text-mauve transition-colors duration-300">
-            {item.q}
-          </span>
-          <span className={`text-mauve text-lg shrink-0 transition-transform duration-500 mt-0.5 ${open ? 'rotate-45' : ''}`}>
-            +
-          </span>
-        </button>
+        <h2 className="m-0 p-0 text-base font-normal">
+          <button
+            onClick={() => setOpen(!open)}
+            className="w-full text-left py-6 flex items-start justify-between gap-6 group min-h-[44px]"
+            aria-expanded={open}
+          >
+            <span className="text-sm md:text-base text-teal font-light leading-relaxed tracking-wide group-hover:text-mauve transition-colors duration-300">
+              {item.q}
+            </span>
+            <span className={`text-mauve text-lg shrink-0 transition-transform duration-500 mt-0.5 ${open ? 'rotate-45' : ''}`}>
+              +
+            </span>
+          </button>
+        </h2>
 
         <AnimatePresence>
           {open && (
@@ -84,9 +87,11 @@ function FaqItem({ item, index }: { item: typeof FAQS[0]; index: number }) {
 
 export default function FAQ() {
   useEffect(() => {
-    document.title = 'Frequently Asked Questions | RIAH Weddings & Events';
-    const metaEl = document.querySelector('meta[name="description"]');
-    if (metaEl) metaEl.setAttribute('content', 'Answers to common questions about RIAH\'s luxury wedding planning services, timelines, destinations, multicultural weddings, and how to begin your enquiry.');
+    updatePageSEO({
+      title: 'Frequently Asked Questions | RIAH Weddings & Events',
+      description: "Answers to common questions about RIAH's luxury wedding planning services, timelines, destinations, multicultural weddings, and how to begin your enquiry.",
+      canonical: 'https://www.riahevents.com/faq',
+    });
 
     // Inject FAQ schema
     const script = document.createElement('script');

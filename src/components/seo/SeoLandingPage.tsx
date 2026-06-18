@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
 import FadeIn from '../FadeIn';
+import { updatePageSEO } from '../../utils/seo';
 
 interface SeoLandingPageProps {
   keyword: string;
@@ -42,9 +43,12 @@ export default function SeoLandingPage({
   image,
 }: SeoLandingPageProps) {
   useEffect(() => {
-    document.title = `${keyword} | RIAH Weddings & Events`;
-    const metaEl = document.querySelector('meta[name="description"]');
-    if (metaEl) metaEl.setAttribute('content', metaDescription);
+    const canonical = `https://www.riahevents.com${window.location.pathname}`;
+    updatePageSEO({
+      title: `${keyword} | RIAH Weddings & Events`,
+      description: metaDescription,
+      canonical,
+    });
 
     const script = document.createElement('script');
     script.type = 'application/ld+json';
@@ -53,8 +57,8 @@ export default function SeoLandingPage({
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://riahevents.com' },
-        { '@type': 'ListItem', position: 2, name: keyword, item: `https://riahevents.com${window.location.pathname}` },
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.riahevents.com' },
+        { '@type': 'ListItem', position: 2, name: keyword, item: canonical },
       ],
     });
     document.head.appendChild(script);
