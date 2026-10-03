@@ -29,7 +29,15 @@ async function main() {
   const server = await preview({ preview: { port: 4173, strictPort: false } });
   const base = server.resolvedUrls.local[0];
 
-  const browser = await chromium.launch();
+  let browser;
+  try {
+    browser = await chromium.launch();
+  } catch (error) {
+    if (process.env.VERCEL !== '1') throw error;
+    console.warn('[prerender] Chromium is unavailable on Vercel; skipping route prerendering.');
+    await new Promise((resolve) => server.httpServer.close(resolve));
+    return;
+  }
   const page = await browser.newPage();
 
   // Analytics/tag-manager calls go to real external hosts and can hang the
