@@ -135,7 +135,7 @@ export default function Footer() {
           <p className="text-[9px] uppercase tracking-[0.25em] text-off-white/25">
             © {new Date().getFullYear()} RIAH. All rights reserved.
           </p>
-          <div className="flex gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 sm:justify-end">
             <Link
               to="/privacy"
               className="text-[9px] uppercase tracking-[0.25em] text-off-white/25 hover:text-off-white/50 transition-colors py-3 min-h-[44px] flex items-center"
@@ -148,6 +148,17 @@ export default function Footer() {
             >
               Terms &amp; Conditions
             </Link>
+            <span className="flex min-h-[44px] items-center gap-1 text-[10px] uppercase tracking-[0.2em] text-off-white/70">
+              Built by
+              <a
+                href="https://www.zortojnr.site"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-off-white hover:text-mauve underline underline-offset-4 transition-colors"
+              >
+                zortojnr
+              </a>
+            </span>
           </div>
         </div>
       </motion.div>
