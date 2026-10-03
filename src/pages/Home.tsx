@@ -17,6 +17,15 @@ const MOTTOS = [
   { line: 'Your story, told beautifully.' },
 ];
 
+function canAutoplayVideo() {
+  const connection = (navigator as Navigator & {
+    connection?: { saveData?: boolean; effectiveType?: string };
+  }).connection;
+  const limitedConnection = connection?.saveData || ['slow-2g', '2g'].includes(connection?.effectiveType ?? '');
+
+  return !limitedConnection && !window.matchMedia('(max-width: 767px), (prefers-reduced-motion: reduce)').matches;
+}
+
 function VideoInterlude() {
   const [index, setIndex] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
@@ -33,6 +42,7 @@ function VideoInterlude() {
   }, []);
 
   useEffect(() => {
+    if (!canAutoplayVideo()) return;
     const el = sectionRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -114,11 +124,11 @@ function VideoInterlude() {
             style={{ width: 'min(340px, 80vw)', aspectRatio: '9/16' }}
           >
             {videoReady ? (
-              <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                <source src="https://res.cloudinary.com/dzr18sd58/video/upload/v1778538684/RIAH_kikenb.mp4" type="video/mp4" />
+              <video autoPlay muted loop playsInline preload="none" poster="/assests/experience-poster.webp" className="w-full h-full object-cover">
+                <source src="https://res.cloudinary.com/dzr18sd58/video/upload/q_auto:eco,vc_auto,w_720,c_limit/v1778538684/RIAH_kikenb.mp4" type="video/mp4" />
               </video>
             ) : (
-              <div className="w-full h-full bg-[#0e1c1b]" />
+              <img src="/assests/experience-poster.webp" alt="Wedding celebration in progress" loading="lazy" decoding="async" className="w-full h-full object-cover" />
             )}
             <div className="absolute inset-0 bg-black/10" />
           </div>
@@ -173,6 +183,14 @@ function PressCarousel() {
 }
 
 export default function Home() {
+  const [heroVideoReady, setHeroVideoReady] = useState(false);
+
+  useEffect(() => {
+    if (!canAutoplayVideo()) return;
+    const timeout = window.setTimeout(() => setHeroVideoReady(true), 5000);
+    return () => window.clearTimeout(timeout);
+  }, []);
+
   return (
     <div className="flex flex-col">
       <IntroCurtain />
@@ -182,14 +200,17 @@ export default function Home() {
         {/* Video background */}
         <div className="absolute inset-0 z-0 bg-[#0e1c1b]">
           <video
-            autoPlay
+            autoPlay={heroVideoReady}
             muted
             loop
             playsInline
             preload="none"
+            poster="/assests/hero-poster.webp"
             className="w-full h-full object-cover object-center brightness-[0.65]"
           >
-            <source src="https://res.cloudinary.com/dzr18sd58/video/upload/q_auto:best,vc_auto/v1778538684/RIAHS_WEDDING_jgl3j4.mp4" type="video/mp4" />
+            {heroVideoReady && (
+              <source src="https://res.cloudinary.com/dzr18sd58/video/upload/q_auto:eco,vc_auto,w_1280,c_limit/v1778538684/RIAHS_WEDDING_jgl3j4.mp4" type="video/mp4" />
+            )}
           </video>
         </div>
 

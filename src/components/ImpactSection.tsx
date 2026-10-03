@@ -61,6 +61,8 @@ function StatSlideshow({ images }: { images: string[] }) {
           transition={{ duration: 0.9, ease: "easeInOut" }}
           src={images[index]}
           alt="Stat highlight"
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 transition-all duration-1000"
           referrerPolicy="no-referrer"
         />
@@ -120,6 +122,8 @@ function TestimonialCard() {
           transition={{ duration: 1.2, ease: 'easeInOut' }}
           src={t.image}
           alt=""
+          loading="lazy"
+          decoding="async"
           className="absolute inset-0 w-full h-full object-cover"
         />
       </AnimatePresence>
