@@ -149,9 +149,9 @@ export default function Footer() {
               Terms &amp; Conditions
             </Link>
             <span className="flex min-h-[44px] items-center gap-1 text-[10px] uppercase tracking-[0.2em] text-off-white/70">
-              Built by
+              Website built by
               <a
-                href="https://www.zortojnr.site"
+                href="https://zortojnr.site"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-off-white hover:text-mauve underline underline-offset-4 transition-colors"
