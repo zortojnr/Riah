@@ -148,13 +148,13 @@ export default function Footer() {
             >
               Terms &amp; Conditions
             </Link>
-            <span className="flex min-h-[44px] items-center gap-1 text-[10px] uppercase tracking-[0.2em] text-off-white/70">
-              Website built by
+            <span className="flex min-h-[44px] items-center gap-1 text-[11px] uppercase tracking-[0.16em] text-off-white/80">
+              Website by
               <a
                 href="https://zortojnr.site"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-off-white hover:text-mauve underline underline-offset-4 transition-colors"
+                className="font-semibold text-mauve hover:text-off-white underline underline-offset-4 transition-colors"
               >
                 zortojnr
               </a>
